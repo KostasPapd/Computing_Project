@@ -1,8 +1,11 @@
-# Need for this project:
-# Email validation and verification
-# Student id validation
-# Password length check
-# Answer data validation
+"""
+Need for this project:
+Email validation and verification
+Student id validation
+Password length check
+Answer data validation
+"""
+
 
 def validEmail(email):
     import re
