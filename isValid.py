@@ -5,8 +5,8 @@ API key: test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674edb1218e7a5972c5aa369d2c
 
 Need for this project:
 Email validation and verification
-Username validation
-Password length check
+Username validation and verification
+Password validation
 Answer data validation
 
 
@@ -37,13 +37,21 @@ def verifyEmail(email):
     else:
         return False
 
-def verifyPasword(pas):
-    if len(pas) < 8:
-        return False
-    else:
-        for i in range(len(pas)):
-            if pas[i].isupper():
-                return True
-            else:
+def validatePassword(pas):
+    import re
+
+    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,}', pas):
+        if not any(char.isupper() for char in pas):
+            return False
+        else:
+            if not any(char.islower() for char in pas):
                 return False
-# add number checker
+            else:
+                if not any(char.isdigit() for char in pas):
+                    return False
+                else:
+                    return True
+    else:
+        return False
+
+print(validatePassword("iddibbvkxczvH"))
