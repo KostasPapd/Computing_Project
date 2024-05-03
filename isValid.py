@@ -8,7 +8,6 @@ Email validation and verification
 Username validation and verification
 Password validation
 Answer data validation
-https://www.geeksforgeeks.org/password-validation-in-python/
 
 Use mySQL, find host for database
 """
