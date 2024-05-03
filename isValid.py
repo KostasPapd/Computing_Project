@@ -54,4 +54,5 @@ def validatePassword(pas):
     else:
         return False
 
-print(validatePassword("iddibbvkxczvH"))
+
+print(validatePassword("Hf3!5555"))
