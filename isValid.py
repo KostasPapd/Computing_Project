@@ -4,9 +4,13 @@ Email verification website: https://app.kickbox.com/accounts/GelrCwkY/verify/api
 API key: test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674edb1218e7a5972c5aa369d2c
 
 Need for this project:
-Email validation and verification
-Username validation and verification
-Password validation
+Email validation and verification - done
+Username validation - done
+Password validation - done
+
+Do after database lesson:
+Username verification (for logging in)
+Password verification
 Answer data validation
 
 Use mySQL, find host for database
@@ -39,7 +43,8 @@ def verifyEmail(email):
 def validatePassword(pas):
     import re
 
-    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,}', pas):
+    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,}', pas):  # Sets what characters are allowed and required in the password
+        # Checks if all the required characters are in the password
         if not any(char.isupper() for char in pas):
             return False
         else:
@@ -53,5 +58,12 @@ def validatePassword(pas):
     else:
         return False
 
+def validateUsername(username):
+    import re
 
-print(validatePassword("Hf3!5555"))
+    if re.fullmatch(r'[A-Za-z0-9!@_&]{5,}', username):  # Sets what characters are allowed in the username
+        # The {5,} sets the minimum length of the username
+        return True
+    else:
+        return False
+
