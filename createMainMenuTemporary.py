@@ -1,9 +1,9 @@
 from tkinter import *
 from tkinter import font as tkfont
-from registerMenuTemporary import *
+import registerMenuTemporary
 
 def register():
-    pass
+    registerMenuTemporary.createBox()
 def createMenu():
     win = Tk()
 
@@ -11,7 +11,7 @@ def createMenu():
     win.title("Testing")
 
     text = tkfont.Font(font="Arial", size=36)
-    regButton = Button(text="Register", command=lambda: register(), font=text)
+    regButton = Button(win, text="Register", command=lambda: register(), font=text)
     regButton.grid(row=10, column=10, pady=200, padx=205, sticky="NW")
 
 
@@ -20,6 +20,7 @@ def createMenu():
 createMenu()
 
 """
+FIX ISSUE WITH REGISTER WINDOW - look at old code/consult with abid
 Make register and login windows
 Add subroutines that run the other window programs
 Error messages for invalid data

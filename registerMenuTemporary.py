@@ -1,18 +1,18 @@
 from tkinter import *
-from tkinter import font as tkfont
+from tkinter import font as regFont
 import isValid
 
 def createBox():
-    win = Tk()
+    window = Tk()
 
-    win.geometry("400x300")
-    win.title("Register Account")
+    window.geometry("400x300")
+    window.title("Register Account")
 
-    text = tkfont.Font(font="Arial", size=36)
-    regButton = Button(text="Register", font=text)
-    regButton.grid(row=10, column=10, pady=200, padx=154, sticky="NW")
+    text = regFont.Font(font="Arial", size=36)
+    registerButton = Button(text="Register", font=text)
+    registerButton.grid(row=10, column=10, pady=200, padx=154, sticky="NW")
 
-    win.mainloop()
+    window.mainloop()
 
 createBox()
 
