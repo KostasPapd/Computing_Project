@@ -16,13 +16,18 @@ def createBox():
     registerButton.config(font=("Arial", 16))
     registerButton.place(x=130, y=325)
 
+    userLabel = Label(window, text="Username:")
+    userLabel.config(font=("Arial", 14))
+    userLabel.place(x=60, y=93)
+
+    userBox = Text(window, height=1, width=30)
+    userBox.place(x=175, y=100)
+
     emailLabel = Label(window, text="Email Address:")
     emailLabel.config(font=("Arial", 14))
-    emailLabel.place(x=50, y=100)
+    emailLabel.place(x=21, y=130)
 
-    emailBox =
-
-
+    userBox.focus()
     window.mainloop()
 
 
