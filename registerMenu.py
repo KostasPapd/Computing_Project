@@ -1,10 +1,13 @@
 from tkinter import *
 #from tkinter import messagebox
 
-def checkVal(userBox, emailBox, passBox):
+def checkVal(userBox, emailBox, passBox, repassBox, c):
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()
     password = passBox.get("1.0", "end-1c").strip()
+    repassword = repassBox.get("1.0", "end-1c").strip()
+    school = c.get()
+    print(school)
     # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
 
 
@@ -18,7 +21,8 @@ def createBox():
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(x=140, y=25)
 
-    registerButton = Button(window, text="Test_Register_Window", command=lambda: checkVal(userBox, emailBox, passBox))
+    registerButton = Button(window, text="Test_Register_Window", command=lambda: checkVal(userBox, emailBox, passBox,
+                                                                                          repassBox, c))
     registerButton.config(font=("Arial", 16))
     registerButton.place(x=130, y=310)
 
@@ -44,11 +48,11 @@ def createBox():
     passBox.place(x=185, y=175)
 
 # Re-type label and text box
-    passLabel = Label(window, text="Re-type Password:")
-    passLabel.config(font=("Arial", 14))
-    passLabel.place(x=15, y=210)
-    passBox = Text(window, height=1, width=30)
-    passBox.place(x=185, y=215)
+    repassLabel = Label(window, text="Re-type Password:")
+    repassLabel.config(font=("Arial", 14))
+    repassLabel.place(x=15, y=210)
+    repassBox = Text(window, height=1, width=30)
+    repassBox.place(x=185, y=215)
 
 # School label
     schoolLabel = Label(window, text="School:")
@@ -66,7 +70,7 @@ def createBox():
     window.mainloop()
 
 
-#createBox() #REMOVE THIS OR BIG PROBLEMS
+createBox() #REMOVE THIS OR BIG PROBLEMS
 
 
 """

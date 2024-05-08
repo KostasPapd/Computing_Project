@@ -4,7 +4,6 @@ def register():
     import registerMenu
     registerMenu.createBox()
 
-
 def createMenu():
     win = Tk()
 
