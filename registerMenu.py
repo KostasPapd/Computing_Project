@@ -31,10 +31,10 @@ def createBox():
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(x=140, y=25)
 
-    registerButton = Button(window, text="Test_Register_Window", command=lambda: getVal(userBox, emailBox, passBox,
+    registerButton = Button(window, text="Register Account", command=lambda: getVal(userBox, emailBox, passBox,
                                                                                           repassBox, c))
     registerButton.config(font=("Arial", 16))
-    registerButton.place(x=130, y=310)
+    registerButton.place(x=150, y=310)
 
 # Username label and text box
     userLabel = Label(window, text="Username:")
@@ -80,7 +80,7 @@ def createBox():
     window.mainloop()
 
 
-createBox() #REMOVE THIS OR BIG PROBLEMS
+createBox()# REMOVE THIS OR BIG PROBLEMS
 
 
 """
