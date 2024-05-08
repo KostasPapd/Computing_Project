@@ -13,7 +13,7 @@ def createMenu():
 
     regButton = Button(win, text="Test_Register", command=lambda: register())
     regButton.config(font=("Arial", 20))
-    regButton.grid(row=10, column=10, pady=200, padx=205, sticky="NW")
+    regButton.grid(row=10, column=10, pady=200, padx=150, sticky="W")
 
 
     win.mainloop()
@@ -21,7 +21,6 @@ def createMenu():
 createMenu()
 
 """
-FIX ISSUE WITH EXITING WINDOW - look at old code/consult with abid
 Make register and login windows
 Add subroutines that run the other window programs
 Error messages for invalid data
