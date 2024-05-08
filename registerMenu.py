@@ -80,7 +80,7 @@ def createBox():
     window.mainloop()
 
 
-createBox()# REMOVE THIS OR BIG PROBLEMS
+#createBox()# REMOVE THIS OR BIG PROBLEMS
 
 
 """
