@@ -1,17 +1,17 @@
 from tkinter import *
-from tkinter import font as tkfont
 import registerMenuTemporary
 
 def register():
     registerMenuTemporary.createBox()
+
 def createMenu():
     win = Tk()
 
     win.geometry("500x500")
     win.title("Testing")
 
-    text = tkfont.Font(font="Arial", size=36)
-    regButton = Button(win, text="Register", command=lambda: register(), font=text)
+    regButton = Button(win, text="Register", command=lambda: register())
+    regButton.config(font=("Arial", 36))
     regButton.grid(row=10, column=10, pady=200, padx=205, sticky="NW")
 
 

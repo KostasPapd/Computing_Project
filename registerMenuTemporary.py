@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import font as regFont
+
 import isValid
 
 def createBox():
@@ -8,8 +8,8 @@ def createBox():
     window.geometry("400x300")
     window.title("Register Account")
 
-    text = regFont.Font(font="Arial", size=36)
-    registerButton = Button(text="Register", font=text)
+    registerButton = Button(window, text="Register")
+    registerButton.config(font=("Arial", 36))
     registerButton.grid(row=10, column=10, pady=200, padx=154, sticky="NW")
 
     window.mainloop()
