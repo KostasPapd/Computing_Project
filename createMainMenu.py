@@ -25,6 +25,3 @@ def createMenu():
     logButton.place(x=190, y=300)
 
     win.mainloop()
-
-
-createMenu()

@@ -22,6 +22,10 @@ def getVal(userBox, emailBox, passBox, repassBox, c, o):
             validateRegisterData.checkVal(username, email, password)
     # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
 
+def back(win):
+    import createMainMenu
+    win.destroy()
+    createMainMenu.createMenu()
 
 def createBox():
     window = Tk()
@@ -36,7 +40,11 @@ def createBox():
     registerButton = Button(window, text="Register Account", command=lambda: getVal(userBox, emailBox, passBox,
                                                                                           repassBox, c, o))
     registerButton.config(font=("Arial", 16))
-    registerButton.place(x=150, y=335)
+    registerButton.place(x=100, y=335)
+
+    backButton = Button(window, text="Back", command=lambda: back(window))
+    backButton.config(font=("Arial", 16))
+    backButton.place(x=300, y=335)
 
 # Username label and text box
     userLabel = Label(window, text="Username:")
@@ -79,7 +87,7 @@ def createBox():
     schoolMenu.place(x=182, y=250)
 
 
-#Label for level
+# Label for level
     levelLabel = Label(window, text="I am a:")
     levelLabel.config(font=("Arial", 14))
     levelLabel.place(x=115, y=290)
@@ -93,7 +101,3 @@ def createBox():
 
     userBox.focus()
     window.mainloop()
-
-
-# createBox()
-# REMOVE THIS OR BIG PROBLEMS
