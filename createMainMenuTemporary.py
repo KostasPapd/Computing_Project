@@ -1,8 +1,9 @@
 from tkinter import *
-import registerMenuTemporary
 
 def register():
+    import registerMenuTemporary
     registerMenuTemporary.createBox()
+
 
 def createMenu():
     win = Tk()
@@ -20,7 +21,7 @@ def createMenu():
 createMenu()
 
 """
-FIX ISSUE WITH REGISTER WINDOW - look at old code/consult with abid
+FIX ISSUE WITH EXITING WINDOW - look at old code/consult with abid
 Make register and login windows
 Add subroutines that run the other window programs
 Error messages for invalid data
