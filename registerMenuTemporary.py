@@ -8,8 +8,8 @@ def createBox():
     window.geometry("400x300")
     window.title("Register Account")
 
-    registerButton = Button(window, text="Register")
-    registerButton.config(font=("Arial", 36))
+    registerButton = Button(window, text="Test_Register_Window ")
+    registerButton.config(font=("Arial", 14))
     registerButton.grid(row=10, column=10, pady=200, padx=154, sticky="NW")
 
     window.mainloop()

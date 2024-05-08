@@ -11,8 +11,8 @@ def createMenu():
     win.geometry("500x500")
     win.title("Testing")
 
-    regButton = Button(win, text="Register", command=lambda: register())
-    regButton.config(font=("Arial", 36))
+    regButton = Button(win, text="Test_Register", command=lambda: register())
+    regButton.config(font=("Arial", 20))
     regButton.grid(row=10, column=10, pady=200, padx=205, sticky="NW")
 
 
