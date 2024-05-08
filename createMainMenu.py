@@ -2,7 +2,7 @@ from tkinter import *
 
 def register():
     import registerMenu
-    registerMenuTemporary.createBox()
+    registerMenu.createBox()
 
 
 def createMenu():
