@@ -2,12 +2,14 @@ from tkinter import *
 from tkinter import messagebox
 import validateRegisterData
 
-def getVal(userBox, emailBox, passBox, repassBox, c):
+def getVal(userBox, emailBox, passBox, repassBox, c, o):
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()
     password = passBox.get("1.0", "end-1c").strip()
     repassword = repassBox.get("1.0", "end-1c").strip()
     school = c.get()
+    level = o.get()
+    # PUTS ACCOUNT IN THE DATABASE STUDENT OR TEACHER
     if school == "School not listed":
         messagebox.showwarning("School not listed", "You can't create an account because your school isn't"
                                                     " registered to PROGRAM NAME. Please talk to a teacher if you want "
@@ -24,7 +26,7 @@ def getVal(userBox, emailBox, passBox, repassBox, c):
 def createBox():
     window = Tk()
 
-    window.geometry("500x375")
+    window.geometry("500x400")
     window.title("Register Account")
 
     titleLabel = Label(window, text="Register Account")
@@ -32,9 +34,9 @@ def createBox():
     titleLabel.place(x=140, y=25)
 
     registerButton = Button(window, text="Register Account", command=lambda: getVal(userBox, emailBox, passBox,
-                                                                                          repassBox, c))
+                                                                                          repassBox, c, o))
     registerButton.config(font=("Arial", 16))
-    registerButton.place(x=150, y=310)
+    registerButton.place(x=150, y=335)
 
 # Username label and text box
     userLabel = Label(window, text="Username:")
@@ -69,21 +71,28 @@ def createBox():
     schoolLabel.config(font=("Arial", 14))
     schoolLabel.place(x=110, y=250)
 
-# Drop-down menu
+# Drop-down menu for school
     options = ["City of Stoke-on-Trent Sixth Form College", "School not listed"]
     c = StringVar()
     c.set("School name")
     schoolMenu = OptionMenu(window, c, *options)
     schoolMenu.place(x=182, y=250)
 
+
+#Label for level
+    levelLabel = Label(window, text="I am a:")
+    levelLabel.config(font=("Arial", 14))
+    levelLabel.place(x=115, y=290)
+
+# Drop-down menu for level of account
+    levelOp = ["Teacher", "Student"]
+    o = StringVar()
+    o.set("Level")
+    levelMenu = OptionMenu(window, o, *levelOp)
+    levelMenu.place(x=182, y=290)
+
     userBox.focus()
     window.mainloop()
 
 
-#createBox()# REMOVE THIS OR BIG PROBLEMS
-
-
-"""
-Add text boxes with titles
-Run commands that verify data entered
-"""
+createBox()# REMOVE THIS OR BIG PROBLEMS
