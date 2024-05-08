@@ -24,13 +24,7 @@ def createMenu():
     logButton.config(font=("Arial", 20))
     logButton.place(x=190, y=300)
 
-
     win.mainloop()
 
-createMenu()
 
-"""
-Make register and login windows
-Add subroutines that run the other window programs
-Error messages for invalid data
-"""
+createMenu()

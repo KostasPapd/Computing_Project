@@ -1,22 +1,3 @@
-"""
-GitHub repository:: https://github.com/KostasPapd/Computing_Project
-Email verification website: https://app.kickbox.com/accounts/GelrCwkY/verify/api
-API key: test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674edb1218e7a5972c5aa369d2c
-
-Need for this project:
-Email validation and verification - done
-Username validation - done
-Password validation - done
-
-Do after database lesson:
-Username verification (for logging in)
-Password verification
-Answer data validation
-
-Use mySQL, find host for database
-"""
-
-
 def validEmail(email):
     import re
 
