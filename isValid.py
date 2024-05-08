@@ -66,3 +66,5 @@ def validateUsername(username):
         return True
     else:
         return False
+
+validatePassword("Karma98")

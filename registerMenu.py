@@ -1,13 +1,23 @@
 from tkinter import *
-#from tkinter import messagebox
+from tkinter import messagebox
+import validateRegisterData
 
-def checkVal(userBox, emailBox, passBox, repassBox, c):
+def getVal(userBox, emailBox, passBox, repassBox, c):
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()
     password = passBox.get("1.0", "end-1c").strip()
     repassword = repassBox.get("1.0", "end-1c").strip()
     school = c.get()
-    print(school)
+    if school == "School not listed":
+        messagebox.showwarning("School not listed", "You can't create an account because your school isn't"
+                                                    " registered to PROGRAM NAME. Please talk to a teacher if you want "
+                                                    "to register with us")
+        # ADD PROGRAM NAME
+    else:
+        if password != repassword:
+            messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
+        else:
+            validateRegisterData.checkVal(username, email, password)
     # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
 
 
@@ -21,7 +31,7 @@ def createBox():
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(x=140, y=25)
 
-    registerButton = Button(window, text="Test_Register_Window", command=lambda: checkVal(userBox, emailBox, passBox,
+    registerButton = Button(window, text="Test_Register_Window", command=lambda: getVal(userBox, emailBox, passBox,
                                                                                           repassBox, c))
     registerButton.config(font=("Arial", 16))
     registerButton.place(x=130, y=310)
