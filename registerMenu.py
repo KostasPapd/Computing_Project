@@ -44,8 +44,8 @@ def createBox():
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(x=140, y=10)
 
-    registerButton = Button(window, text="Register Account", command=lambda: getVal( nameBox, userBox, emailBox, passBox,
-                                                                                          repassBox, c, o))
+    registerButton = Button(window, text="Register Account", command=lambda: getVal(nameBox, userBox, emailBox, passBox,
+                                                                                    repassBox, c, o))
     registerButton.config(font=("Arial", 16))
     registerButton.place(x=100, y=335)
 
