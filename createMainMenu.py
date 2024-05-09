@@ -11,6 +11,9 @@ def log(window):
     window.destroy()
     logInMenu.createLogIn()
 
+def exitMenu(win):
+    win.destroy()
+
 def createMenu():
     win = Tk()
 
@@ -34,6 +37,10 @@ def createMenu():
 
     logButton = Button(win, text="Log In", command=lambda: log(win))
     logButton.config(font=("Arial", 20))
-    logButton.place(x=190, y=300)
+    logButton.place(x=190, y=275)
+
+    exitButton = Button(win, text="Exit", command=lambda: exitMenu(win))
+    exitButton.config(font=("Arial", 20))
+    exitButton.place(x=200, y=350)
 
     win.mainloop()
