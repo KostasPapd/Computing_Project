@@ -28,7 +28,6 @@ def createMenu():
     label = Label(frame, image=img)
     label.pack()
 
-
     regButton = Button(win, text="Register", command=lambda: register(win))
     regButton.config(font=("Arial", 20))
     regButton.place(x=180, y=200)
