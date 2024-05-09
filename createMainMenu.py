@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import ImageTk, Image
 
 def register(window):
     import registerMenu
@@ -16,9 +17,17 @@ def createMenu():
     win.geometry("500x500")
     win.title("Program_name_here")  # ADD PROGRAM NAME HERE
 
-    logoLabel = Label(win, text="Placeholder")
-    logoLabel.config(font=("Arial", 30))
-    logoLabel.place(x=145, y=75)
+    frame = Frame(win, width=60, height=40)
+    frame.pack()
+    frame.place(x=90, y=50)
+
+    img = Image.open("testLogo2png.png")
+    img = img.resize((300, 120))
+    img = ImageTk.PhotoImage(img)
+
+    label = Label(frame, image=img)
+    label.pack()
+
 
     regButton = Button(win, text="Register", command=lambda: register(win))
     regButton.config(font=("Arial", 20))
