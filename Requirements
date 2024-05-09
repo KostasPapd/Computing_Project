@@ -9,7 +9,7 @@ Username validation - done
 Password validation - done
 Make register and login windows - done, ADD VERIFICATION
 Error messages for invalid data - done
-Find stakeholders
+FIND STAKEHOLDERS
 Add designs to the menus
 
 
@@ -17,6 +17,15 @@ Student view:
 Look at studentView.png
 Profile (personal info (email, username, etc), change password/email)
 Assignment page
+
+Teacher view:
+Full class statistics
+Set assignment
+Delete assignment
+See overdue and complete
+See who has completed and left overdue
+Have class codes???
+
 
 
 

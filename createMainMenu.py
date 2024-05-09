@@ -14,7 +14,11 @@ def createMenu():
     win = Tk()
 
     win.geometry("500x500")
-    win.title("Testing")
+    win.title("Program_name_here")  # ADD PROGRAM NAME HERE
+
+    logoLabel = Label(win, text="Placeholder")
+    logoLabel.config(font=("Arial", 30))
+    logoLabel.place(x=145, y=75)
 
     regButton = Button(win, text="Register", command=lambda: register(win))
     regButton.config(font=("Arial", 20))
