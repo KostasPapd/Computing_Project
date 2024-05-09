@@ -12,6 +12,12 @@ Error messages for invalid data - done
 FIND STAKEHOLDERS
 Add designs to the menus
 
+Do after database lesson:
+Username verification (for logging in)
+Password verification
+Answer data validation
+Create admin accounts
+
 
 Student view:
 Look at studentView.png
@@ -31,10 +37,6 @@ Able to access student and teacher view
 Able to access databases???
 Ask Abid
 
-Do after database lesson:
-Username verification (for logging in)
-Password verification
-Answer data validation
-Create admin accounts
+
 
 Use mySQL, find host for database
