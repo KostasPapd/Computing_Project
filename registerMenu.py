@@ -8,7 +8,6 @@ def back(win):
 
 def createBox():
     window = Tk()
-
     window.geometry("500x400")
     window.title("Register Account")
 
