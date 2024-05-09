@@ -1,8 +1,9 @@
 from tkinter import *
-from tkinter import messagebox
+# from tkinter import messagebox  # To create wrong login info warnings
 
-def logIn():
-    print("Test")
+def logIn(username, password):
+    username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
+    password = password.get("1.0", "end-1c").strip()  # Maybe different file
 
 def back(win):
     import createMainMenu
@@ -23,7 +24,7 @@ def createLogIn():
     backButton.config(font=("Arial", 16))
     backButton.place(x=275, y=275)
 
-    logButton = Button(win, text="Log In", command=lambda: logIn())
+    logButton = Button(win, text="Log In", command=lambda: logIn(userBox, passBox))
     logButton.config(font=("Arial", 16))
     logButton.place(x=150, y=275)
 

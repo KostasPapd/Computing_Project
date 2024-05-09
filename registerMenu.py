@@ -2,7 +2,14 @@ from tkinter import *
 from tkinter import messagebox
 import validateRegisterData
 
-def getVal(userBox, emailBox, passBox, repassBox, c, o):
+def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
+    name = nameBox.get("1.0", "end-1c")
+    # Capitalises the first letter of the first name and surname for the database
+    space = 0
+    for i in range(len(name)):
+        if name[i].isspace():
+            space = i
+    name = name[0].capitalize() + name[1:(space)] + " " + name[space + 1].capitalize() + name[space + 2:]
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()
     password = passBox.get("1.0", "end-1c").strip()
@@ -35,9 +42,9 @@ def createBox():
 
     titleLabel = Label(window, text="Register Account")
     titleLabel.config(font=("Arial", 20))
-    titleLabel.place(x=140, y=25)
+    titleLabel.place(x=140, y=10)
 
-    registerButton = Button(window, text="Register Account", command=lambda: getVal(userBox, emailBox, passBox,
+    registerButton = Button(window, text="Register Account", command=lambda: getVal( nameBox, userBox, emailBox, passBox,
                                                                                           repassBox, c, o))
     registerButton.config(font=("Arial", 16))
     registerButton.place(x=100, y=335)
@@ -45,6 +52,13 @@ def createBox():
     backButton = Button(window, text="Back", command=lambda: back(window))
     backButton.config(font=("Arial", 16))
     backButton.place(x=300, y=335)
+
+# Name label and text box
+    nameLabel = Label(window, text="Full Name:")
+    nameLabel.config(font=("Arial", 14))
+    nameLabel.place(x=82, y=60)
+    nameBox = Text(window, height=1, width=30)
+    nameBox.place(x=185, y=65)
 
 # Username label and text box
     userLabel = Label(window, text="Username:")
@@ -99,5 +113,5 @@ def createBox():
     levelMenu = OptionMenu(window, o, *levelOp)
     levelMenu.place(x=182, y=290)
 
-    userBox.focus()
+    nameBox.focus()
     window.mainloop()
