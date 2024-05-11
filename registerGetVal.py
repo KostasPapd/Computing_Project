@@ -30,7 +30,7 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
             if password != repassword:
                 messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
             else:
-                validateRegisterData.checkVal(name, username, email, password)
+                validateRegisterData.checkVal(username, email, password)
         # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
 
 
