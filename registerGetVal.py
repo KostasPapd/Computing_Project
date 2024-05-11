@@ -2,6 +2,7 @@ from tkinter import messagebox
 import validateRegisterData
 
 def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
+    # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
     name = nameBox.get("1.0", "end-1c")
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()
@@ -31,6 +32,3 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
                 messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
             else:
                 validateRegisterData.checkVal(username, email, password)
-        # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
-
-
