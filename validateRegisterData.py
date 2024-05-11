@@ -7,12 +7,11 @@ def checkVal(username, email, password):
     if validateUsername(username) == False:
         # Add username verification
         messagebox.showwarning("Invalid Username", "This username is invalid or already taken")
-    elif validEmail(email) == True:
-        if verifyEmail(email) == False:
-            messagebox.showwarning("Invalid email", "The email you have entered is invalid")
-    elif validEmail(email) == False:
+    if validEmail(email) == False:
         messagebox.showwarning("Invalid email", "The email you have entered is invalid")
-    elif validatePassword(password) == False:
+    elif verifyEmail(email) == False:
+        messagebox.showwarning("Invalid email", "The email you have entered is invalid")
+    if validatePassword(password) == False:
         messagebox.showwarning("Invalid password", "Your password must include: an uppercase letter, a "
                                                    "lowercase letter, a number, a special character (!@_&) and more "
                                                    "than 8 characters")
