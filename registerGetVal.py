@@ -2,7 +2,8 @@ from tkinter import messagebox
 import validateRegisterData
 
 def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
-    # Strip gets rid of whitespace, 1.0 and end-1c is where the indexing starts and ends
+    # Strip gets rid of whitespace at the beginning or the end of the string
+    # 1.0 and end-1c is where the indexing starts and ends
     name = nameBox.get("1.0", "end-1c")
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()

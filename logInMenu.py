@@ -1,9 +1,10 @@
+import tkinter
 from tkinter import *
 # from tkinter import messagebox  # To create wrong login info warnings
 
 def logIn(username, password):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
-    password = password.get("1.0", "end-1c").strip()  # Maybe different file
+    password = password.get().strip()  # Maybe different file
 
 def back(win):
     import createMainMenu
@@ -15,6 +16,8 @@ def createLogIn():
 
     win.geometry("500x350")
     win.title("Log In")
+
+    password_variable = tkinter.StringVar()
 
     titleLabel = Label(win, text="Log In")
     titleLabel.config(font=("Arial", 20))
@@ -37,7 +40,7 @@ def createLogIn():
     passLabel = Label(win, text="Password:")
     passLabel.config(font=("Arial", 14))
     passLabel.place(x=85, y=170)
-    passBox = Text(win, height=1, width=30)
+    passBox = Entry(win, textvariable=password_variable, font=('Arial', 12), show='•', width=27)
     passBox.place(x=185, y=175)
 
     win.mainloop()
