@@ -40,7 +40,7 @@ def createLogIn():
     passLabel = Label(win, text="Password:")
     passLabel.config(font=("Arial", 14))
     passLabel.place(x=85, y=170)
-    passBox = Entry(win, textvariable=password_variable, font=('Arial', 11), show='• ', width=30)
+    passBox = Entry(win, textvariable=password_variable, font=('Arial', 12), show='• ', width=27)
     passBox.place(x=185, y=175)
 
     win.mainloop()
