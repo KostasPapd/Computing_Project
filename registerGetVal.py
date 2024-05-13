@@ -25,7 +25,6 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o, window):
         else:
             name = name[0].capitalize() + name[1:space] + " " + name[space + 1].capitalize() + name[space + 2:]
 
-        # PUTS ACCOUNT IN THE DATABASE STUDENT OR TEACHER
         if school == "School not listed":
             messagebox.showwarning("School not listed", "You can't create an account because your school "
                                                         "isn't registered to The Physics Lab. Please talk to a teacher "
@@ -34,4 +33,4 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o, window):
             if password != repassword:
                 messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
             else:
-                validateRegisterData.checkVal(username, email, password, window)
+                validateRegisterData.checkVal(username, email, password, window, c, o)
