@@ -85,10 +85,10 @@ def createBox():
     levelLabel.place(x=115, y=290)
 
 # Drop-down menu for level of account
-    levelOp = ["Teacher", "Student"]
+    levelOpt = ["Teacher", "Student"]
     o = StringVar()
     o.set("Level")
-    levelMenu = OptionMenu(window, o, *levelOp)
+    levelMenu = OptionMenu(window, o, *levelOpt)
     levelMenu.place(x=182, y=290)
 
     nameBox.focus()
