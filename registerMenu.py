@@ -63,7 +63,7 @@ def createBox():
     repassLabel = Label(window, text="Re-type Password:")
     repassLabel.config(font=("Arial", 14))
     repassLabel.place(x=15, y=210)
-    repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 12), show='• ', width=27)
+    repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 12), show='•', width=27)
     repassBox.place(x=185, y=215)
 
 # School label
