@@ -18,7 +18,7 @@ def createMenu():
     win = Tk()
 
     win.geometry("500x500")
-    win.title("Program_name_here")  # ADD PROGRAM NAME HERE
+    win.title("The Physics Lab")
 
     frame = Frame(win, width=60, height=40)
     frame.pack()
