@@ -2,10 +2,12 @@ import tkinter
 from tkinter import *
 import registerGetVal
 
+
 def back(win):
     import createMainMenu
     win.destroy()
     createMainMenu.createMenu()
+
 
 def createBox():
     window = Tk()
