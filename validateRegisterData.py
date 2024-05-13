@@ -15,7 +15,7 @@ def checkVal(username, email, password, window):
                                                    "lowercase letter, a number, a special character (!@_&) and more "
                                                    "than 8 characters")
     else:
-        messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         # Add to database
+        messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         window.destroy()
         createMainMenu.createMenu()
