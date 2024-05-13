@@ -55,14 +55,14 @@ def createBox():
     passLabel.config(font=("Arial", 14))
     passLabel.place(x=85, y=170)
     # Makes whatever is entered into bullet points
-    passBox = Entry(window, textvariable=password_var, font=('Arial', 12), show='•', width=27)
+    passBox = Entry(window, textvariable=password_var, font=('Arial', 11), show='•', width=30)
     passBox.place(x=185, y=175)
 
 # Re-type label and text box
     repassLabel = Label(window, text="Re-type Password:")
     repassLabel.config(font=("Arial", 14))
     repassLabel.place(x=15, y=210)
-    repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 12), show='•', width=27)
+    repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 11), show='•', width=30)
     repassBox.place(x=185, y=215)
 
 # School label
