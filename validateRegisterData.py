@@ -1,7 +1,8 @@
 from tkinter import messagebox
 from isValid import *
+import createMainMenu
 
-def checkVal(username, email, password):
+def checkVal(username, email, password, window):
     if validateUsername(username) == False:
         # Add username verification
         messagebox.showwarning("Invalid Username", "This username is invalid or already taken")
@@ -14,6 +15,7 @@ def checkVal(username, email, password):
                                                    "lowercase letter, a number, a special character (!@_&) and more "
                                                    "than 8 characters")
     else:
-        print("Approved")  # Remove this line after database is added
+        messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         # Add to database
-        # Account registered window and then go to the main menu/log them in immediately
+        window.destroy()
+        createMainMenu.createMenu()

@@ -21,7 +21,8 @@ def createBox():
 
     registerButton = Button(window, text="Register Account", command=lambda: registerGetVal.getVal(nameBox, userBox,
                                                                                                    emailBox, passBox,
-                                                                                                   repassBox, c, o))
+                                                                                                   repassBox, c, o,
+                                                                                                   window))
     registerButton.config(font=("Arial", 16))
     registerButton.place(x=100, y=335)
 
