@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 import registerGetVal
 
@@ -10,6 +11,9 @@ def createBox():
     window = Tk()
     window.geometry("500x400")
     window.title("Register Account")
+
+    password_var = tkinter.StringVar()
+    repassword_var = tkinter.StringVar()
 
     titleLabel = Label(window, text="Register Account")
     titleLabel.config(font=("Arial", 20))
@@ -50,14 +54,15 @@ def createBox():
     passLabel = Label(window, text="Password:")
     passLabel.config(font=("Arial", 14))
     passLabel.place(x=85, y=170)
-    passBox = Text(window, height=1, width=30)
+    # Makes whatever is entered into bullet points
+    passBox = Entry(window, textvariable=password_var, font=('Arial', 12), show='•', width=27)
     passBox.place(x=185, y=175)
 
 # Re-type label and text box
     repassLabel = Label(window, text="Re-type Password:")
     repassLabel.config(font=("Arial", 14))
     repassLabel.place(x=15, y=210)
-    repassBox = Text(window, height=1, width=30)
+    repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 12), show='•', width=27)
     repassBox.place(x=185, y=215)
 
 # School label

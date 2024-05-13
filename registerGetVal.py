@@ -6,8 +6,8 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
     name = nameBox.get("1.0", "end-1c")
     username = userBox.get("1.0", "end-1c").strip()
     email = emailBox.get("1.0", "end-1c").strip()
-    password = passBox.get("1.0", "end-1c").strip()
-    repassword = repassBox.get("1.0", "end-1c").strip()
+    password = passBox.get().strip()
+    repassword = repassBox.get().strip()
     school = c.get()
     level = o.get()
     if (len(name) < 1 or len(username) < 1 or len(email) < 1 or len(password) < 1 or school == "School name" or
