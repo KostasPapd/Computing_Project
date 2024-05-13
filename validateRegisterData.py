@@ -18,4 +18,4 @@ def checkVal(username, email, password):
     else:
         print("Approved")  # Remove this line after database is added
         # Add to database
-        # Go to main menu
+        # Account registered window and then go to the main menu/log them in immediately
