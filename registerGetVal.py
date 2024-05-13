@@ -20,7 +20,10 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
         for i in range(len(name)):
             if name[i].isspace():
                 space = i
-        name = name[0].capitalize() + name[1:space] + " " + name[space + 1].capitalize() + name[space + 2:]
+        if len(name) < 5:
+            messagebox.showwarning("Name too short", "Please enter your full name")
+        else:
+            name = name[0].capitalize() + name[1:space] + " " + name[space + 1].capitalize() + name[space + 2:]
 
         # PUTS ACCOUNT IN THE DATABASE STUDENT OR TEACHER
         if school == "School not listed":
