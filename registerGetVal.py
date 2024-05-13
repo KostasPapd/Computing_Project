@@ -30,7 +30,6 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o):
             messagebox.showwarning("School not listed", "You can't create an account because your school "
                                                         "isn't registered to The Physics Lab. Please talk to a teacher "
                                                         "if you want to register with us")
-            # ADD PROGRAM NAME
         else:
             if password != repassword:
                 messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
