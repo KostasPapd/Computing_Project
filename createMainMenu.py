@@ -24,8 +24,8 @@ def createMenu():
     frame.pack()
     frame.place(x=90, y=50)
 
-    img = Image.open("testLogo2png.png")
-    img = img.resize((300, 120))
+    img = Image.open("iconNotPng.png")  # LOGO GOES HERE
+    img = img.resize((120, 120))
     img = ImageTk.PhotoImage(img)
 
     label = Label(frame, image=img)
