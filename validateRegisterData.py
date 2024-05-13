@@ -2,6 +2,7 @@ from tkinter import messagebox
 from isValid import *
 import createMainMenu
 
+
 def checkVal(username, email, password, window, school, level):
     if validateUsername(username) == False:
         # Add username verification
