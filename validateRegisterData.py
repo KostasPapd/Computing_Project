@@ -1,8 +1,6 @@
 from tkinter import messagebox
 from isValid import *
 
-# CHANGE TO VERIFY EMAIL
-
 def checkVal(username, email, password):
     if validateUsername(username) == False:
         # Add username verification
