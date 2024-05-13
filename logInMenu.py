@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import *
-# from tkinter import messagebox  # To create wrong login info warnings
+from tkinter import messagebox
 
 def logIn(username, password):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
