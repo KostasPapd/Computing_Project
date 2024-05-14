@@ -58,4 +58,5 @@ def createLogIn():
     showPass = Button(win, image=showPassImg, command=lambda: togglePass(passBox))
     showPass.place(x=440, y=171)
 
+    userBox.focus()
     win.mainloop()
