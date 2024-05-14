@@ -8,6 +8,12 @@ def back(win):
     win.destroy()
     createMainMenu.createMenu()
 
+def toggle_password(passBox):
+    if passBox.cget("show") == "•":
+        passBox.config(show="")
+    else:
+        passBox.config(show="•")
+
 
 def createBox():
     window = Tk()
@@ -92,6 +98,19 @@ def createBox():
     o.set("Level")
     levelMenu = OptionMenu(window, o, *levelOpt)
     levelMenu.place(x=182, y=290)
+
+# Show password buttons
+    showPassImg = PhotoImage(file="showPassword.png")
+    showPassImg = showPassImg.subsample(15, 15)
+    showPass = Button(window, image=showPassImg, command=lambda: toggle_password(passBox))
+    showPass.config(font=("Arial", 12))
+    showPass.place(x=440, y=171)
+
+    showRePassImg = PhotoImage(file="showPassword.png")
+    showRePassImg = showPassImg.subsample(15, 15)
+    showRePass = Button(window, image=showPassImg, command=lambda: toggle_password(repassBox))
+    showRePass.config(font=("Arial", 12))
+    showRePass.place(x=440, y=213)
 
     nameBox.focus()
     window.mainloop()
