@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox  # For wrong username/password pop-ups
 
 
 def logIn(username, password):
