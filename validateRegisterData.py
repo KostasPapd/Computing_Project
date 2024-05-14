@@ -19,4 +19,4 @@ def checkVal(username, email, password, window, school, level):
         # Add to student or teacher database
         messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         window.destroy()
-        createMainMenu.createMenu()  # OR LOGIN THEM IN IMMEDIATELY
+        createMainMenu.createMenu()  # REMOVE THIS AND LOG THEM IN IMMEDIATELY
