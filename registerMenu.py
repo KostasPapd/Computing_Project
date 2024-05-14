@@ -8,7 +8,7 @@ def back(win):
     win.destroy()
     createMainMenu.createMenu()
 
-def toggle_password(passBox):
+def togglePass(passBox):
     if passBox.cget("show") == "•":
         passBox.config(show="")
     else:
@@ -102,14 +102,10 @@ def createBox():
 # Show password buttons
     showPassImg = PhotoImage(file="showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
-    showPass = Button(window, image=showPassImg, command=lambda: toggle_password(passBox))
-    showPass.config(font=("Arial", 12))
+    showPass = Button(window, image=showPassImg, command=lambda: togglePass(passBox))
     showPass.place(x=440, y=171)
 
-    showRePassImg = PhotoImage(file="showPassword.png")
-    showRePassImg = showPassImg.subsample(15, 15)
-    showRePass = Button(window, image=showPassImg, command=lambda: toggle_password(repassBox))
-    showRePass.config(font=("Arial", 12))
+    showRePass = Button(window, image=showPassImg, command=lambda: togglePass(repassBox))
     showRePass.place(x=440, y=213)
 
     nameBox.focus()

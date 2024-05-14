@@ -14,6 +14,13 @@ def back(win):
     createMainMenu.createMenu()
 
 
+def togglePass(passBox):
+    if passBox.cget("show") == "•":
+        passBox.config(show="")
+    else:
+        passBox.config(show="•")
+
+
 def createLogIn():
     win = Tk()
 
@@ -45,5 +52,10 @@ def createLogIn():
     passLabel.place(x=85, y=170)
     passBox = Entry(win, textvariable=password_variable, font=('Arial', 12), show='•', width=27)
     passBox.place(x=185, y=175)
+
+    showPassImg = PhotoImage(file="showPassword.png")
+    showPassImg = showPassImg.subsample(15, 15)
+    showPass = Button(win, image=showPassImg, command=lambda: togglePass(passBox))
+    showPass.place(x=440, y=171)
 
     win.mainloop()
