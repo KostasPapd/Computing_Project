@@ -1,18 +1,22 @@
 from tkinter import *
 from PIL import ImageTk, Image
 
+
 def register(window):
     import registerMenu
     window.destroy()
     registerMenu.createBox()
+
 
 def log(window):
     import logInMenu
     window.destroy()
     logInMenu.createLogIn()
 
+
 def exitMenu(win):
     win.destroy()
+
 
 def createMenu():
     win = Tk()
