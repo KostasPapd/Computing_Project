@@ -24,18 +24,18 @@ def verifyEmail(email):
 def validatePassword(pas):
     import re
 
-    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,}', pas):  # Sets what characters are allowed and required in the password
+    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,20}', pas):  # Sets what characters are allowed and required in the password
         # Checks if all the required characters are in the password
         if not any(char.isupper() for char in pas):
             return False
+        elif not any(char.islower() for char in pas):
+            return False
+        elif not any(char.isdigit() for char in pas):
+            return False
+        elif len(pas) < 8 or len(pas) > 20:
+            return False
         else:
-            if not any(char.islower() for char in pas):
-                return False
-            else:
-                if not any(char.isdigit() for char in pas):
-                    return False
-                else:
-                    return True
+            return True
     else:
         return False
 
