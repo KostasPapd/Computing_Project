@@ -20,16 +20,17 @@ def createMenu():
     win.geometry("500x500")
     win.title("The Physics Lab")
 
-    frame = Frame(win, width=60, height=40)
-    frame.pack()
-    frame.place(x=90, y=50)
+# ADD WHEN LOGO IS DONE
+    # frame = Frame(win, width=60, height=40)
+    # frame.pack()
+    # frame.place(x=90, y=50)
 
-    img = Image.open("iconNotPng.png")  # LOGO GOES HERE
-    img = img.resize((120, 120))
-    img = ImageTk.PhotoImage(img)
+    # img = Image.open("iconNotPng.png")  # LOGO GOES HERE
+    # img = img.resize((120, 120))
+    # img = ImageTk.PhotoImage(img)
 
-    label = Label(frame, image=img)
-    label.pack()
+    # label = Label(frame, image=img)
+    # label.pack()
 
     regButton = Button(win, text="Register", command=lambda: register(win))
     regButton.config(font=("Arial", 20))
