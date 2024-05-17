@@ -44,6 +44,7 @@ def createBox():
 
     titleLabel = Label(window, text="Register Account")
     titleLabel.config(font=("Arial", 20))
+    # Change to relative pos
     titleLabel.place(x=140, y=10)
 
     registerButton = Button(window, text="Register Account", command=lambda: registerGetVal.getVal(nameBox, userBox,
