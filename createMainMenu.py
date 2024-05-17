@@ -21,7 +21,13 @@ def exitMenu(win):
 def createMenu():
     win = Tk()
 
-    win.geometry("500x500")
+    wWidth = 500
+    wHeight = 500
+    sWidth = win.winfo_screenwidth()
+    sHeight = win.winfo_screenheight()
+    xCord = int((sWidth / 2) - (wWidth / 2))
+    yCord = int((sHeight / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
     win.title("The Physics Lab")
 
 # ADD WHEN LOGO IS DONE
@@ -38,14 +44,14 @@ def createMenu():
 
     regButton = Button(win, text="Register", command=lambda: register(win))
     regButton.config(font=("Arial", 20))
-    regButton.place(x=180, y=200)
+    regButton.place(relx=0.37, rely=0.4, relheight=0.11, relwidth=0.23)
 
     logButton = Button(win, text="Log In", command=lambda: log(win))
     logButton.config(font=("Arial", 20))
-    logButton.place(x=190, y=275)
+    logButton.place(relx=0.37, rely=0.55, relheight=0.11, relwidth=0.23)
 
     exitButton = Button(win, text="Exit", command=lambda: exitMenu(win))
     exitButton.config(font=("Arial", 20))
-    exitButton.place(x=200, y=350)
+    exitButton.place(relx=0.37, rely=0.7, relheight=0.11, relwidth=0.23)
 
     win.mainloop()

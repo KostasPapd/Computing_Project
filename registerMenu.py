@@ -36,7 +36,15 @@ def togglePass(passBox):
 
 def createBox():
     window = Tk()
-    window.geometry("500x400")
+
+    wWidth = 500
+    wHeight = 400
+    sWidth = window.winfo_screenwidth()
+    sHeight = window.winfo_screenheight()
+    xCord = int((sWidth / 2) - (wWidth / 2))
+    yCord = int((sHeight / 2) - (wHeight / 2))
+    window.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
     window.title("Register Account")
 
     password_var = tkinter.StringVar()
