@@ -100,7 +100,7 @@ def createBox():
     levelMenu.place(x=182, y=290)
 
 # Show password buttons
-    showPassImg = PhotoImage(file="showPassword.png")
+    showPassImg = PhotoImage(file="Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
     showPass = Button(window, image=showPassImg, command=lambda: togglePass(passBox))
     showPass.place(x=440, y=171)
