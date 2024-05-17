@@ -1,5 +1,5 @@
 from tkinter import messagebox
-import validateRegisterData
+import registerMenu
 
 def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o, window):
     # Strip gets rid of whitespace at the beginning or the end of the string
@@ -33,4 +33,4 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o, window):
             if password != repassword:
                 messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
             else:
-                validateRegisterData.checkVal(username, email, password, window, c, o)
+                registerMenu.checkVal(username, email, password, window)
