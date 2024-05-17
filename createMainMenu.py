@@ -23,10 +23,8 @@ def createMenu():
 
     wWidth = 500
     wHeight = 500
-    sWidth = win.winfo_screenwidth()
-    sHeight = win.winfo_screenheight()
-    xCord = int((sWidth / 2) - (wWidth / 2))
-    yCord = int((sHeight / 2) - (wHeight / 2))
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
     win.title("The Physics Lab")
 

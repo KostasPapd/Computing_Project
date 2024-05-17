@@ -39,10 +39,8 @@ def createBox():
 
     wWidth = 500
     wHeight = 400
-    sWidth = window.winfo_screenwidth()
-    sHeight = window.winfo_screenheight()
-    xCord = int((sWidth / 2) - (wWidth / 2))
-    yCord = int((sHeight / 2) - (wHeight / 2))
+    xCord = int((window.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((window.winfo_screenheight() / 2) - (wHeight / 2))
     window.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
     window.title("Register Account")
@@ -53,7 +51,7 @@ def createBox():
     titleLabel = Label(window, text="Register Account")
     titleLabel.config(font=("Arial", 20))
     # Change to relative pos
-    titleLabel.place(x=140, y=10)
+    titleLabel.place(relx=0.27, rely=0.01, relheight=0.11, relwidth=0.5)
 
     registerButton = Button(window, text="Register Account", command=lambda: registerGetVal.getVal(nameBox, userBox,
                                                                                                    emailBox, passBox,
