@@ -24,7 +24,12 @@ def togglePass(passBox):
 def createLogIn():
     win = Tk()
 
-    win.geometry("500x350")
+    wWidth = 500
+    wHeight = 350
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
     win.title("Log In")
 
     password_variable = tkinter.StringVar()
