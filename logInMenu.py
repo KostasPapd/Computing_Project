@@ -36,32 +36,34 @@ def createLogIn():
 
     titleLabel = Label(win, text="Log In")
     titleLabel.config(font=("Arial", 20))
-    titleLabel.place(x=200, y=25)
+    titleLabel.place(relx=0.13, rely=0.05, relheight=0.1, relwidth=0.7)
 
     backButton = Button(win, text="Back", command=lambda: back(win))
     backButton.config(font=("Arial", 16))
-    backButton.place(x=275, y=275)
+    backButton.place(relx=0.55, rely=0.8, relheight=0.13, relwidth=0.15)
 
     logButton = Button(win, text="Log In", command=lambda: logIn(userBox, passBox))
     logButton.config(font=("Arial", 16))
-    logButton.place(x=150, y=275)
+    logButton.place(relx=0.28, rely=0.8, relheight=0.13, relwidth=0.2)
 
     userLabel = Label(win, text="Username:")
     userLabel.config(font=("Arial", 14))
-    userLabel.place(x=82, y=93)
+    userLabel.place(relx=0.15, rely=0.24, relheight=0.13, relwidth=0.2)
     userBox = Text(win, height=1, width=30)
-    userBox.place(x=185, y=100)
+    userBox.place(relx=0.37, rely=0.28, relheight=0.06, relwidth=0.48)
 
     passLabel = Label(win, text="Password:")
     passLabel.config(font=("Arial", 14))
-    passLabel.place(x=85, y=170)
+    passLabel.place(relx=0.15, rely=0.5, relheight=0.13, relwidth=0.2)
     passBox = Entry(win, textvariable=password_variable, font=('Arial', 12), show='•', width=27)
-    passBox.place(x=185, y=175)
+    passBox.place(relx=0.37, rely=0.54, relheight=0.06, relwidth=0.48)
 
     showPassImg = PhotoImage(file="Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
     showPass = Button(win, image=showPassImg, command=lambda: togglePass(passBox))
-    showPass.place(x=440, y=171)
+    showPass.place(relx=0.87, rely=0.53, relheight=0.07, relwidth=0.1)
 
     userBox.focus()
     win.mainloop()
+
+createLogIn()

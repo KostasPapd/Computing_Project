@@ -69,21 +69,21 @@ def createBox():
     nameLabel.config(font=("Arial", 14))
     nameLabel.place(relx=0.05, rely=0.125, relheight=0.11, relwidth=0.4)
     nameBox = Text(window, height=1, width=30)
-    nameBox.place(relx=0.37, rely=0.16, relheight=0.05, relwidth=0.48)
+    nameBox.place(relx=0.37, rely=0.16, relheight=0.06, relwidth=0.48)
 
 # Username label and text box
     userLabel = Label(window, text="Username:")
     userLabel.config(font=("Arial", 14))
     userLabel.place(relx=0.145, rely=0.22, relheight=0.1, relwidth=0.2)
     userBox = Text(window, height=1, width=30)
-    userBox.place(relx=0.37, rely=0.25, relheight=0.05, relwidth=0.48)
+    userBox.place(relx=0.37, rely=0.25, relheight=0.06, relwidth=0.48)
 
 # Email label and text box
     emailLabel = Label(window, text="Email Address:")
     emailLabel.config(font=("Arial", 14))
     emailLabel.place(relx=0.06, rely=0.315, relheight=0.1, relwidth=0.3)
     emailBox = Text(window, height=1, width=30)
-    emailBox.place(relx=0.37, rely=0.34, relheight=0.05, relwidth=0.48)
+    emailBox.place(relx=0.37, rely=0.34, relheight=0.06, relwidth=0.48)
 
 # Password label and text box
     passLabel = Label(window, text="Password:")
@@ -91,14 +91,14 @@ def createBox():
     passLabel.place(relx=0.15, rely=0.415, relheight=0.1, relwidth=0.2)
     # Makes whatever is entered into bullet points
     passBox = Entry(window, textvariable=password_var, font=('Arial', 12), show='•', width=27)
-    passBox.place(relx=0.37, rely=0.44, relheight=0.05, relwidth=0.48)
+    passBox.place(relx=0.37, rely=0.44, relheight=0.06, relwidth=0.48)
 
 # Re-type label and text box
     repassLabel = Label(window, text="Re-type Password:")
     repassLabel.config(font=("Arial", 14))
-    repassLabel.place(relx=0.02, rely=0.51, relheight=0.1, relwidth=0.32)
+    repassLabel.place(relx=0.022, rely=0.515, relheight=0.1, relwidth=0.32)
     repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 12), show='•', width=27)
-    repassBox.place(relx=0.37, rely=0.54, relheight=0.05, relwidth=0.48)
+    repassBox.place(relx=0.37, rely=0.54, relheight=0.06, relwidth=0.48)
 
 # School label
     schoolLabel = Label(window, text="School:")
