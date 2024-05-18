@@ -136,5 +136,3 @@ def createBox():
 
     nameBox.focus()
     window.mainloop()
-
-createBox()
