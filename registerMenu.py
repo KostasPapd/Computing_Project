@@ -58,32 +58,32 @@ def createBox():
                                                                                                    repassBox, c, o,
                                                                                                    window))
     registerButton.config(font=("Arial", 16))
-    registerButton.place(x=100, y=335)
+    registerButton.place(relx=0.17, rely=0.85, relheight=0.11, relwidth=0.4)
 
     backButton = Button(window, text="Back", command=lambda: back(window))
     backButton.config(font=("Arial", 16))
-    backButton.place(x=300, y=335)
+    backButton.place(relx=0.6, rely=0.85, relheight=0.11, relwidth=0.15)
 
 # Name label and text box
     nameLabel = Label(window, text="Full Name:")
     nameLabel.config(font=("Arial", 14))
-    nameLabel.place(x=82, y=60)
+    nameLabel.place(relx=0.05, rely=0.125, relheight=0.11, relwidth=0.4)
     nameBox = Text(window, height=1, width=30)
-    nameBox.place(x=185, y=65)
+    nameBox.place(relx=0.37, rely=0.16, relheight=0.05, relwidth=0.48)
 
 # Username label and text box
     userLabel = Label(window, text="Username:")
     userLabel.config(font=("Arial", 14))
     userLabel.place(x=82, y=93)
     userBox = Text(window, height=1, width=30)
-    userBox.place(x=185, y=100)
+    userBox.place(relx=0.37, rely=0.25, relheight=0.05, relwidth=0.48)
 
 # Email label and text box
     emailLabel = Label(window, text="Email Address:")
     emailLabel.config(font=("Arial", 14))
     emailLabel.place(x=45, y=130)
     emailBox = Text(window, height=1, width=30)
-    emailBox.place(x=185, y=135)
+    emailBox.place(relx=0.37, rely=0.34, relheight=0.05, relwidth=0.48)
 
 # Password label and text box
     passLabel = Label(window, text="Password:")
@@ -91,14 +91,14 @@ def createBox():
     passLabel.place(x=85, y=170)
     # Makes whatever is entered into bullet points
     passBox = Entry(window, textvariable=password_var, font=('Arial', 12), show='•', width=27)
-    passBox.place(x=185, y=175)
+    passBox.place(relx=0.37, rely=0.44, relheight=0.05, relwidth=0.48)
 
 # Re-type label and text box
     repassLabel = Label(window, text="Re-type Password:")
     repassLabel.config(font=("Arial", 14))
     repassLabel.place(x=15, y=210)
     repassBox = Entry(window, textvariable=repassword_var, font=('Arial', 12), show='•', width=27)
-    repassBox.place(x=185, y=215)
+    repassBox.place(relx=0.37, rely=0.54, relheight=0.05, relwidth=0.48)
 
 # School label
     schoolLabel = Label(window, text="School:")
@@ -136,3 +136,5 @@ def createBox():
 
     nameBox.focus()
     window.mainloop()
+
+createBox()
