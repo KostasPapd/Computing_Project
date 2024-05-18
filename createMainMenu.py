@@ -52,4 +52,5 @@ def createMenu():
     exitButton.config(font=("Arial", 20))
     exitButton.place(relx=0.37, rely=0.7, relheight=0.11, relwidth=0.23)
 
+    win.resizable(False, False)
     win.mainloop()

@@ -1,11 +1,13 @@
 import tkinter
 from tkinter import *
+import studentView
 from tkinter import messagebox  # For wrong username/password pop-ups
 
 
 def logIn(username, password):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
     password = password.get().strip()  # Maybe different file
+    studentView.createStudent()
 
 
 def back(win):
@@ -64,6 +66,5 @@ def createLogIn():
     showPass.place(relx=0.87, rely=0.53, relheight=0.07, relwidth=0.1)
 
     userBox.focus()
+    win.resizable(False, False)
     win.mainloop()
-
-createLogIn()

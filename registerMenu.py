@@ -3,6 +3,7 @@ from tkinter import *
 import registerGetVal
 from isValid import *
 from tkinter import messagebox
+import studentView
 
 def checkVal(username, email, password, window):
     if validateUsername(username) == False:
@@ -20,7 +21,9 @@ def checkVal(username, email, password, window):
         # Add to student or teacher database
         messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         window.destroy()
-        # LOG THEM IN IMMEDIATELY
+        studentView.createStudent()
+        # ADD TO DATABASE
+        # LOG THEM IN IMMEDIATELY BY CREATING STUDENT VIEW AND PASSING USERNAME AND PASSWORD AS PARAMETERS
 
 def back(win):
     import createMainMenu
@@ -135,4 +138,5 @@ def createBox():
     showRePass.place(relx=0.87, rely=0.53, relheight=0.07, relwidth=0.1)
 
     nameBox.focus()
+    window.resizable(False, False)
     window.mainloop()
