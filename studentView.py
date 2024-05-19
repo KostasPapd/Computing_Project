@@ -3,14 +3,16 @@ from tkinter import *
 
 def exitView(win):
     win.destroy()
+
+
 def createStudent():
     win = Tk()
 
     win.title("Student View")
     win.geometry("500x500")
 
-    testLabel = Label(win, text="Student View Test")
-    testLabel.config(font=("Arial", 20))
+    nameText = "Name test"
+    testLabel = Label(win, text=nameText, font="Arial 60 bold")
     testLabel.place(relx=0.15, rely=0.05, relheight=0.1, relwidth=0.7)
 
     exitButton = Button(win, text="Exit", command=lambda: exitView(win))
