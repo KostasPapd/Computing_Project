@@ -10,6 +10,11 @@ https://www.db4free.net/
 https://www.psycopg.org/psycopg3/docs/basic/install.html
 env file
 hash passwords
+mySQL, find host for database
+mysql.connector
+https://www.mysql.com/
+https://dev.mysql.com/doc/connector-python/en/
+
 
 
 
@@ -47,7 +52,3 @@ Admin view:
 Able to access student and teacher view
 Able to access databases???
 Ask Abid
-
-
-
-Use mySQL, find host for database
