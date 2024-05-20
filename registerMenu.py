@@ -5,7 +5,7 @@ from isValid import *
 from tkinter import messagebox
 import studentView
 
-def checkVal(username, email, password, window):
+def checkVal(username, email, password, window, name):
     if validateUsername(username) == False:
         # Add username verification
         messagebox.showwarning("Invalid Username", "This username is invalid or already taken")
@@ -21,7 +21,7 @@ def checkVal(username, email, password, window):
         # Add to student or teacher database
         messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         window.destroy()
-        studentView.createStudent()
+        studentView.createStudent(name)
         # ADD TO DATABASE
         # LOG THEM IN IMMEDIATELY BY CREATING STUDENT VIEW AND PASSING USERNAME AND PASSWORD AS PARAMETERS
 

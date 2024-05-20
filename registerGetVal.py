@@ -33,4 +33,4 @@ def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o, window):
             if password != repassword:
                 messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
             else:
-                registerMenu.checkVal(username, email, password, window)
+                registerMenu.checkVal(username, email, password, window, name)

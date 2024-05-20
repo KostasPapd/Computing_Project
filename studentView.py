@@ -5,13 +5,13 @@ def exitView(win):
     win.destroy()
 
 
-def createStudent():
+def createStudent(name):
     win = Tk()
 
     win.title("Student View")
     win.geometry("500x500")
 
-    nameText = "Name test"
+    nameText = name
     testLabel = Label(win, text=nameText, font="Arial 60 bold")
     testLabel.place(relx=0.15, rely=0.05, relheight=0.1, relwidth=0.7)
 
