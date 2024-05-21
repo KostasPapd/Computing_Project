@@ -23,7 +23,7 @@ def createStudent(name):
     testLabel = Label(win, text=nameText, font="Arial 60 bold")
     testLabel.place(relx=0.15, rely=0.05, relheight=0.1, relwidth=0.7)
 
-    popUp = Balloon(win)
+    popUp = Balloon()
 
     exitButtonImg = PhotoImage(file="Pictures/exit.png")
     exitButtonImg = exitButtonImg.subsample(15, 15)
