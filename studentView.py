@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter.tix import *
-from PIL import ImageTk, Image
 from createMainMenu import createMenu
 
 
