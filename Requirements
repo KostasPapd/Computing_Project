@@ -21,9 +21,6 @@ mydb = mysql.connector.connect(
         password="yourPassword"
 )
 
-"user=postgres.pvvduzraadbgtljdkmyg password=Strakos12! host=aws-0-eu-west-2.pooler.supabase.com port=5432 dbname=postgres"
-
-
 
 Need for this project:
 Email validation and verification - done
