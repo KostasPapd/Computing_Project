@@ -7,7 +7,6 @@ from tkinter import messagebox  # For wrong username/password pop-ups
 def logIn(username, password):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
     password = password.get().strip()  # Maybe different file
-    studentView.createStudent()  # Check if the username and password are correct, if so, create the student view
 
 
 def back(win):
