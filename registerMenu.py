@@ -1,6 +1,5 @@
 import tkinter
 from tkinter import *
-import registerGetVal
 from isValid import *
 from tkinter import messagebox
 import studentView
@@ -13,6 +12,8 @@ def checkVal(username, email, password, window, name, school, level):
         messagebox.showwarning("Username taken", "This username is already taken")
     elif validEmail(email) == False:
         messagebox.showwarning("Invalid email", "The email you have entered is invalid")
+    elif SQLfunctions.checkEmail(email) == False:
+        messagebox.showwarning("Email taken", "This email is already taken")
     elif verifyEmail(email) == False:
         messagebox.showwarning("Invalid email", "The email you have entered is invalid")
     elif validatePassword(password) == False:
@@ -20,11 +21,45 @@ def checkVal(username, email, password, window, name, school, level):
                                                    "lowercase letter, a number, a special character (!@_&) and "
                                                    "between 8 and 20 characters")
     else:
-        SQLfunctions.registerAcc(username, email, password, name, school, level)
+        #SQLfunctions.registerAcc(username, email, password, name, school, level)
         messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         window.destroy()
         # studentView.createStudent(name)
         # LOG THEM IN IMMEDIATELY BY CREATING STUDENT VIEW AND PASSING USERNAME AND PASSWORD AS PARAMETERS
+
+def getVal(nameBox, userBox, emailBox, passBox, repassBox, c, o, window):
+    # Strip gets rid of whitespace at the beginning or the end of the string
+    # 1.0 and end-1c is where the indexing starts and ends
+    name = nameBox.get("1.0", "end-1c")
+    username = userBox.get("1.0", "end-1c").strip()
+    email = emailBox.get("1.0", "end-1c").strip()
+    password = passBox.get().strip()
+    repassword = repassBox.get().strip()
+    school = c.get()
+    level = o.get()
+    if (len(name) < 1 or len(username) < 1 or len(email) < 1 or len(password) < 1 or school == "School name" or
+            level == "Level"):
+        messagebox.showwarning("Empty Field", "Please fill out all fields")
+    else:
+        # Capitalises the first letter of the first name and surname for the database
+        space = 0
+        for i in range(len(name)):
+            if name[i].isspace():
+                space = i
+        if len(name) < 5:
+            messagebox.showwarning("Name too short", "Please enter your full name")
+        else:
+            name = name[0].capitalize() + name[1:space] + " " + name[space + 1].capitalize() + name[space + 2:]
+
+        if school == "School not listed":
+            messagebox.showwarning("School not listed", "You can't create an account because your school "
+                                                        "isn't registered to The Physics Lab. Please talk to a teacher "
+                                                        "if you want to register with us")
+        else:
+            if password != repassword:
+                messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
+            else:
+                checkVal(username, email, password, window, name, school, level)
 
 def back(win):
     import createMainMenu
@@ -57,10 +92,8 @@ def createBox():
     # Change to relative pos
     titleLabel.place(relx=0.27, rely=0.01, relheight=0.11, relwidth=0.5)
 
-    registerButton = Button(window, text="Register Account", command=lambda: registerGetVal.getVal(nameBox, userBox,
-                                                                                                   emailBox, passBox,
-                                                                                                   repassBox, c, o,
-                                                                                                   window))
+    registerButton = Button(window, text="Register Account", command=lambda: getVal(nameBox, userBox, emailBox, passBox,
+                                                                                    repassBox, c, o, window))
     registerButton.config(font=("Arial", 16))
     registerButton.place(relx=0.17, rely=0.85, relheight=0.11, relwidth=0.4)
 
