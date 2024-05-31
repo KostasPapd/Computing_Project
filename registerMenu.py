@@ -4,8 +4,9 @@ import registerGetVal
 from isValid import *
 from tkinter import messagebox
 import studentView
+import SQLfunctions
 
-def checkVal(username, email, password, window, name):
+def checkVal(username, email, password, window, name, school, level):
     if validateUsername(username) == False:
         # Add username verification
         messagebox.showwarning("Invalid Username", "This username is invalid or already taken")
@@ -18,11 +19,10 @@ def checkVal(username, email, password, window, name):
                                                    "lowercase letter, a number, a special character (!@_&) and "
                                                    "between 8 and 20 characters")
     else:
-        # Add to student or teacher database
+        SQLfunctions.registerAcc(username, email, password, name, school, level)
         messagebox.showinfo("Account Registered", "Your account has been registered successfully!")
         window.destroy()
-        studentView.createStudent(name)
-        # ADD TO DATABASE
+        # studentView.createStudent(name)
         # LOG THEM IN IMMEDIATELY BY CREATING STUDENT VIEW AND PASSING USERNAME AND PASSWORD AS PARAMETERS
 
 def back(win):

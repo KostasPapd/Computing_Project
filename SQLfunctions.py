@@ -7,3 +7,23 @@ def hashPassword(password):
     hash_object = hashlib.sha256(password.encode())
     hashPass = hash_object.hexdigest()
     return hashPass
+
+
+def registerAcc(username, email, password, name, school, level):
+    import psycopg2
+    import os
+    from dotenv import load_dotenv
+    from tkinter import messagebox as mg
+
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        passw = hashPassword(password)
+        cur.execute(f"INSERT INTO main_acc (level, name, username, password, email, school) "
+                    f"VALUES ('{level}', '{name}', '{username}', '{passw}', '{email}', '{school}')")
+        conn.commit()
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to create account")
