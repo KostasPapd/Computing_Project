@@ -8,8 +8,9 @@ import SQLfunctions
 
 def checkVal(username, email, password, window, name, school, level):
     if validateUsername(username) == False:
-        # Add username verification
-        messagebox.showwarning("Invalid Username", "This username is invalid or already taken")
+        messagebox.showwarning("Invalid Username", "This username is invalid")
+    elif SQLfunctions.checkUser(username) == False:
+        messagebox.showwarning("Username taken", "This username is already taken")
     elif validEmail(email) == False:
         messagebox.showwarning("Invalid email", "The email you have entered is invalid")
     elif verifyEmail(email) == False:

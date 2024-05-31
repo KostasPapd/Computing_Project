@@ -27,3 +27,24 @@ def registerAcc(username, email, password, name, school, level):
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
+
+def checkUser(user):
+    import psycopg2
+    import os
+    from dotenv import load_dotenv
+    from tkinter import messagebox as mg
+
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT username FROM main_acc WHERE username = '{user}'")
+        res = cur.fetchone()
+        if res is not None:
+            return False
+        else:
+            return True
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to check if user exists")
