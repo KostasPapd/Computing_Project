@@ -1,13 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
 
-
-def register(window):
-    import registerMenu
-    window.destroy()
-    registerMenu.createBox()
-
-
 def log(window):
     import logInMenu
     window.destroy()
@@ -40,17 +33,13 @@ def createMenu():
     # label = Label(frame, image=img)
     # label.pack()
 
-    regButton = Button(win, text="Register", command=lambda: register(win))
-    regButton.config(font=("Arial", 20))
-    regButton.place(relx=0.37, rely=0.4, relheight=0.11, relwidth=0.23)
-
     logButton = Button(win, text="Log In", command=lambda: log(win))
     logButton.config(font=("Arial", 20))
-    logButton.place(relx=0.37, rely=0.55, relheight=0.11, relwidth=0.23)
+    logButton.place(relx=0.37, rely=0.4, relheight=0.11, relwidth=0.23)
 
     exitButton = Button(win, text="Exit", command=lambda: exitMenu(win))
     exitButton.config(font=("Arial", 20))
-    exitButton.place(relx=0.37, rely=0.7, relheight=0.11, relwidth=0.23)
+    exitButton.place(relx=0.37, rely=0.6, relheight=0.11, relwidth=0.23)
 
     win.resizable(False, False)
     win.mainloop()

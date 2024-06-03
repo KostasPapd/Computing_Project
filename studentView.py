@@ -22,19 +22,15 @@ def createStudent(name):
     testLabel = Label(win, text=nameText, font="Arial 60 bold")
     testLabel.place(relx=0.15, rely=0.05, relheight=0.1, relwidth=0.7)
 
-    popUp = Balloon()
-
     exitButtonImg = PhotoImage(file="Pictures/exit.png")
     exitButtonImg = exitButtonImg.subsample(15, 15)
     exitButton = Button(win, image=exitButtonImg,  borderwidth=0, command=lambda: exitView(win))
     exitButton.place(relx=0.95, rely=0.01, relheight=0.06, relwidth=0.05)
-    popUp.bind_widget(exitButton, balloonmsg="Exit")
 
     signOutImg = PhotoImage(file="Pictures/signOut.png")
     signOutImg = signOutImg.subsample(15, 15)
     signOutButton = Button(win, image=signOutImg, borderwidth=0, command=lambda: signOut(win))
     signOutButton.place(relx=0.89, rely=0.01, relheight=0.06, relwidth=0.05)
-    popUp.bind_widget(signOutButton, balloonmsg="Sign Out")
 
     win.attributes("-fullscreen", True)
     win.resizable(False, False)
