@@ -8,13 +8,38 @@ def signOut(win):
     win.destroy()
     createMenu()
 
+class MenuBar(Frame):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        toolBar = Menu(self.master)
+        self.master.config(menu=toolBar)
+
+        accMenu = Menu(toolBar)
+
+        # accMenu.add_command(label="Join Class", font=("Helvetica", 10)) - maybe do
+        accMenu.add_command(label="Change Email", font=("Helvetica", 10))
+        # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
+        accMenu.add_command(label="Change Password", font=("Helvetica", 10))
+        # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
+
+        toolBar.add_cascade(label="Assignments")  # ADD COMMAND THAT SHOWS ASSIGNMENTS
+        toolBar.add_cascade(label="Statistics")  # ADD COMMAND THAT SHOWS STATISTICS
+        toolBar.add_cascade(label="Account", menu=accMenu)
+        toolBar.add_command(label="Sign Out", command=lambda: signOut(self.master))
+        toolBar.add_command(label="Exit", command=self.exit)
+
+    def exit(self):
+        self.quit()
 
 
 def createStudent(name):
     win = Tk()
-
     win.title("Student View")
     win.geometry("500x500")
+    toolB = MenuBar()
 
     nameText = name
     testLabel = Label(win, text=nameText, font="Arial 60 bold")
@@ -24,3 +49,4 @@ def createStudent(name):
     win.attributes("-fullscreen", True)
     win.resizable(False, False)
     win.mainloop()
+createStudent("")
