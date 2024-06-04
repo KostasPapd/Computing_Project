@@ -36,8 +36,6 @@ class MenuBar(Frame):
         # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
         accMenu.add_command(label="Change Email", font=("Helvetica", 10))
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
-        accMenu.add_command(label="Change Name", font=("Helvetica", 10))
-        # ADD COMMAND THAT CHANGES NAME TO SQL PROGRAM
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
