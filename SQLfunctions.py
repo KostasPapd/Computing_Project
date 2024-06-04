@@ -40,3 +40,9 @@ def checkEmail(email):
             return True
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to check if user exists")
+
+def returnDetails(email):
+    name = "name"
+    password = "password"
+    email = "email"
+    return name, password, email
