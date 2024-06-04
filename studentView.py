@@ -24,11 +24,12 @@ class MenuBar(Frame):
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
         accMenu.add_command(label="Change Password", font=("Helvetica", 10))
         # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
+        accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
+        accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
         toolBar.add_cascade(label="Assignments")  # ADD COMMAND THAT SHOWS ASSIGNMENTS
         toolBar.add_cascade(label="Statistics")  # ADD COMMAND THAT SHOWS STATISTICS
-        toolBar.add_cascade(label="Account", menu=accMenu)
-        toolBar.add_command(label="Sign Out", command=lambda: signOut(self.master))
+        toolBar.add_cascade(label="Settings", menu=accMenu)
         toolBar.add_command(label="Exit", command=self.exit)
 
     def exit(self):
