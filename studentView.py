@@ -8,10 +8,32 @@ def signOut(win):
     win.destroy()
     createMenu()
 
+class Assignments(Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        self.widgets()
+
+    def widgets(self):
+        self.label = Label(self, text="Assignments", font=("Helvetica", 20))
+        self.label.pack()
+
+class Statistics(Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        self.widgets()
+
+    def widgets(self):
+        self.label = Label(self, text="Statistics", font=("Helvetica", 20))
+        self.label.pack()
+
 class MenuBar(Frame):
     def __init__(self):
         super().__init__()
+        self.pack()
         self.initUI()
+        self.frames = {}
 
     def initUI(self):
         toolBar = Menu(self.master)
@@ -27,13 +49,30 @@ class MenuBar(Frame):
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
-        toolBar.add_cascade(label="Assignments")  # ADD COMMAND THAT SHOWS ASSIGNMENTS
-        toolBar.add_cascade(label="Statistics")  # ADD COMMAND THAT SHOWS STATISTICS
+        toolBar.add_cascade(label="Assignments", command=self.showAssign)  # ADD COMMAND THAT SHOWS ASSIGNMENTS
+        toolBar.add_cascade(label="Statistics", command=self.showStats)  # ADD COMMAND THAT SHOWS STATISTICS
         toolBar.add_cascade(label="Settings", menu=accMenu)
         toolBar.add_command(label="Exit", command=self.exit)
 
+    def hide(self):
+        for frame in self.frames.values():
+            frame.pack_forget()
+
+    def showAssign(self):
+        self.hide()
+        if "assignments" not in self.frames:
+            self.frames["assignments"] = Assignments(self.master)
+        self.frames["assignments"].pack(fill="both", expand=True)
+
+    def showStats(self):
+        self.hide()
+        if "statistics" not in self.frames:
+            self.frames["statistics"] = Statistics(self.master)
+        self.frames["statistics"].pack(fill="both", expand=True)
+
     def exit(self):
         self.quit()
+
 
 
 def createStudent(name):
@@ -50,4 +89,3 @@ def createStudent(name):
     win.attributes("-fullscreen", True)
     win.resizable(False, False)
     win.mainloop()
-createStudent("")

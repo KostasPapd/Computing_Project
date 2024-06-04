@@ -30,7 +30,7 @@ def searchAcc():
     emailBox.place(relx=0.32, rely=0.36, relheight=0.08, relwidth=0.62)
 
     searchButton = Button(win, text="Send details to student", font=("Arial", 15),
-                          command=lambda: sendEmail(emailBox.get(), win))
+                          command=lambda: sendEmail(emailBox.get()))
     searchButton.place(relx=0.12, rely=0.6, relheight=0.16, relwidth=0.45)
 
     backButton = Button(win, text="Back", font=("Arial", 15), command=lambda: win.destroy())
@@ -102,10 +102,9 @@ def createView():
     exitButton.config(font=("Arial", 20))
     exitButton.place(relx=0.37, rely=0.6, relheight=0.11, relwidth=0.23)
 
-
-
     win.attributes("-fullscreen", True)
     win.resizable(False, False)
     win.mainloop()
+
 
 createView()
