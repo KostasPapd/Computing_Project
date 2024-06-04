@@ -8,10 +8,15 @@ def testSendEmail(email):
     pass
 
 
-def signOu(win):
+def signOut(win):
     win.destroy()
     createMainMenu.createMenu()
 
+
+"""
+Using a class to create a menu bar is a very good idea. It is easier to upkeep and read the code and makes it easier to 
+add more commands to the menu bar.
+"""
 
 class MenuBar(Frame):
     def __init__(self):
@@ -33,7 +38,7 @@ class MenuBar(Frame):
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
         accMenu.add_command(label="Change Name", font=("Helvetica", 10))
         # ADD COMMAND THAT CHANGES NAME TO SQL PROGRAM
-        accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOu(self.master))
+        accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
         toolBar.add_command(label="Exit", command=self.exit)
