@@ -2,9 +2,13 @@ from tkinter import *
 import registerMenu
 import createMainMenu
 
-def testSendEmail(email):
+def sendEmailCreate(email):
     # https://automatetheboringstuff.com/2e/chapter18/
     # https://mailtrap.io/blog/python-send-email/
+    pass
+
+def sendEmailSearch(email, name, password):
+    # Add code that send email with account details
     pass
 
 def searchAcc():
@@ -36,13 +40,13 @@ def searchAcc():
     win.resizable(False, False)
     win.mainloop()
 
-def sendEmail(email, window):
+def sendEmail(email):
     from SQLfunctions import returnDetails, checkEmail
     from tkinter import messagebox as mg
 
     if checkEmail(email) == False:
         details = returnDetails(email)
-        # ADD SEND EMAIL FUNCTION
+        sendEmailSearch(email, details[0], details[1])
         mg.showinfo("Email Sent", "The email has been sent to the student.")
     else:
         mg.showwarning("Email not found", "The email you entered does not exist in the database.")

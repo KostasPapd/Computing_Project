@@ -44,5 +44,4 @@ def checkEmail(email):
 def returnDetails(email):
     name = "name"
     password = "password"
-    email = "email"
-    return name, password, email
+    return name, password
