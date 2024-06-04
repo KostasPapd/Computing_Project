@@ -49,11 +49,6 @@ def getVal(nameBox, emailBox, passBox, repassBox, window):
         else:
             checkVal(email, password, window, name)
 
-def back(win):
-    import createMainMenu
-    win.destroy()
-    createMainMenu.createMenu()
-
 def togglePass(passBox):
     if passBox.cget("show") == "•":
         passBox.config(show="")
@@ -62,13 +57,14 @@ def togglePass(passBox):
 
 
 def createBox():
-    window = Tk()
+    window = Toplevel()
 
     wWidth = 500
     wHeight = 350
     xCord = int((window.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((window.winfo_screenheight() / 2) - (wHeight / 2))
     window.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+    window.resizable(False, False)
 
     window.title("Register Account")
 
@@ -82,11 +78,11 @@ def createBox():
     registerButton = Button(window, text="Register Account", command=lambda: getVal(nameBox, emailBox, passBox,
                                                                                     repassBox, window))
     registerButton.config(font=("Arial", 16))
-    registerButton.place(relx=0.17, rely=0.7, relheight=0.11, relwidth=0.4)
+    registerButton.place(relx=0.12, rely=0.7, relheight=0.11, relwidth=0.4)
 
-    backButton = Button(window, text="Back", command=lambda: back(window))
-    backButton.config(font=("Arial", 16))
-    backButton.place(relx=0.6, rely=0.7, relheight=0.11, relwidth=0.15)
+    exitButton = Button(window, text="Exit", command=lambda: window.destroy())
+    exitButton.config(font=("Arial", 16))
+    exitButton.place(relx=0.65, rely=0.7, relheight=0.11, relwidth=0.15)
 
 # Name label and text box
     nameLabel = Label(window, text="Full Name:")
@@ -128,5 +124,4 @@ def createBox():
     showRePass.place(relx=0.87, rely=0.51, relheight=0.07, relwidth=0.1)
 
     nameBox.focus()
-    window.resizable(False, False)
     window.mainloop()
