@@ -2,9 +2,23 @@ from tkinter import *
 import registerMenu
 import createMainMenu
 
-def sendEmailCreate(email):
-    # https://automatetheboringstuff.com/2e/chapter18/
-    # https://mailtrap.io/blog/python-send-email/
+def sendEmailCreate(email, password, name):
+    import smtplib
+
+    smtpObj = smtplib.SMTP('smtp-mail.outlook.com', 587)
+    smtpObj.ehlo()
+    smtpObj.starttls()
+    smtpObj.login("physics12305@outlook.com", "PhysicsEmail1")
+
+    sender = "physics12305@outlook.com"
+    receiver = email
+    message = (f"Subject: Account Created\n\nYour teacher has created an account for you. Your details are below:\n\n"
+               f"Name: {name}\nPassword: {password}\nEmail: {email}\n\n"
+               f"Make sure to log in and change your password to something more secure. "
+               f"Please keep this information safe and do not share it with anyone.")
+
+    smtpObj.sendmail(sender, receiver, message)
+    smtpObj.quit()
     pass
 
 def sendEmailSearch(email, name, password):
@@ -107,4 +121,4 @@ def createView():
     win.mainloop()
 
 
-createView()
+#createView()
