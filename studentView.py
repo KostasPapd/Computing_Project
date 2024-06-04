@@ -9,9 +9,6 @@ def signOut(win):
     createMenu()
 
 
-def exitView(win):
-    win.destroy()
-
 
 def createStudent(name):
     win = Tk()
