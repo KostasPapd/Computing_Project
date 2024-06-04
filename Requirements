@@ -7,12 +7,6 @@ Supabase for databases
 https://www.db4free.net/
 https://www.psycopg.org/psycopg3/docs/basic/install.html
 
-Hash passwords
-
-mySQL, find host for database
-mysql.connector
-https://www.mysql.com/
-https://dev.mysql.com/doc/connector-python/en/
 
 How to connect to python (mysql):
 (install mysql.connector)
@@ -45,13 +39,11 @@ Look at studentView.png
 Profile (personal info (email, username, etc), change password/email)
 Assignment page
 
-Teacher view:
+Admin view:
+Go into student view
 Full class statistics
 Set assignment
 Delete assignment
 See overdue and complete
 See who has completed and left overdue
 Have class codes, able to create classes
-
-Admin view:
-Able to access student and teacher view
