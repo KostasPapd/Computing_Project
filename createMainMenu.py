@@ -43,3 +43,8 @@ def createMenu():
 
     win.resizable(False, False)
     win.mainloop()
+
+if __name__ == "__main__":
+    # Testing
+    # createMenu()
+    pass

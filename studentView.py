@@ -89,3 +89,9 @@ def createStudent(name):
     win.attributes("-fullscreen", True)
     win.resizable(False, False)
     win.mainloop()
+
+
+if __name__ == "__main__":
+    # Testing
+    # createStudent("Test name")
+    pass

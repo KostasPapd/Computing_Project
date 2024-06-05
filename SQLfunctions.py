@@ -45,3 +45,8 @@ def returnDetails(email):
     name = "name"
     password = "password"
     return name, password
+
+
+if __name__ == "__main__":
+    # For testing
+    pass

@@ -125,3 +125,9 @@ def createBox():
 
     nameBox.focus()
     window.mainloop()
+
+
+if __name__ == "__main__":
+    # Testing
+    # createBox()
+    pass
