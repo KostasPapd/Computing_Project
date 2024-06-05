@@ -2,7 +2,7 @@ import tkinter
 from tkinter import *
 from isValid import *
 from tkinter import messagebox
-import studentView
+from adminView import sendEmailCreate
 import SQLfunctions
 
 def checkVal(email, password, window, name):
@@ -18,10 +18,9 @@ def checkVal(email, password, window, name):
                                                    "between 8 and 20 characters")
     else:
         #SQLfunctions.registerAcc(username, email, password, name)
-        # Send email to student with details
+        sendEmailCreate(email, password, name)
+        messagebox.showinfo("Account Created", "Account has been created and details have been sent to student")
         window.destroy()
-        # studentView.createStudent(name)
-        # LOG THEM IN IMMEDIATELY BY CREATING STUDENT VIEW AND PASSING USERNAME AND PASSWORD AS PARAMETERS
 
 def getVal(nameBox, emailBox, passBox, repassBox, window):
     # Strip gets rid of whitespace at the beginning or the end of the string

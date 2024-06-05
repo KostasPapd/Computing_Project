@@ -1,4 +1,10 @@
-# all the sql will go in this module
+"""
+All the SQL/database functions will go in this program#
+
+Add to here:
+Send email function - search for the email entered and then return all the student's information
+"""
+
 import psycopg2
 import os
 from dotenv import load_dotenv

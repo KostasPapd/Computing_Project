@@ -19,7 +19,7 @@ def sendEmailCreate(email, password, name):
 
     smtpObj.sendmail(sender, receiver, message)
     smtpObj.quit()
-    pass
+
 
 def sendEmailSearch(email, name, password):
     # Add code that send email with account details
@@ -112,10 +112,6 @@ def createView():
     win.geometry("500x500")
     toolB = MenuBar()
 
-    exitButton = Button(win, text="Exit", command=lambda: win.destroy())
-    exitButton.config(font=("Arial", 20))
-    exitButton.place(relx=0.37, rely=0.6, relheight=0.11, relwidth=0.23)
-
     win.attributes("-fullscreen", True)
     win.resizable(False, False)
     win.mainloop()
@@ -123,6 +119,6 @@ def createView():
 
 if __name__ == "__main__":
     # Testing
-    # createView()
+    createView()
     # sendEmailCreate("kostispapd@outlook.com", "password", "Test Name")
     pass
