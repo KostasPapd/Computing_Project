@@ -1,6 +1,6 @@
-def validEmail(email):
-    import re
+import re
 
+def validEmail(email):
     regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9]+(\.[A-Z|a-z]{2,})+')
 
     if re.fullmatch(regex, email):
@@ -22,9 +22,7 @@ def verifyEmail(email):
         return False
 
 def validatePassword(pas):
-    import re
-
-    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,20}', pas):  # Sets what characters are allowed and required in the password
+    if re.fullmatch(r'[A-Za-z0-9!@_&]{8,}', pas):  # Sets what characters are allowed and required in the password
         # Checks if all the required characters are in the password
         if not any(char.isupper() for char in pas):
             return False
@@ -32,18 +30,26 @@ def validatePassword(pas):
             return False
         elif not any(char.isdigit() for char in pas):
             return False
-        elif len(pas) < 8 or len(pas) > 20:
+        elif len(pas) < 8:
             return False
         else:
             return True
     else:
         return False
 
-def validateUsername(username):
-    import re
 
-    if re.fullmatch(r'[A-Za-z0-9!_*#+]{3,}', username):  # Sets what characters are allowed in the username
-        # The {5,} sets the minimum length of the username
-        return True
-    else:
-        return False
+# def validateUsername(username):
+#    import re
+#
+#    if re.fullmatch(r'[A-Za-z0-9!_*#+]{3,}', username):  # Sets what characters are allowed in the username
+#        # The {5,} sets the minimum length of the username
+#        return True
+#    else:
+#        return False
+
+if __name__ == "__main__":
+    # Testing
+    # print(validatePassword("password"))
+    # print(validEmail("b32908@sfc.potteries.ac.uk"))
+    # print(verifyEmail("b32908@sfc.potteries.ac.uk"))
+    pass

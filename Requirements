@@ -4,11 +4,16 @@ Kickbox (email checker) API key: test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674ed
 Email: physics12305@outlook.com
 PhysicsEmail1
 
+Always write functions, no code by itself. Classes are fine
 
 DO SOON:
 EMAIL SENDING WHEN ACCOUNT REGISTERED
 LINK TO REGISTER WINDOW
 SQL FOR GETTING EMAIL INFO
+Add name = main to every file (can use it for testing)
+Unittesting
+Do flow diagrams
+
 
 Supabase for databases
 https://www.db4free.net/
@@ -53,5 +58,5 @@ Full class statistics
 Set assignment
 Delete assignment
 See overdue and complete
-See who has completed and left overdue
-Have class codes, able to create classes
+# See who has completed and left overdue
+# Have class codes, able to create classes

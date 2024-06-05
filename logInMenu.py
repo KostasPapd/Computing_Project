@@ -67,3 +67,8 @@ def createLogIn():
     userBox.focus()
     win.resizable(False, False)
     win.mainloop()
+
+if __name__ == "__main__":
+    # Testing
+    # createLogIn()
+    pass

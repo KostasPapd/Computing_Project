@@ -121,4 +121,8 @@ def createView():
     win.mainloop()
 
 
-#createView()
+if __name__ == "__main__":
+    # Testing
+    # createView()
+    # sendEmailCreate("kostispapd@outlook.com", "password", "Test Name")
+    pass
