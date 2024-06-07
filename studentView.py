@@ -46,10 +46,11 @@ class MenuBar(Frame):
         accMenu = Menu(toolBar)
 
         # accMenu.add_command(label="Join Class", font=("Helvetica", 10)) - maybe do
-        accMenu.add_command(label="Change Email", font=("Helvetica", 10))
+        accMenu.add_command(label="Change Email", font=("Helvetica", 10),
+                            command=lambda: processWindows.changeEmailUI(self.email, "Student"))
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
         accMenu.add_command(label="Change Password", font=("Helvetica", 10),
-                                command=lambda: processWindows.changePassUI(self.email, self.passw, "Student"))
+                            command=lambda: processWindows.changePassUI(self.email, self.passw, "Student"))
         # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))

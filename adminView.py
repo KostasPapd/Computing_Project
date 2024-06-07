@@ -94,7 +94,8 @@ class MenuBar(Frame):
         accMenu.add_command(label="Send account details", font=("Helvetica", 10), command=lambda: searchAcc())
         accMenu.add_command(label="- "*18, font=("Helvetica", 10))
         accMenu.add_command(label="Your Account:", font=("Helvetica", 10))
-        accMenu.add_command(label="Change Email", font=("Helvetica", 10))
+        accMenu.add_command(label="Change Email", font=("Helvetica", 10),
+                            command=lambda: processWindows.changeEmailUI(self.user, "Admin"))
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
         accMenu.add_command(label="Change Password", font=("Helvetica", 10),
                             command=lambda: processWindows.changePassUI(self.user, self.passw, "Admin"))
@@ -103,8 +104,6 @@ class MenuBar(Frame):
         toolBar.add_cascade(label="Accounts", menu=accMenu)
         toolBar.add_command(label="Sign Out", command=lambda: signOut(self.master))
         toolBar.add_command(label="Exit", command=self.exit)
-
-
 
     def exit(self):
         self.quit()
