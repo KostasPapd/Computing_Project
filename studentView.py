@@ -1,5 +1,6 @@
 from tkinter import *
 import logInMenu
+import processWindows
 
 # ADD CLASS TO CREATE MENU BAR
 
@@ -30,8 +31,10 @@ class Statistics(Frame):
         self.label.pack()
 
 class MenuBar(Frame):
-    def __init__(self):
+    def __init__(self, email="", password=""):
         super().__init__()
+        self.email = email
+        self.passw = password
         self.pack()
         self.toolBarMenu()
         self.frames = {}
@@ -45,7 +48,8 @@ class MenuBar(Frame):
         # accMenu.add_command(label="Join Class", font=("Helvetica", 10)) - maybe do
         accMenu.add_command(label="Change Email", font=("Helvetica", 10))
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
-        accMenu.add_command(label="Change Password", font=("Helvetica", 10))
+        accMenu.add_command(label="Change Password", font=("Helvetica", 10),
+                                command=lambda: processWindows.changePassUI(self.email, self.passw, "Student"))
         # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
@@ -76,11 +80,11 @@ class MenuBar(Frame):
 
 
 
-def createStudent(name):
+def createStudent(name, email, password):
     win = Tk()
     win.title("The Physics Lab - Student")
     win.geometry("500x500")
-    toolB = MenuBar()
+    toolB = MenuBar(email, password)
 
     nameText = name
     testLabel = Label(win, text=nameText, font="Arial 25 bold")
@@ -93,5 +97,5 @@ def createStudent(name):
 
 if __name__ == "__main__":
     # Testing
-    createStudent("Test name")
+    createStudent("Test name", "email", "password")
     pass

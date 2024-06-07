@@ -53,9 +53,9 @@ def createLogIn():
     logButton.config(font=("Arial", 16))
     logButton.place(relx=0.28, rely=0.8, relheight=0.13, relwidth=0.2)
 
-    userLabel = Label(win, text="Email:")
+    userLabel = Label(win, text="Username:")
     userLabel.config(font=("Arial", 14))
-    userLabel.place(relx=0.15, rely=0.4, relheight=0.13, relwidth=0.2)
+    userLabel.place(relx=0.12, rely=0.4, relheight=0.13, relwidth=0.2)
     userBox = Text(win, height=1, width=30)
     userBox.place(relx=0.34, rely=0.44, relheight=0.06, relwidth=0.48)
 

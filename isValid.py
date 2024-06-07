@@ -1,4 +1,5 @@
 import re
+import kickbox
 
 def validEmail(email):
     regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9]+(\.[A-Z|a-z]{2,})+')
@@ -10,7 +11,6 @@ def validEmail(email):
 
 
 def verifyEmail(email):
-    import kickbox
     client = kickbox.Client("test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674edb1218e7a5972c5aa369d2c")  # API key
     kick = client.kickbox()
 
