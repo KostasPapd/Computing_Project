@@ -1,6 +1,7 @@
 from tkinter import *
 import registerMenu
 import logInMenu
+import processWindows
 
 def sendEmailCreate(email, password, name):
     import smtplib
@@ -77,8 +78,10 @@ add more commands to the menu bar.
 """
 
 class MenuBar(Frame):
-    def __init__(self):
+    def __init__(self, user="", password=""):
         super().__init__()
+        self.user = user
+        self.passw = password
         self.toolBarMenu()
 
     def toolBarMenu(self):
@@ -93,7 +96,8 @@ class MenuBar(Frame):
         accMenu.add_command(label="Your Account:", font=("Helvetica", 10))
         accMenu.add_command(label="Change Email", font=("Helvetica", 10))
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
-        accMenu.add_command(label="Change Password", font=("Helvetica", 10))
+        accMenu.add_command(label="Change Password", font=("Helvetica", 10),
+                            command=lambda: processWindows.changePassUI(self.user, self.passw, "Admin"))
         # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
@@ -106,11 +110,11 @@ class MenuBar(Frame):
         self.quit()
 
 
-def createView():
+def createView(user, password):
     win = Tk()
     win.title("The Physics Lab - Admin")
     win.geometry("500x500")
-    toolB = MenuBar()
+    toolB = MenuBar(user, password)
 
     win.state("zoomed")
     win.resizable(False, False)
@@ -119,6 +123,6 @@ def createView():
 
 if __name__ == "__main__":
     # Testing
-    createView()
+    createView("test", "password")
     # sendEmailCreate("kostispapd@outlook.com", "password", "Test Name")
     pass

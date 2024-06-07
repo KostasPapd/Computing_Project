@@ -1,3 +1,11 @@
+"""
+The UI for many of the processes will go in here
+
+Add:
+Change Password - get value and validation
+Change Email - UI, get value and validation
+"""
+
 import tkinter
 from tkinter import *
 
