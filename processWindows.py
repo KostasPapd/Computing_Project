@@ -8,6 +8,8 @@ Change Email - get value and validation
 
 import tkinter
 from tkinter import *
+import smtplib
+from tkinter import messagebox as mg
 
 
 def changePassUI(user, password, level):
@@ -84,6 +86,52 @@ def changeEmailUI(user, level):
     newEmailBox.focus()
     win.resizable(False, False)
     win.mainloop()
+
+def searchAcc():
+    win = Toplevel()
+    win.title("Search Account")
+    wWidth = 500
+    wHeight = 300
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    titleLabel = Label(win, text="Send student account details", font=("Arial", 18))
+    titleLabel.place(relx=0.1, rely=0.1, relheight=0.1, relwidth=0.8)
+
+    emailLabel = Label(win, text="Student Email:", font=("Arial", 15))
+    emailLabel.place(relx=0.03, rely=0.35, relheight=0.1, relwidth=0.3)
+
+    emailBox = Entry(win, font=("Helvetica", 12))
+    emailBox.place(relx=0.32, rely=0.36, relheight=0.08, relwidth=0.62)
+
+    searchButton = Button(win, text="Send details to student", font=("Arial", 15),
+                          command=lambda: sendEmail(emailBox.get(), win))
+    searchButton.place(relx=0.12, rely=0.6, relheight=0.16, relwidth=0.45)
+
+    backButton = Button(win, text="Back", font=("Arial", 15), command=lambda: win.destroy())
+    backButton.place(relx=0.65, rely=0.6, relheight=0.16, relwidth=0.2)
+
+    emailBox.focus()
+    win.resizable(False, False)
+    win.mainloop()
+
+def sendEmailCreate(email, password, name):
+    smtpObj = smtplib.SMTP('smtp-mail.outlook.com', 587)
+    smtpObj.ehlo()
+    smtpObj.starttls()
+    smtpObj.login("physics12305@outlook.com", "PhysicsEmail1")
+
+    sender = "physics12305@outlook.com"
+    receiver = email
+    message = (f"Subject: Account Created\n\nYour teacher has created an account for you. Your details are below:\n\n"
+               f"Name: {name}\nPassword: {password}\nUsername: {email}\n\n"
+               f"Make sure to log in and change your password to something more secure. "
+               f"Please keep this information safe and do not share it with anyone.")
+
+    smtpObj.sendmail(sender, receiver, message)
+    smtpObj.quit()
+
 
 
 if __name__ == "__main__":

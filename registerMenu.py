@@ -17,7 +17,7 @@ def checkVal(email, password, window, name):
                                                    "lowercase letter, a number, a special character (!@_&) and "
                                                    "between 8 and 20 characters")
     else:
-        #SQLfunctions.registerAcc(username, email, password, name)
+        SQLfunctions.registerAcc(email, password, name)
         sendEmailCreate(email, password, name)
         messagebox.showinfo("Account Created", "Account has been created and details have been sent to student")
         window.destroy()

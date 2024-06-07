@@ -26,7 +26,7 @@ def registerAcc(email, password, name):
         cur = conn.cursor()
         passw = hashPassword(password)
         cur.execute(f"INSERT INTO main_acc (name, password, email) "
-                    f"VALUES ('{name}', '{passw}', '{email}'")
+                    f"VALUES ('{name}', '{passw}', '{email}')")
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
@@ -46,11 +46,6 @@ def checkEmail(email):
             return True
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to check if user exists.")
-
-def returnDetails(email):
-    name = "name"
-    password = "password"
-    return name, password
 
 
 if __name__ == "__main__":
