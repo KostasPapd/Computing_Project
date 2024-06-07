@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter.tix import *
 import logInMenu
 
 # ADD CLASS TO CREATE MENU BAR
@@ -15,8 +14,10 @@ class Assignments(Frame):
         self.widgets()
 
     def widgets(self):
-        self.label = Label(self, text="Assignments", font=("Helvetica", 20))
-        self.label.pack()
+        self.label = Label(self, text="Your Assignments", font=("Helvetica", 20))
+        self.testLabel = Label(self, text="Test", font=("Helvetica", 20))
+        self.testLabel.place(relx=0.5, rely=0.2, relheight=0.02, relwidth=0.03)
+        self.label.pack()  # Pack puts it at the top of the page
 
 class Statistics(Frame):
     def __init__(self, master=None):
@@ -25,17 +26,17 @@ class Statistics(Frame):
         self.widgets()
 
     def widgets(self):
-        self.label = Label(self, text="Statistics", font=("Helvetica", 20))
+        self.label = Label(self, text="Your Statistics", font=("Helvetica", 20))
         self.label.pack()
 
 class MenuBar(Frame):
     def __init__(self):
         super().__init__()
         self.pack()
-        self.initUI()
+        self.toolBarMenu()
         self.frames = {}
 
-    def initUI(self):
+    def toolBarMenu(self):
         toolBar = Menu(self.master)
         self.master.config(menu=toolBar)
 
@@ -77,21 +78,20 @@ class MenuBar(Frame):
 
 def createStudent(name):
     win = Tk()
-    win.title("Student View")
+    win.title("The Physics Lab - Student")
     win.geometry("500x500")
     toolB = MenuBar()
 
     nameText = name
-    testLabel = Label(win, text=nameText, font="Arial 60 bold")
+    testLabel = Label(win, text=nameText, font="Arial 25 bold")
     testLabel.place(relx=0.15, rely=0.05, relheight=0.1, relwidth=0.7)
 
 
-    win.attributes("-fullscreen", True)
-    win.resizable(False, False)
+    win.state("zoomed")
     win.mainloop()
 
 
 if __name__ == "__main__":
     # Testing
-    # createStudent("Test name")
+    createStudent("Test name")
     pass

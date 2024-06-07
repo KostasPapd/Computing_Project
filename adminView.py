@@ -79,9 +79,9 @@ add more commands to the menu bar.
 class MenuBar(Frame):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.toolBarMenu()
 
-    def initUI(self):
+    def toolBarMenu(self):
         toolBar = Menu(self.master)
         self.master.config(menu=toolBar)
 
@@ -108,11 +108,11 @@ class MenuBar(Frame):
 
 def createView():
     win = Tk()
-    win.title("Admin view")
+    win.title("The Physics Lab - Admin")
     win.geometry("500x500")
     toolB = MenuBar()
 
-    win.attributes("-fullscreen", True)
+    win.state("zoomed")
     win.resizable(False, False)
     win.mainloop()
 
