@@ -47,6 +47,32 @@ def checkEmail(email):
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to check if user exists.")
 
+def checkLogIn(user, passw):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        passw = hashPassword(passw)
+        cur.execute(f"SELECT * FROM main_acc WHERE email = '{user}' AND password = '{passw}'")
+        res = cur.fetchone()
+        if res is not None:
+            return "Student", res[1], user, passw
+        else:
+            try:
+                cur.execute(f"SELECT * FROM admin_acc WHERE email = '{user}' AND password = '{passw}'")
+                result = cur.fetchone()
+                if result is not None:
+                    return "Admin", result[3], user, passw
+                else:
+                    return None
+            except Exception as e:
+                mg.showwarning("Connection Failed", "Unable to check if user exists.")
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to check if user exists.")
+
+def changePass():
+    pass
 
 if __name__ == "__main__":
     # For testing

@@ -2,7 +2,7 @@ import tkinter
 from tkinter import *
 from isValid import *
 from tkinter import messagebox
-from adminView import sendEmailCreate
+from processWindows import sendEmailCreate
 import SQLfunctions
 
 def checkVal(email, password, window, name):

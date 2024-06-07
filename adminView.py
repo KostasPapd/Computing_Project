@@ -1,7 +1,7 @@
 from tkinter import *
 import registerMenu
 import logInMenu
-from processWindows import *
+from processWindows import changeEmailUI, changePassUI
 
 def signOut(win):
     win.destroy()
@@ -45,7 +45,7 @@ class MenuBar(Frame):
         self.quit()
 
 
-def createView(user, password):
+def createView(user, password, name):
     win = Tk()
     win.title("The Physics Lab - Admin")
     win.geometry("500x500")
@@ -58,5 +58,5 @@ def createView(user, password):
 
 if __name__ == "__main__":
     # Testing
-    createView("test", "password")
+    createView("test", "password", "test name")
     pass

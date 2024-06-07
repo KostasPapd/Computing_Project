@@ -1,12 +1,25 @@
 import tkinter
 from tkinter import *
 import studentView
-from tkinter import messagebox  # For wrong username/password pop-ups
+import adminView
+import SQLfunctions
+from tkinter import messagebox
 
 
-def logIn(username, password):
+def logIn(username, password, win):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
-    password = password.get().strip()  # Maybe different file
+    password = password.get().strip()
+    check = SQLfunctions.checkLogIn(username, password)  # Check if the login is correct
+    if check is None:
+        messagebox.showwarning("Incorrect Login", "Incorrect username or password")
+    else:
+        if check[0] == "Student":
+            win.destroy()
+            studentView.createStudent(check[1], check[2], check[3])
+        elif check[0] == "Admin":
+            win.destroy()
+            adminView.createView(check[2], check[3], check[1])
+
 
 
 def togglePass(passBox):
@@ -49,7 +62,7 @@ def createLogIn():
     exitButton.config(font=("Arial", 16))
     exitButton.place(relx=0.55, rely=0.8, relheight=0.13, relwidth=0.15)
 
-    logButton = Button(win, text="Log In", command=lambda: logIn(userBox, passBox))
+    logButton = Button(win, text="Log In", command=lambda: logIn(userBox, passBox, win))
     logButton.config(font=("Arial", 16))
     logButton.place(relx=0.28, rely=0.8, relheight=0.13, relwidth=0.2)
 

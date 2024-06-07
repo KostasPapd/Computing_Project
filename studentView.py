@@ -93,6 +93,7 @@ def createStudent(name, email, password):
 
 
     win.state("zoomed")
+    win.resizable(False, False)
     win.mainloop()
 
 
