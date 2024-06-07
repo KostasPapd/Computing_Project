@@ -9,12 +9,6 @@ def logIn(username, password):
     password = password.get().strip()  # Maybe different file
 
 
-def back(win):
-    import createMainMenu
-    win.destroy()
-    createMainMenu.createMenu()
-
-
 def togglePass(passBox):
     if passBox.cget("show") == "•":
         passBox.config(show="")
@@ -35,13 +29,25 @@ def createLogIn():
 
     password_variable = tkinter.StringVar()
 
+    # ADD WHEN LOGO IS DONE
+    # frame = Frame(win, width=60, height=40)
+    # frame.pack()
+    # frame.place(x=90, y=50)
+
+    # img = Image.open("iconNotPng.png")  # LOGO GOES HERE
+    # img = img.resize((120, 120))
+    # img = ImageTk.PhotoImage(img)
+
+    # label = Label(frame, image=img)
+    # label.pack()
+
     titleLabel = Label(win, text="Log In")
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(relx=0.13, rely=0.05, relheight=0.1, relwidth=0.7)
 
-    backButton = Button(win, text="Back", command=lambda: back(win))
-    backButton.config(font=("Arial", 16))
-    backButton.place(relx=0.55, rely=0.8, relheight=0.13, relwidth=0.15)
+    exitButton = Button(win, text="Back", command=lambda: win.destroy())
+    exitButton.config(font=("Arial", 16))
+    exitButton.place(relx=0.55, rely=0.8, relheight=0.13, relwidth=0.15)
 
     logButton = Button(win, text="Log In", command=lambda: logIn(userBox, passBox))
     logButton.config(font=("Arial", 16))

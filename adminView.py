@@ -1,6 +1,6 @@
 from tkinter import *
 import registerMenu
-import createMainMenu
+import logInMenu
 
 def sendEmailCreate(email, password, name):
     import smtplib
@@ -68,7 +68,7 @@ def sendEmail(email):
 
 def signOut(win):
     win.destroy()
-    createMainMenu.createMenu()
+    logInMenu.createLogIn()
 
 
 """

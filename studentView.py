@@ -1,12 +1,12 @@
 from tkinter import *
 from tkinter.tix import *
-from createMainMenu import createMenu
+import logInMenu
 
 # ADD CLASS TO CREATE MENU BAR
 
 def signOut(win):
     win.destroy()
-    createMenu()
+    logInMenu.createLogIn()
 
 class Assignments(Frame):
     def __init__(self, master=None):
