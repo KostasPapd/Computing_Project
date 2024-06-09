@@ -54,7 +54,6 @@ def changePassUI(user, password, level):
 
     changeBut = Button(win, text="Change Password", font=("Arial", 16),
                        command=lambda: checkPassword(newPassVar.get(), rePassVar.get(), level, user))
-    # Add command that runs a value checker and then runs the SQL to change the database
     changeBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 
     cancelBut = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
