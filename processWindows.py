@@ -13,17 +13,34 @@ from tkinter import messagebox as mg
 import SQLfunctions
 
 
-def checkPassword(passw, repassw, level, user):
+def checkPassword(passw, repassw, level, user, window):
     from isValid import validatePassword
     if passw == repassw:
         if validatePassword(passw) == True:
             SQLfunctions.changePass(user, level, passw)
             mg.showinfo("Password Changed", "Password has been changed")
+            window.destroy()
         else:
             mg.showwarning("Invalid Password", "Password must include: an uppercase letter, a lowercase letter, a number, "
                                                "a special character (!@_&) and between 8 and 20 characters")
     else:
         mg.showwarning("Passwords don't match", "Passwords don't match. Please try again")
+
+
+def checkEmail(email, reemail, level, user, window):
+    from isValid import validEmail, verifyEmail
+    if email == reemail:
+        if validEmail(email) == True:
+            if verifyEmail(email) == True:
+                SQLfunctions.changeEmail(level, user, email)
+                mg.showinfo("Email Changed", "Email has been changed")
+                window.destroy()
+            else:
+                mg.showwarning("Invalid Email", "The email you have entered is invalid")
+        else:
+            mg.showwarning("Invalid Email", "The email you have entered is invalid")
+    else:
+        mg.showwarning("Emails don't match", "Emails don't match. Please try again")
 
 
 def changePassUI(user, password, level):
@@ -53,7 +70,7 @@ def changePassUI(user, password, level):
     rePassBox.place(relx=0.4, rely=0.54, relheight=0.06, relwidth=0.48)
 
     changeBut = Button(win, text="Change Password", font=("Arial", 16),
-                       command=lambda: checkPassword(newPassVar.get(), rePassVar.get(), level, user))
+                       command=lambda: checkPassword(newPassVar.get(), rePassVar.get(), level, user, win))
     changeBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 
     cancelBut = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
@@ -90,7 +107,8 @@ def changeEmailUI(user, level):
     reEmailBox = Entry(win, textvariable=reEmailVar, font=('Arial', 12), width=27)
     reEmailBox.place(relx=0.4, rely=0.54, relheight=0.06, relwidth=0.48)
 
-    changeBut = Button(win, text="Change Email", font=("Arial", 16))
+    changeBut = Button(win, text="Change Email", font=("Arial", 16),
+                       command=lambda: checkEmail(newEmailVar.get(), reEmailVar.get(), level, user, win))
     # Add command that runs a value checker and then runs the SQL to change the database
     changeBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 

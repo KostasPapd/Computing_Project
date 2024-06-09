@@ -99,6 +99,29 @@ def changePass(user, level, passw):
             mg.showwarning("Connection Failed", "Unable to change password.")
 
 
+def changeEmail(level, user, email):
+    if level == "Admin":
+        load_dotenv()
+        connector_key = os.getenv("DB_KEY")
+        try:
+            conn = psycopg2.connect(connector_key)
+            cur = conn.cursor()
+            cur.execute(f"UPDATE admin_acc SET email = '{email}' WHERE email = '{user}'")
+            conn.commit()
+        except Exception as e:
+            mg.showwarning("Connection Failed", "Unable to change email.")
+    else:
+        load_dotenv()
+        connector_key = os.getenv("DB_KEY")
+        try:
+            conn = psycopg2.connect(connector_key)
+            cur = conn.cursor()
+            cur.execute(f"UPDATE main_acc SET email = '{email}' WHERE email = '{user}'")
+            conn.commit()
+        except Exception as e:
+            mg.showwarning("Connection Failed", "Unable to change email.")
+
+
 if __name__ == "__main__":
     # For testing
     pass
