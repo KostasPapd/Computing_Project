@@ -31,6 +31,7 @@ def registerAcc(email, password, name):
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
 
+
 def checkEmail(email):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
