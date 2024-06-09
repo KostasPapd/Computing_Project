@@ -73,7 +73,7 @@ def checkLogIn(user, passw):
         mg.showwarning("Connection Failed", "Unable to check if user exists.")
 
 
-# ADD HASHING TO THIS FUNCTION
+
 def changePass(user, level, passw):
     if level == "Admin":
         load_dotenv()
@@ -81,6 +81,7 @@ def changePass(user, level, passw):
         try:
             conn = psycopg2.connect(connector_key)
             cur = conn.cursor()
+            passw = hashPassword(passw)
             cur.execute(f"UPDATE admin_acc SET password = '{passw}' WHERE email = '{user}'")
             conn.commit()
         except Exception as e:
@@ -91,6 +92,7 @@ def changePass(user, level, passw):
         try:
             conn = psycopg2.connect(connector_key)
             cur = conn.cursor()
+            passw = hashPassword(passw)
             cur.execute(f"UPDATE main_acc SET password = '{passw}' WHERE email = '{user}'")
             conn.commit()
         except Exception as e:

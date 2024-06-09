@@ -10,6 +10,20 @@ import tkinter
 from tkinter import *
 import smtplib
 from tkinter import messagebox as mg
+import SQLfunctions
+
+
+def checkPassword(passw, repassw, level, user):
+    from isValid import validatePassword
+    if passw == repassw:
+        if validatePassword(passw) == True:
+            SQLfunctions.changePass(user, level, passw)
+            mg.showinfo("Password Changed", "Password has been changed")
+        else:
+            mg.showwarning("Invalid Password", "Password must include: an uppercase letter, a lowercase letter, a number, "
+                                               "a special character (!@_&) and between 8 and 20 characters")
+    else:
+        mg.showwarning("Passwords don't match", "Passwords don't match. Please try again")
 
 
 def changePassUI(user, password, level):
@@ -38,7 +52,8 @@ def changePassUI(user, password, level):
     rePassBox = Entry(win, textvariable=rePassVar, font=('Arial', 12), show='•', width=27)
     rePassBox.place(relx=0.4, rely=0.54, relheight=0.06, relwidth=0.48)
 
-    changeBut = Button(win, text="Change Password", font=("Arial", 16))
+    changeBut = Button(win, text="Change Password", font=("Arial", 16),
+                       command=lambda: checkPassword(newPassVar.get(), rePassVar.get(), level, user))
     # Add command that runs a value checker and then runs the SQL to change the database
     changeBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 
