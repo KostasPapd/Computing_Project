@@ -37,6 +37,8 @@ class MenuBar(Frame):
                             command=lambda: changePassUI(self.user, self.passw, "Admin"))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
+        toolBar.add_command(label="Classes")
+        toolBar.add_command(label="Assignments")
         toolBar.add_command(label="Sign Out", command=lambda: signOut(self.master))
         toolBar.add_command(label="Exit", command=self.exit)
 
