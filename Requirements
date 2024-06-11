@@ -15,6 +15,7 @@ LINK TO REGISTER WINDOW - DONE
 ADD FUNCTION TO CHANGE EMAIL BUTTON
 ADD FUNCTION TO CHANGE PASSWORD BUTTON - DONE
 Link password and email button subroutines to both views - DONE
+ADD VERIFICATION TO SEE IF EMAIL ALREADY EXISTS WHEN CHANGING IT
 Add name = main to every file (can use it for testing)
 
 Unittesting
