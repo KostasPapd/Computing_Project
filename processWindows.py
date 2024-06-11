@@ -21,7 +21,8 @@ def checkPassword(passw, repassw, level, user, window):
             mg.showinfo("Password Changed", "Password has been changed")
             window.destroy()
         else:
-            mg.showwarning("Invalid Password", "Password must include: an uppercase letter, a lowercase letter, a number, "
+            mg.showwarning("Invalid Password", "Password must include: an uppercase letter, a lowercase "
+                                               "letter, a number, "
                                                "a special character (!@_&) and between 8 and 20 characters")
     else:
         mg.showwarning("Passwords don't match", "Passwords don't match. Please try again")
