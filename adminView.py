@@ -38,7 +38,6 @@ class MenuBar(Frame):
 
         classMenu = Menu(toolBar)
         classMenu.add_command(label="Create Class", font=("Helvetica", 9))
-        classMenu.add_command(label="Edit Class", font=("Helvetica", 9))
         classMenu.add_command(label="Delete Class", font=("Helvetica", 9))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)

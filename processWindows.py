@@ -150,9 +150,52 @@ def sendEmailCreate(email, password, name):
     smtpObj.sendmail(sender, receiver, message)
     smtpObj.quit()
 
+def createClassUI(name):
+    win = Toplevel()
+
+    wWidth = 500
+    wHeight = 400
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    win.title("Create Class")
+
+    titleLabel = Label(win, text="Create Class", font=("Arial", 20))
+    titleLabel.place(relx=0.26, rely=0.05, relheight=0.1, relwidth=0.5)
+
+    nameLabel = Label(win, text="Class Name:", font=("Arial", 16))
+    nameLabel.place(relx=0.06, rely=0.2, relheight=0.13, relwidth=0.3)
+    nameVar = tkinter.StringVar()
+    nameBox = Entry(win, textvariable=nameVar, font=('Arial', 12), width=27)
+    nameBox.place(relx=0.35, rely=0.235, relheight=0.06, relwidth=0.55)
+
+    teacherLabel = Label(win, text="Teacher:", font=("Arial", 16))
+    teacherLabel.place(relx=0.09, rely=0.35, relheight=0.13, relwidth=0.3)
+    teacherVar = tkinter.StringVar()
+    teacherBox = Entry(win, textvariable=teacherVar, font=('Arial', 12), width=27)
+    teacherBox.place(relx=0.35, rely=0.385, relheight=0.06, relwidth=0.55)
+
+    stuLabel = Label(win, text="Students:", font=("Arial", 16))
+    stuLabel.place(relx=0.09, rely=0.55, relheight=0.13, relwidth=0.3)
+    stuButton = Button(win, text="Add Students", font=("Arial", 16))
+    # Add command that opens a new window and runs the sql
+    stuButton.place(relx=0.35, rely=0.56, relheight=0.1, relwidth=0.3)
+
+    createBut = Button(win, text="Create Class", font=("Arial", 16))
+    # Add command that runs the SQL to create the class
+    createBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
+
+    cancelBut = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
+    cancelBut.place(relx=0.6, rely=0.75, relheight=0.13, relwidth=0.2)
+
+
+    win.resizable(False, False)
+    win.mainloop()
 
 
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
+    createClassUI("test")
     pass
