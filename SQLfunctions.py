@@ -9,6 +9,8 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 from tkinter import messagebox as mg
+
+
 def hashPassword(password):
     import hashlib
     salt = "lr4h"
