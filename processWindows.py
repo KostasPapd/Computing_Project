@@ -150,6 +150,53 @@ def sendEmailCreate(email, password, name):
     smtpObj.sendmail(sender, receiver, message)
     smtpObj.quit()
 
+def stuListUI(name):
+    win = Toplevel()
+
+    wWidth = 600
+    wHeight = 600
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    win.title("Add Students")
+
+    titleLabel = Label(win, text="Add Students", font=("Arial", 20))
+    titleLabel.pack()
+
+    scroll = Scrollbar(win)
+    scroll.pack(side=RIGHT, fill=Y)
+
+    # Add SQL to get the list of students
+
+####################################################
+    # PLACEHOLDER
+    students = []
+    for i in range(50):
+        students.append(f"Student {i}")
+####################################################
+
+    stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
+                      yscrollcommand=scroll.set)
+    for student in students:
+        stuList.insert(END, student)
+    stuList.pack(side=LEFT, fill=BOTH)
+
+    def select():
+        # CHANGE TO GET AND RETURN THE VALUES
+        selected = stuList.curselection()
+        for n in selected:
+            print(stuList.get(n))
+
+    selectButton = Button(win, text="Select", font=("Arial", 18), command=select)
+    selectButton.place(relx=0.75, rely=0.3, relheight=0.1, relwidth=0.2)
+
+    cancelBut = Button(win, text="Cancel", font=("Arial", 18), command=lambda: win.destroy())
+    cancelBut.place(relx=0.75, rely=0.5, relheight=0.1, relwidth=0.2)
+
+    win.resizable(False, False)
+    win.mainloop()
+
 def createClassUI(name):
     win = Toplevel()
 
@@ -178,7 +225,7 @@ def createClassUI(name):
 
     stuLabel = Label(win, text="Students:", font=("Arial", 16))
     stuLabel.place(relx=0.09, rely=0.55, relheight=0.13, relwidth=0.3)
-    stuButton = Button(win, text="Add Students", font=("Arial", 16))
+    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: stuListUI(name))
     # Add command that opens a new window and runs the sql
     stuButton.place(relx=0.35, rely=0.56, relheight=0.1, relwidth=0.3)
 
@@ -189,7 +236,6 @@ def createClassUI(name):
     cancelBut = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
     cancelBut.place(relx=0.6, rely=0.75, relheight=0.13, relwidth=0.2)
 
-
     win.resizable(False, False)
     win.mainloop()
 
@@ -197,5 +243,6 @@ def createClassUI(name):
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    createClassUI("test")
+    # createClassUI("test")
+    stuListUI("test")
     pass
