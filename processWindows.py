@@ -169,12 +169,12 @@ def stuListUI(name):
 
     # Add SQL to get the list of students
 
-####################################################
+########################################################################################################################
     # PLACEHOLDER
     students = []
     for i in range(50):
         students.append(f"Student {i}")
-####################################################
+########################################################################################################################
 
     stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
