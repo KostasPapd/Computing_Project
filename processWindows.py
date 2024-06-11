@@ -154,4 +154,5 @@ def sendEmailCreate(email, password, name):
 
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
-    changePassUI("test", "test", "Amdin")
+    # changePassUI("test", "test", "Admin")
+    pass
