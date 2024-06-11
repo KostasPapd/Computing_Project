@@ -243,6 +243,6 @@ def createClassUI(name):
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    # createClassUI("test")
-    stuListUI("test")
+    createClassUI("test")
+    # stuListUI("test")
     pass
