@@ -167,15 +167,7 @@ def stuListUI(name):
     scroll = Scrollbar(win)
     scroll.pack(side=RIGHT, fill=Y)
 
-    # Add SQL to get the list of students
-
-########################################################################################################################
-    # PLACEHOLDER
-    students = []
-    for i in range(50):
-        students.append(f"Student {i}")
-########################################################################################################################
-
+    students = SQLfunctions.getStudents(name)
     stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
     for student in students:
@@ -197,7 +189,7 @@ def stuListUI(name):
     win.resizable(False, False)
     win.mainloop()
 
-def createClassUI(name):
+def createClassUI():
     win = Toplevel()
 
     wWidth = 500
@@ -225,7 +217,7 @@ def createClassUI(name):
 
     stuLabel = Label(win, text="Students:", font=("Arial", 16))
     stuLabel.place(relx=0.09, rely=0.55, relheight=0.13, relwidth=0.3)
-    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: stuListUI(name))
+    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: stuListUI(teacherVar))
     # Add command that opens a new window and runs the sql
     stuButton.place(relx=0.35, rely=0.56, relheight=0.1, relwidth=0.3)
 
@@ -243,6 +235,6 @@ def createClassUI(name):
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    createClassUI("test")
+    createClassUI()
     # stuListUI("test")
     pass

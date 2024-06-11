@@ -124,6 +124,23 @@ def changeEmail(level, user, email):
             mg.showwarning("Connection Failed", "Unable to change email.")
 
 
+def getStudents(teacher):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT name FROM main_acc WHERE teacher = '{teacher}'")
+        res = cur.fetchall()
+        if res is not None:
+            return [row[0] for row in res]  # Return the list of student names
+        else:
+            return []
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to fetch students.")
+        return []
+
+
 if __name__ == "__main__":
     # For testing
     pass
