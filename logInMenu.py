@@ -80,7 +80,7 @@ def createLogIn():
 
     showPassImg = PhotoImage(file="Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
-    showPass = Button(win, image=showPassImg, command=lambda: togglePass(passBox))
+    showPass = Button(win, image=showPassImg, borderwidth=0, command=lambda: togglePass(passBox))
     showPass.place(relx=0.85, rely=0.63, relheight=0.07, relwidth=0.1)
 
     userBox.focus()

@@ -116,10 +116,10 @@ def createBox(teacherName):
 # Show password buttons
     showPassImg = PhotoImage(file="Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
-    showPass = Button(window, image=showPassImg, command=lambda: togglePass(passBox))
+    showPass = Button(window, image=showPassImg, borderwidth=0, command=lambda: togglePass(passBox))
     showPass.place(relx=0.87, rely=0.39, relheight=0.07, relwidth=0.1)
 
-    showRePass = Button(window, image=showPassImg, command=lambda: togglePass(repassBox))
+    showRePass = Button(window, image=showPassImg, borderwidth=0, command=lambda: togglePass(repassBox))
     showRePass.place(relx=0.87, rely=0.51, relheight=0.07, relwidth=0.1)
 
     nameBox.focus()
@@ -128,5 +128,5 @@ def createBox(teacherName):
 
 if __name__ == "__main__":
     # Testing
-    # createBox()
+    # createBox("test")
     pass
