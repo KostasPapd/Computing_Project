@@ -1,5 +1,5 @@
 """
-The UI for many of the processes will go in here
+The UI and many processes will go in here
 
 Add:
 Change Password - get value and validation
