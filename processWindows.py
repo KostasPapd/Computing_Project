@@ -42,6 +42,11 @@ def checkEmail(email, reemail, level, user, window):
     else:
         mg.showwarning("Emails don't match", "Emails don't match. Please try again")
 
+def togglePass(passBox):
+    if passBox.cget("show") == "•":
+        passBox.config(show="")
+    else:
+        passBox.config(show="•")
 
 def changePassUI(user, password, level):
     win = Toplevel()
@@ -52,22 +57,31 @@ def changePassUI(user, password, level):
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    newPassVar = tkinter.StringVar()
+    rePassVar = tkinter.StringVar()
+
     win.title("Change Password")
 
     chaLabel = Label(win, text="Change Password", font=("Arial", 20))
     chaLabel.place(relx=0.26, rely=0.05, relheight=0.1, relwidth=0.5)
 
     newPassLabel = Label(win, text="New Password:", font=("Arial", 16))
-    newPassLabel.place(relx=0.09, rely=0.3, relheight=0.13, relwidth=0.3)
-    newPassVar = tkinter.StringVar()
+    newPassLabel.place(relx=0.07, rely=0.3, relheight=0.13, relwidth=0.3)
     newPassBox = Entry(win, textvariable=newPassVar, font=('Arial', 12), show='•', width=27)
-    newPassBox.place(relx=0.4, rely=0.34, relheight=0.06, relwidth=0.48)
+    newPassBox.place(relx=0.38, rely=0.34, relheight=0.06, relwidth=0.48)
 
     rePassLabel = Label(win, text="Re-Type Password:", font=("Arial", 14))
-    rePassLabel.place(relx=0.02, rely=0.5, relheight=0.13, relwidth=0.4)
-    rePassVar = tkinter.StringVar()
+    rePassLabel.place(relx=0, rely=0.5, relheight=0.13, relwidth=0.4)
     rePassBox = Entry(win, textvariable=rePassVar, font=('Arial', 12), show='•', width=27)
-    rePassBox.place(relx=0.4, rely=0.54, relheight=0.06, relwidth=0.48)
+    rePassBox.place(relx=0.38, rely=0.54, relheight=0.06, relwidth=0.48)
+
+    showPassImg = PhotoImage(file="Pictures/showPassword.png")
+    showPassImg = showPassImg.subsample(15, 15)
+    showPass = Button(win, image=showPassImg, command=lambda: togglePass(newPassBox))
+    showPass.place(relx=0.87, rely=0.33, relheight=0.07, relwidth=0.1)
+
+    showRePass = Button(win, image=showPassImg, command=lambda: togglePass(rePassBox))
+    showRePass.place(relx=0.87, rely=0.53, relheight=0.07, relwidth=0.1)
 
     changeBut = Button(win, text="Change Password", font=("Arial", 16),
                        command=lambda: checkPassword(newPassVar.get(), rePassVar.get(), level, user, win))
@@ -138,4 +152,5 @@ def sendEmailCreate(email, password, name):
 
 
 if __name__ == "__main__":
-    changeEmailUI("test", "test")
+    # changeEmailUI("test", "test")
+    changePassUI("test", "test", "Amdin")
