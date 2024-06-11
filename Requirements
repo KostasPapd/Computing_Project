@@ -50,11 +50,6 @@ Answer data validation
 Create admin accounts
 
 
-Student view:
-Look at studentView.png
-change password/email
-Assignment/stats page
-
 Admin view:
 Change password as soon as you login for the first time
 Go into student view
@@ -63,4 +58,66 @@ Set assignment
 Delete assignment
 See overdue and complete
 # See who has completed and left overdue
-# Have class codes, able to create classes
+Have class codes, able to create classes and add students to classes
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+                                                      Student View
+------------------------------------------------------------------------------------------------------------------------
+
+------------
+ Processes
+------------
+- Change password
+- Change email
+- See and do assignments
+- See statistics
+
+------------
+     UI
+------------
+- Boots up to main screen (has name, latest assignments etc)
+
+Tool Bar:
+- Assignments
+    * Takes you to assignments page
+- Statistics
+    * Takes you to stats page
+- Sign out
+- Exit
+
+* Assignments Page *
+- Lists all assignments in order of newest to oldest
+    + Overdue assignments will have a label that says that +
+
+When assignment clicked:
+- Changes frame/creates new window
+- Able to answer all questions set
++ When all questions answered +
+    * Takes you to marking frame/window
+    * Students able to see mark scheme and appoint marks as necessary
+    * Sends score to admin view and database
+
+* Statistics Page *
+- Shows stats
+    + Total questions answered correctly or incorrectly etc +
+
+
+------------------------------------------------------------------------------------------------------------------------
+                                                       Admin View
+------------------------------------------------------------------------------------------------------------------------
+
+------------
+ Processes
+------------
+- When first time logging in
+    * Window pops up to change password
+- Change email
+- Change password
+-
+
+
+------------
+     UI
+------------

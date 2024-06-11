@@ -19,7 +19,7 @@ def hashPassword(password):
     hashPass = hash_object.hexdigest()
     return hashPass
 
-def registerAcc(email, password, name):
+def registerAcc(email, password, name, teacher):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
 
@@ -27,8 +27,8 @@ def registerAcc(email, password, name):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         passw = hashPassword(password)
-        cur.execute(f"INSERT INTO main_acc (name, password, email) "
-                    f"VALUES ('{name}', '{passw}', '{email}')")
+        cur.execute(f"INSERT INTO main_acc (name, password, email, teacher) "
+                    f"VALUES ('{name}', '{passw}', '{email}', '{teacher}')")
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
