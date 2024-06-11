@@ -41,25 +41,13 @@ Need for this project:
 Email validation and verification - done
 Username validation - done
 Password validation - done
-Make register and login windows - done, ADD VERIFICATION
+Make register and login windows - done
 Error messages for invalid data - done
 Add designs to the menus
-Username verification (for logging in)
-Password verification
+Username verification (for logging in) - done
+Password verification - done
 Answer data validation
 Create admin accounts
-
-
-Admin view:
-Change password as soon as you login for the first time
-Go into student view
-Full class statistics
-Set assignment
-Delete assignment
-See overdue and complete
-# See who has completed and left overdue
-Have class codes, able to create classes and add students to classes
-
 
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -138,7 +126,3 @@ Tool Bar:
             + Add to class
 - Sign Out
 - Exit
-
-
-
-
