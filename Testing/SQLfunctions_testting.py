@@ -15,5 +15,6 @@ class Validate_SQLfunctions(unittest.TestCase):
         expected = None
         self.assertEqual(expected, result)
 
+
 if __name__ == "__main__":
     unittest.main()
