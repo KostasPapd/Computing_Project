@@ -115,9 +115,30 @@ When assignment clicked:
     * Window pops up to change password
 - Change email
 - Change password
--
-
+- Create classes and add students to classes
+    * Will have list of all students that they have created accounts for
 
 ------------
      UI
 ------------
+- Boots up to main screen (has name, list of classes etc)
+
+Tool Bar:
+- Accounts
+    * Drop down menu
+        - All TopLevel() windows -
+            + Create student account
+            + Change email
+            + Change password
+- Classes
+    * Drop down menu
+        - All TopLevel() windows -
+            + Create class
+            + Delete class
+            + Add to class
+- Sign Out
+- Exit
+
+
+
+
