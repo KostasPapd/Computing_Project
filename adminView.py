@@ -1,7 +1,7 @@
 from tkinter import *
 import registerMenu
 import logInMenu
-from processWindows import changeEmailUI, changePassUI
+from processWindows import changeEmailUI, changePassUI, createClassUI
 
 def signOut(win):
     win.destroy()
@@ -37,7 +37,8 @@ class MenuBar(Frame):
                             command=lambda: changePassUI(self.user, self.passw, "Admin"))
 
         classMenu = Menu(toolBar)
-        classMenu.add_command(label="Create Class", font=("Helvetica", 9))
+        classMenu.add_command(label="Create Class", font=("Helvetica", 9),
+                              command=lambda: createClassUI())
         classMenu.add_command(label="Delete Class", font=("Helvetica", 9))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)

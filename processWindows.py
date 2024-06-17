@@ -167,11 +167,14 @@ def stuListUI(name):
     scroll = Scrollbar(win)
     scroll.pack(side=RIGHT, fill=Y)
 
+    name = name.get()
     students = SQLfunctions.getStudents(name)
     stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
-    for student in students:
-        stuList.insert(END, student)
+
+    if students is not None:
+        for student in students:
+            stuList.insert(END, student)
     stuList.pack(side=LEFT, fill=BOTH)
 
     def select():
@@ -236,5 +239,5 @@ if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
     createClassUI()
-    # stuListUI("test")
+    # stuListUI("Kostas Papadopoulos")
     pass

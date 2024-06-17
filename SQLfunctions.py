@@ -133,7 +133,8 @@ def getStudents(teacher):
         cur.execute(f"SELECT name FROM main_acc WHERE teacher = '{teacher}'")
         res = cur.fetchall()
         if res is not None:
-            return [row[0] for row in res]  # Return the list of student names
+            names = [row[0] for row in res]  # Extract the names from the tuples
+            return names
         else:
             return []
     except Exception as e:
@@ -143,4 +144,5 @@ def getStudents(teacher):
 
 if __name__ == "__main__":
     # For testing
+    getStudents("Kostas Papadopoulos")
     pass
