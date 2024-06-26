@@ -142,8 +142,9 @@ def sendEmailCreate(email, password, name):
 
     sender = "physics12305@outlook.com"
     receiver = email
-    message = (f"Subject: Account Created\n\nYour teacher has created an account for you. Your details are below:\n\n"
-               f"Name: {name}\nPassword: {password}\nUsername: {email}\n\n"
+    message = (f"Subject: Account Created\n\nHello {name},\n\n Your teacher has created a Physics Lab account for you. "
+               f"Your details are below:\n\n"
+               f"Username: {email}\nPassword: {password}\n\n"
                f"Make sure to log in and change your password to something more secure. "
                f"Please keep this information safe and do not share it with anyone.")
 
