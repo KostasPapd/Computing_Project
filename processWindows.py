@@ -168,21 +168,23 @@ def stuListUI(name):
     scroll = Scrollbar(win)
     scroll.pack(side=RIGHT, fill=Y)
 
-    name = name.get()
     students = SQLfunctions.getStudents(name)
     stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
 
     if students is not None:
+        students = sorted(students)
         for student in students:
             stuList.insert(END, student)
     stuList.pack(side=LEFT, fill=BOTH)
 
+    selectedStu = StringVar()
+
     def select():
         # CHANGE TO GET AND RETURN THE VALUES
         selected = stuList.curselection()
-        for n in selected:
-            print(stuList.get(n))
+        selectedStu = [stuList.get(n) for n in selected]
+        win.destroy()
 
     selectButton = Button(win, text="Select", font=("Arial", 18), command=select)
     selectButton.place(relx=0.75, rely=0.3, relheight=0.1, relwidth=0.2)
@@ -190,14 +192,18 @@ def stuListUI(name):
     cancelBut = Button(win, text="Cancel", font=("Arial", 18), command=lambda: win.destroy())
     cancelBut.place(relx=0.75, rely=0.5, relheight=0.1, relwidth=0.2)
 
+
     win.resizable(False, False)
     win.mainloop()
 
-def createClassUI():
+    return selectedStu.get()
+
+
+def createClassUI(Tname):
     win = Toplevel()
 
     wWidth = 500
-    wHeight = 400
+    wHeight = 300
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
@@ -208,24 +214,28 @@ def createClassUI():
     titleLabel.place(relx=0.26, rely=0.05, relheight=0.1, relwidth=0.5)
 
     nameLabel = Label(win, text="Class Name:", font=("Arial", 16))
-    nameLabel.place(relx=0.06, rely=0.2, relheight=0.13, relwidth=0.3)
+    nameLabel.place(relx=0.06, rely=0.25, relheight=0.13, relwidth=0.3)
     nameVar = tkinter.StringVar()
     nameBox = Entry(win, textvariable=nameVar, font=('Arial', 12), width=27)
-    nameBox.place(relx=0.35, rely=0.235, relheight=0.06, relwidth=0.55)
+    nameBox.place(relx=0.35, rely=0.28, relheight=0.08, relwidth=0.55)
 
-    teacherLabel = Label(win, text="Teacher:", font=("Arial", 16))
-    teacherLabel.place(relx=0.09, rely=0.35, relheight=0.13, relwidth=0.3)
-    teacherVar = tkinter.StringVar()
-    teacherBox = Entry(win, textvariable=teacherVar, font=('Arial', 12), width=27)
-    teacherBox.place(relx=0.35, rely=0.385, relheight=0.06, relwidth=0.55)
+    students = []
+    def addStu(Tname):
+        nonlocal students
+        students = stuListUI(Tname)
 
     stuLabel = Label(win, text="Students:", font=("Arial", 16))
-    stuLabel.place(relx=0.09, rely=0.55, relheight=0.13, relwidth=0.3)
-    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: stuListUI(teacherVar))
+    stuLabel.place(relx=0.09, rely=0.5, relheight=0.13, relwidth=0.3)
+    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: addStu(Tname))
     # Add command that opens a new window and runs the sql
-    stuButton.place(relx=0.35, rely=0.56, relheight=0.1, relwidth=0.3)
+    stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
-    createBut = Button(win, text="Create Class", font=("Arial", 16))
+    def create_class():
+        #SQLfunctions.createClass(nameVar.get(), Tname, students)
+        print(students)
+        win.destroy()
+
+    createBut = Button(win, text="Create Class", font=("Arial", 16), command=create_class)
     # Add command that runs the SQL to create the class
     createBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 
@@ -239,6 +249,6 @@ def createClassUI():
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    createClassUI()
+    createClassUI("Kostas Papadopoulos")
     # stuListUI("Kostas Papadopoulos")
     pass

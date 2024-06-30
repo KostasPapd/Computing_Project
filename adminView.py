@@ -38,7 +38,7 @@ class MenuBar(Frame):
 
         classMenu = Menu(toolBar)
         classMenu.add_command(label="Create Class", font=("Helvetica", 9),
-                              command=lambda: createClassUI())
+                              command=lambda: createClassUI(self.name))
         classMenu.add_command(label="Delete Class", font=("Helvetica", 9))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)

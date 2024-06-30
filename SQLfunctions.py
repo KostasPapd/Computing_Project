@@ -142,6 +142,22 @@ def getStudents(teacher):
         return []
 
 
+def createClass(name, teacher, stuList):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        table_name = f"\"{name}_{teacher}\""  # Creates the table name
+        cur.execute(f"CREATE TABLE {table_name} (student_name varchar(255))")  # Creates the table
+        for student in stuList:
+            # Inserts the students into the table
+            cur.execute(f"INSERT INTO {table_name} (student_name) VALUES ('{student}')")
+        conn.commit()
+    except Exception as e:
+        print(e)
+        mg.showwarning("Connection Failed", "Unable to create class.")
+
 if __name__ == "__main__":
     # For testing
     getStudents("Kostas Papadopoulos")
