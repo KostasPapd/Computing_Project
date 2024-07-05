@@ -10,6 +10,7 @@ import os
 from dotenv import load_dotenv
 from tkinter import messagebox as mg
 import processWindows
+import assignProcess
 
 
 def hashPassword(password):
@@ -185,7 +186,7 @@ def createAssign(name, Tname, win):
         cur.execute(f"CREATE TABLE {table_name} (questionNum INT AUTO_INCREMENT PRIMARY KEY, "
                     f"question varchar(255), answer varchar(255))")
         conn.commit()
-        processWindows.nextAssign(name, Tname, win)
+        assignProcess.nextAssign(name, Tname, win)
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create assignment.")
 
