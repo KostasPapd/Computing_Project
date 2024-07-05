@@ -16,19 +16,8 @@ class Assignments(Frame):
 
     def widgets(self):
         self.label = Label(self, text="Your Assignments", font=("Helvetica", 20))
-        self.testLabel = Label(self, text="Test", font=("Helvetica", 20))
-        self.testLabel.place(relx=0.5, rely=0.2, relheight=0.02, relwidth=0.03)
         self.label.pack()  # Pack puts it at the top of the page
 
-class Statistics(Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.pack()
-        self.widgets()
-
-    def widgets(self):
-        self.label = Label(self, text="Your Statistics", font=("Helvetica", 20))
-        self.label.pack()
 
 class MenuBar(Frame):
     def __init__(self, email="", password=""):
@@ -55,8 +44,8 @@ class MenuBar(Frame):
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
-        toolBar.add_cascade(label="Assignments", command=self.showAssign)  # ADD COMMAND THAT SHOWS ASSIGNMENTS
-        toolBar.add_cascade(label="Statistics", command=self.showStats)  # ADD COMMAND THAT SHOWS STATISTICS
+        # toolBar.add_cascade(label="Assignments", command=self.showAssign)  # ADD COMMAND THAT SHOWS ASSIGNMENTS
+        # toolBar.add_cascade(label="Statistics", command=self.showStats)  # ADD COMMAND THAT SHOWS STATISTICS
         toolBar.add_cascade(label="Settings", menu=accMenu)
         toolBar.add_command(label="Exit", command=self.exit)
 
@@ -83,14 +72,12 @@ class MenuBar(Frame):
 
 def createStudent(name, email, password):
     win = Tk()
-    win.title("The Physics Lab - Student")
+    nameText = name
+    win.title(f"The Physics Lab - {name}")
     win.geometry("500x500")
     toolB = MenuBar(email, password)
 
-    nameText = name
-    testLabel = Label(win, text=nameText, font="Arial 25 bold")
-    testLabel.place(relx=0.15, rely=0.05, relheight=0.1, relwidth=0.7)
-
+    Assignments()
 
     win.state("zoomed")
     win.resizable(False, False)
@@ -99,5 +86,5 @@ def createStudent(name, email, password):
 
 if __name__ == "__main__":
     # Testing
-    createStudent("Test name", "email", "password")
+    createStudent("Kostas Papadopoulos", "email", "password")
     pass

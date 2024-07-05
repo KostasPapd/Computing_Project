@@ -143,3 +143,16 @@ Tool Bar:
             + Delete assignment
 - Sign Out
 - Exit
+
+
+
+
+class Statistics(Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.pack()
+        self.widgets()
+
+    def widgets(self):
+        self.label = Label(self, text="Your Statistics", font=("Helvetica", 20))
+        self.label.pack()
