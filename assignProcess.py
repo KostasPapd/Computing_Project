@@ -75,7 +75,10 @@ def createQs(name, tName):
     answerEntry.place(relx=0.23, rely=0.32, relheight=0.3, relwidth=0.7)
 
     addFileButton = Button(win, text="Add File", font=("Arial", 16))
-    addFileButton.place(relx=0.4, rely=0.68, relheight=0.1, relwidth=0.2)
+    addFileButton.place(relx=0.4, rely=0.65, relheight=0.1, relwidth=0.2)
+
+    nextButton = Button(win, text="Add question", font=("Arial", 16))
+    nextButton.place(relx=0.55, rely=0.8, relheight=0.1, relwidth=0.22)
 
     win.resizable(False, False)
     win.mainloop()
