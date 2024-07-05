@@ -50,7 +50,22 @@ def createQs(name, tName):
     win = Toplevel()
     win.title("Create Question")
 
+    wWidth = 650
+    wHeight = 500
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    titleLabel = Label(win, text="Add Question", font=("Arial", 20))
+    titleLabel.place(relx=0.25, rely=0.03, relheight=0.13, relwidth=0.5)
+
+
+
+    win.resizable(False, False)
+    win.mainloop()
+
 
 if __name__ == "__main__":
-    createAssign("Kostas Papadopoulos")
+    # createAssign("Kostas Papadopoulos")
+    createQs("Test", "Kostas Papadopoulos")
     pass
