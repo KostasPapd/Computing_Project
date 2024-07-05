@@ -9,6 +9,7 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 from tkinter import messagebox as mg
+import processWindows
 
 
 def hashPassword(password):
@@ -174,8 +175,27 @@ def getClass(tName):
         mg.showwarning("Connection Failed", "Unable to search for classes.")
         return []
 
+def createAssign(name, Tname, win):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        table_name = f"\"{name}_{Tname}\""
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"CREATE TABLE {table_name} (questionNum INT AUTO_INCREMENT PRIMARY KEY, "
+                    f"question varchar(255), answer varchar(255))")
+        conn.commit()
+        processWindows.nextAssign(name, Tname, win)
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to create assignment.")
+
+
+def addQuestion():
+    pass
+
 
 if __name__ == "__main__":
     # For testing
-    getStudents("Kostas Papadopoulos")
+    # getStudents("Kostas Papadopoulos")
+    createAssign("Test", "Kostas Papadopoulos")
     pass

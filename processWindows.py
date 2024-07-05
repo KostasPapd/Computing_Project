@@ -276,7 +276,8 @@ def createAssign(tName):
     classMenu = OptionMenu(win, clicked, *classes)
     classMenu.place(relx=0.4, rely=0.46, relheight=0.1, relwidth=0.25)
 
-    nextButton = Button(win, text="Next", font=("Arial", 16))
+    nextButton = Button(win, text="Next", font=("Arial", 16), command=lambda: SQLfunctions.createAssign(nameVar.get()
+                                                                                                        , tName, win))
     nextButton.place(relx=0.6, rely=0.7, relheight=0.13, relwidth=0.2)
 
     cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
@@ -285,6 +286,12 @@ def createAssign(tName):
     win.resizable(False, False)
     win.mainloop()
 
+def nextAssign(name, tName, win):
+    win.destroy()
+    createQs(name, tName)
+
+def createQs(name, tName):
+    pass
 
 
 if __name__ == "__main__":
