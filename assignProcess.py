@@ -47,7 +47,8 @@ def nextAssign(name, tName, win):
     createQs(name, tName)
 
 def createQs(name, tName):
-    pass
+    win = Toplevel()
+    win.title("Create Question")
 
 
 if __name__ == "__main__":
