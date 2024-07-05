@@ -74,6 +74,9 @@ def createQs(name, tName):
     answerEntry = Entry(win, textvariable=answer, font=('Arial', 12))
     answerEntry.place(relx=0.23, rely=0.32, relheight=0.3, relwidth=0.7)
 
+    addFileButton = Button(win, text="Add File", font=("Arial", 16))
+    addFileButton.place(relx=0.4, rely=0.68, relheight=0.1, relwidth=0.2)
+
     win.resizable(False, False)
     win.mainloop()
 
