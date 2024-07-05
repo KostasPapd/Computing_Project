@@ -59,7 +59,20 @@ def createQs(name, tName):
     titleLabel = Label(win, text="Add Question", font=("Arial", 20))
     titleLabel.place(relx=0.25, rely=0.03, relheight=0.13, relwidth=0.5)
 
+    questionLabel = Label(win, text="Question:", font=("Arial", 16))
+    questionLabel.place(relx=0.05, rely=0.2, relheight=0.05, relwidth=0.15)
 
+    quest = StringVar()
+    questionEntry = Entry(win, textvariable=quest, font=('Arial', 12))
+    questionEntry.place(relx=0.23, rely=0.2, relheight=0.06, relwidth=0.7)
+
+    answerLabel = Label(win, text="Answer:", font=("Arial", 16))
+    answerLabel.place(relx=0.05, rely=0.32, relheight=0.05, relwidth=0.15)
+
+    # CHANGE SO THE WRITING STARTS AT THE TOP AND IT GOES TO THE NEXT LINE WHEN IT REACHES THE END
+    answer = StringVar()
+    answerEntry = Entry(win, textvariable=answer, font=('Arial', 12))
+    answerEntry.place(relx=0.23, rely=0.32, relheight=0.3, relwidth=0.7)
 
     win.resizable(False, False)
     win.mainloop()
