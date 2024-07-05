@@ -1,5 +1,6 @@
 import tkinter
 from tkinter import *
+from tkinter import filedialog
 import SQLfunctions
 
 def createAssign(tName):
@@ -73,7 +74,10 @@ def createQs(name, tName):
     answerEntry = Text(win, font=('Arial', 10))
     answerEntry.place(relx=0.23, rely=0.32, relheight=0.5, relwidth=0.7)
 
-    addFileButton = Button(win, text="Add File", font=("Arial", 16))
+    def open_file_dialog():
+        filename = filedialog.askopenfilename()
+
+    addFileButton = Button(win, text="Add File", font=("Arial", 16), command=lambda: open_file_dialog())
     addFileButton.place(relx=0.05, rely=0.4, relheight=0.1, relwidth=0.17)
 
     nextButton = Button(win, text="Add question", font=("Arial", 16))
