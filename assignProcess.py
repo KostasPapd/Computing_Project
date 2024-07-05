@@ -70,15 +70,17 @@ def createQs(name, tName):
     answerLabel.place(relx=0.05, rely=0.32, relheight=0.05, relwidth=0.15)
 
     # CHANGE SO THE WRITING STARTS AT THE TOP AND IT GOES TO THE NEXT LINE WHEN IT REACHES THE END
-    answer = StringVar()
-    answerEntry = Entry(win, textvariable=answer, font=('Arial', 12))
-    answerEntry.place(relx=0.23, rely=0.32, relheight=0.3, relwidth=0.7)
+    answerEntry = Text(win, font=('Arial', 10))
+    answerEntry.place(relx=0.23, rely=0.32, relheight=0.5, relwidth=0.7)
 
     addFileButton = Button(win, text="Add File", font=("Arial", 16))
-    addFileButton.place(relx=0.4, rely=0.65, relheight=0.1, relwidth=0.2)
+    addFileButton.place(relx=0.05, rely=0.4, relheight=0.1, relwidth=0.17)
 
     nextButton = Button(win, text="Add question", font=("Arial", 16))
-    nextButton.place(relx=0.55, rely=0.8, relheight=0.1, relwidth=0.22)
+    nextButton.place(relx=0.55, rely=0.85, relheight=0.1, relwidth=0.22)
+
+    cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
+    cancelButton.place(relx=0.23, rely=0.85, relheight=0.1, relwidth=0.2)
 
     win.resizable(False, False)
     win.mainloop()
