@@ -155,8 +155,25 @@ def createClass(name, teacher, stuList):
             cur.execute(f"INSERT INTO {table_name} (student_name) VALUES ('{student}')")
         conn.commit()
     except Exception as e:
-        print(e)
         mg.showwarning("Connection Failed", "Unable to create class.")
+
+def getClass(tName):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT classNames FROM studClasses WHERE teacher = '{tName}'")
+        res = cur.fetchall()
+        if res is not None:
+            names = [row[0] for row in res]  # Extract the names from the tuples
+            return names
+        else:
+            return []
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to search for classes.")
+        return []
+
 
 if __name__ == "__main__":
     # For testing
