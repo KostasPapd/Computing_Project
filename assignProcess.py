@@ -27,6 +27,7 @@ def createAssign(tName):
     classLabel.place(relx=0.225, rely=0.45, relheight=0.13, relwidth=0.2)
 
     # classes = SQLfunctions.getClass(tName)
+
     classes = ["Class 1", "Class 2", "Class 3"]
     clicked = StringVar()
     clicked.set("Class")
@@ -58,14 +59,20 @@ def createQs(name, tName):
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
     titleLabel = Label(win, text="Add Question", font=("Arial", 20))
-    titleLabel.place(relx=0.25, rely=0.03, relheight=0.13, relwidth=0.5)
+    titleLabel.place(relx=0.25, rely=0.01, relheight=0.13, relwidth=0.5)
 
     questionLabel = Label(win, text="Question:", font=("Arial", 16))
-    questionLabel.place(relx=0.05, rely=0.2, relheight=0.05, relwidth=0.15)
+    questionLabel.place(relx=0.05, rely=0.12, relheight=0.05, relwidth=0.15)
 
     quest = StringVar()
     questionEntry = Entry(win, textvariable=quest, font=('Arial', 12))
-    questionEntry.place(relx=0.23, rely=0.2, relheight=0.06, relwidth=0.7)
+    questionEntry.place(relx=0.23, rely=0.12, relheight=0.06, relwidth=0.7)
+
+    marksLabel = Label(win, text="Marks:", font=("Arial", 16))
+    marksLabel.place(relx=0.06, rely=0.22, relheight=0.05, relwidth=0.15)
+
+    marksEntry = Text(win, font=("Arial", 16))
+    marksEntry.place(relx=0.23, rely=0.22, relheight=0.06, relwidth=0.1)
 
     answerLabel = Label(win, text="Answer:", font=("Arial", 16))
     answerLabel.place(relx=0.05, rely=0.32, relheight=0.05, relwidth=0.15)
@@ -78,7 +85,7 @@ def createQs(name, tName):
         filename = filedialog.askopenfilename()
 
     addFileButton = Button(win, text="Add File", font=("Arial", 16), command=lambda: open_file_dialog())
-    addFileButton.place(relx=0.05, rely=0.4, relheight=0.1, relwidth=0.17)
+    # addFileButton.place(relx=0.05, rely=0.4, relheight=0.1, relwidth=0.17)
 
     nextButton = Button(win, text="Add question", font=("Arial", 16))
     nextButton.place(relx=0.55, rely=0.85, relheight=0.1, relwidth=0.22)
@@ -86,6 +93,7 @@ def createQs(name, tName):
     cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
     cancelButton.place(relx=0.23, rely=0.85, relheight=0.1, relwidth=0.2)
 
+    questionEntry.focus()
     win.resizable(False, False)
     win.mainloop()
 
