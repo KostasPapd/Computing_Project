@@ -152,7 +152,7 @@ def sendEmailCreate(email, password, name):
     smtpObj.quit()
 
 # COME BACK AND FIX EMPTY LIST
-def stuListUI(name):
+def stuListUI(name, updated):
     win = Toplevel()
 
     wWidth = 600
@@ -179,12 +179,13 @@ def stuListUI(name):
             stuList.insert(END, student)
     stuList.pack(side=LEFT, fill=BOTH)
 
-    selectedStu = StringVar()
+    selectedStu = []
 
     def select():
-        # CHANGE TO GET AND RETURN THE VALUES
+        nonlocal selectedStu
         selected = stuList.curselection()
         selectedStu = [stuList.get(n) for n in selected]
+        updated(selectedStu)
         win.destroy()
 
     selectButton = Button(win, text="Select", font=("Arial", 18), command=select)
@@ -196,8 +197,6 @@ def stuListUI(name):
 
     win.resizable(False, False)
     win.mainloop()
-
-    return selectedStu.get()
 
 
 def createClassUI(Tname):
@@ -221,9 +220,12 @@ def createClassUI(Tname):
     nameBox.place(relx=0.35, rely=0.28, relheight=0.08, relwidth=0.55)
 
     students = []
-    def addStu(Tname):
+
+    def update_students(selected_students):
         nonlocal students
-        students = stuListUI(Tname)
+        students = selected_students
+    def addStu(Tname):
+        stuListUI(Tname, update_students)
 
     stuLabel = Label(win, text="Students:", font=("Arial", 16))
     stuLabel.place(relx=0.09, rely=0.5, relheight=0.13, relwidth=0.3)
@@ -232,8 +234,7 @@ def createClassUI(Tname):
     stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
     def create_class():
-        #SQLfunctions.createClass(nameVar.get(), Tname, students)
-        print(students)
+        # SQLfunctions.createClass(nameVar.get(), Tname, students)
         win.destroy()
 
     createBut = Button(win, text="Create Class", font=("Arial", 16), command=create_class)
@@ -250,6 +251,6 @@ def createClassUI(Tname):
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    # createClassUI("Kostas Papadopoulos")
+    createClassUI("Kostas Papadopoulos")
     # stuListUI("Kostas Papadopoulos")
     pass
