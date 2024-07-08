@@ -1,7 +1,9 @@
 import tkinter
 from tkinter import *
 from tkinter import filedialog
+from tkcalendar import Calendar
 import SQLfunctions
+
 
 def createAssign(tName):
     win = Toplevel()
@@ -24,7 +26,7 @@ def createAssign(tName):
     nameEntry.place(relx=0.4, rely=0.28, relheight=0.07, relwidth=0.5)
 
     classLabel = Label(win, text="Class:", font=("Arial", 16))
-    classLabel.place(relx=0.225, rely=0.45, relheight=0.13, relwidth=0.2)
+    classLabel.place(relx=0.225, rely=0.4, relheight=0.13, relwidth=0.2)
 
     # classes = SQLfunctions.getClass(tName)
 
@@ -32,7 +34,26 @@ def createAssign(tName):
     clicked = StringVar()
     clicked.set("Class")
     classMenu = OptionMenu(win, clicked, *classes)
-    classMenu.place(relx=0.4, rely=0.46, relheight=0.1, relwidth=0.25)
+    classMenu.place(relx=0.4, rely=0.41, relheight=0.1, relwidth=0.25)
+
+    def calendar():
+        top = Toplevel(win)
+        top.title("Choose Date")
+        cal = Calendar(top, selectmode='day', year=2024, month=1, day=1)
+        cal.pack(pady=20)
+
+        def get_date():
+            date = cal.selection_get()
+            top.destroy()
+
+        select = Button(top, text="Select", font=("Arial", 14), command=get_date)
+        select.pack()
+
+    dueLabel = Label(win, text="Due:", font=("Arial", 16))
+    dueLabel.place(relx=0.26, rely=0.55, relheight=0.1, relwidth=0.15)
+
+    dueButton = Button(win, text="Choose Date", font=("Arial", 10), command=lambda: calendar())
+    dueButton.place(relx=0.4, rely=0.55, relheight=0.1, relwidth=0.25)
 
     nextButton = Button(win, text="Next", font=("Arial", 16), command=lambda: SQLfunctions.createAssign(nameVar.get()
                                                                                                         , tName, win))
@@ -99,6 +120,6 @@ def createQs(name, tName):
 
 
 if __name__ == "__main__":
-    # createAssign("Kostas Papadopoulos")
-    createQs("Test", "Kostas Papadopoulos")
+    createAssign("Kostas Papadopoulos")
+    # createQs("Test", "Kostas Papadopoulos")
     pass
