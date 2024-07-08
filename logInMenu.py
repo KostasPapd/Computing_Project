@@ -38,7 +38,7 @@ def createLogIn():
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
-    win.title("Log In")
+    win.title("The Physics Lab - Log In")
 
     password_variable = tkinter.StringVar()
 
