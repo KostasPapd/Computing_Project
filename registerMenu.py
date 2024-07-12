@@ -5,7 +5,7 @@ from tkinter import messagebox
 from processWindows import sendEmailCreate
 import SQLfunctions
 
-def checkVal(email, password, window, name, teacherName):
+def checkVal(email, password, window, name, teacherID):
     if validEmail(email) == False:
         messagebox.showwarning("Invalid email", "The email you have entered is invalid")
     elif SQLfunctions.checkEmail(email) == False:
@@ -17,12 +17,12 @@ def checkVal(email, password, window, name, teacherName):
                                                    "lowercase letter, a number, a special character (!@_&) and "
                                                    "between 8 and 20 characters")
     else:
-        SQLfunctions.registerAcc(email, password, name, teacherName)
+        SQLfunctions.registerAcc(email, password, name, teacherID)
         sendEmailCreate(email, password, name)
         messagebox.showinfo("Account Created", "Account has been created and details have been sent to student")
         window.destroy()
 
-def getVal(nameBox, emailBox, passBox, repassBox, window, teacherName):
+def getVal(nameBox, emailBox, passBox, repassBox, window, teacherID):
     # Strip gets rid of whitespace at the beginning or the end of the string
     # 1.0 and end-1c is where the indexing starts and ends
     name = nameBox.get("1.0", "end-1c")
@@ -46,7 +46,7 @@ def getVal(nameBox, emailBox, passBox, repassBox, window, teacherName):
         if password != repassword:
             messagebox.showwarning("Passwords don't match", "Passwords don't match. Please try again")
         else:
-            checkVal(email, password, window, name, teacherName)
+            checkVal(email, password, window, name, teacherID)
 
 def togglePass(passBox):
     if passBox.cget("show") == "•":
@@ -55,7 +55,7 @@ def togglePass(passBox):
         passBox.config(show="•")
 
 
-def createBox(teacherName):
+def createBox(teacherID):
     window = Toplevel()
 
     wWidth = 500
@@ -75,7 +75,7 @@ def createBox(teacherName):
     titleLabel.place(relx=0.27, rely=0.01, relheight=0.11, relwidth=0.5)
 
     registerButton = Button(window, text="Register Account", command=lambda: getVal(nameBox, emailBox, passBox,
-                                                                                    repassBox, window, teacherName))
+                                                                                    repassBox, window, teacherID))
     registerButton.config(font=("Arial", 16))
     registerButton.place(relx=0.12, rely=0.7, relheight=0.11, relwidth=0.4)
 
@@ -128,5 +128,5 @@ def createBox(teacherName):
 
 if __name__ == "__main__":
     # Testing
-    createBox("Kostas Papadopoulos")
+    createBox(1)
     pass

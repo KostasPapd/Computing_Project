@@ -15,11 +15,11 @@ add more commands to the menu bar.
 
 
 class MenuBar(Frame):
-    def __init__(self, user="", password="", name=""):
+    def __init__(self, user="", password="", id=None):
         super().__init__()
         self.user = user
         self.passw = password
-        self.name = name
+        self.id = id
         self.toolBarMenu()
 
     def toolBarMenu(self):
@@ -28,7 +28,7 @@ class MenuBar(Frame):
 
         accMenu = Menu(toolBar)
         accMenu.add_command(label="Create Student Account",  font=("Helvetica", 9),
-                            command=lambda: registerMenu.createBox(self.name))
+                            command=lambda: registerMenu.createBox(self.id))
         accMenu.add_command(label="- "*18, font=("Helvetica", 9))
         accMenu.add_command(label="Your Account:", font=("Helvetica", 9))
         accMenu.add_command(label="Change Email", font=("Helvetica", 9),
@@ -38,7 +38,7 @@ class MenuBar(Frame):
 
         classMenu = Menu(toolBar)
         classMenu.add_command(label="Create Class", font=("Helvetica", 9),
-                              command=lambda: createClassUI(self.name))
+                              command=lambda: createClassUI(self.id))
         classMenu.add_command(label="Delete Class", font=("Helvetica", 9))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
@@ -51,11 +51,11 @@ class MenuBar(Frame):
         self.quit()
 
 
-def createView(user, password, name):
+def createView(user, password, teach_id):
     win = Tk()
     win.title("The Physics Lab - Admin")
     win.geometry("500x500")
-    toolB = MenuBar(user, password, name)
+    toolB = MenuBar(user, password, teach_id)
 
     win.state("zoomed")
     win.resizable(False, False)
@@ -64,5 +64,5 @@ def createView(user, password, name):
 
 if __name__ == "__main__":
     # Testing
-    createView("test", "password", "test name")
+    createView("test", "password", 1)
     pass

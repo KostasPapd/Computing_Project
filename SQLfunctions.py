@@ -46,11 +46,12 @@ def registerAcc(email, password, name, teacher):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         passw = hashPassword(password)
-        cur.execute(f"INSERT INTO main_acc (class_id name, password, email, teacher) "
+        cur.execute(f"INSERT INTO main_acc (class_id name, password, email, teacher_id) "
                     f"VALUES ('NULL', '{name}', '{passw}', '{email}', '{teacher}')")
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
+        print(e)
 
 
 def checkEmail(email):
@@ -85,7 +86,7 @@ def checkLogIn(user, passw):
                 cur.execute(f"SELECT * FROM admin_acc WHERE email = '{user}' AND password = '{passw}'")
                 result = cur.fetchone()
                 if result is not None:
-                    return "Admin", result[3], user, passw
+                    return "Admin", result[3], getTeachID(user), passw
                 else:
                     return None
             except Exception as e:
@@ -215,6 +216,7 @@ def addQuestion():
 
 if __name__ == "__main__":
     # For testing
-    getTeachID("Kostas Papadopoulos")
+    # getTeachID("Kostas Papadopoulos")
     # getStudents("Kostas Papadopoulos")
+    registerAcc("test", "test", "test", 1)
     pass
