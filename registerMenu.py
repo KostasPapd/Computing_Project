@@ -128,5 +128,5 @@ def createBox(teacherName):
 
 if __name__ == "__main__":
     # Testing
-    # createBox("test")
+    createBox("Kostas Papadopoulos")
     pass

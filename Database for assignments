@@ -1,0 +1,64 @@
+To store the assignment databases effectively for a homework program, consider the following approach using PostgreSQL, which aligns with the database interactions already present in your project:
+
+### Database Schema Design
+
+1. **Assignments Table**: Store general information about each assignment.
+   - `assignment_id`: Primary Key, SERIAL
+   - `title`: VARCHAR, the title of the assignment
+   - `class_id`: INTEGER, foreign key linking to the Classes table
+   - `due_date`: DATE, the due date for the assignment
+   - `teacher_id`: INTEGER, foreign key linking to the Teachers table
+
+2. **Questions Table**: Store questions for each assignment.
+   - `question_id`: Primary Key, SERIAL
+   - `assignment_id`: INTEGER, foreign key linking to the Assignments table
+   - `question_text`: TEXT, the text of the question
+   - `marks`: INTEGER, the marks allocated for the question
+   - `question_type`: VARCHAR, the type of question (e.g., multiple choice, short answer)
+
+3. **Classes Table**: Store information about each class.
+   - `class_id`: Primary Key, SERIAL
+   - `class_name`: VARCHAR, the name of the class
+   - `teacher_id`: INTEGER, foreign key linking to the Teachers table
+
+4. **Teachers Table**: Store information about teachers.
+   - `teacher_id`: Primary Key, SERIAL
+   - `name`: VARCHAR, the name of the teacher
+   - `email`: VARCHAR, unique, the email of the teacher
+
+5. **Students Table**: Store information about students.
+   - `student_id`: Primary Key, SERIAL
+   - `name`: VARCHAR, the name of the student
+   - `class_id`: INTEGER, foreign key linking to the Classes table
+
+6. **Submissions Table**: Store students' submissions for assignments.
+   - `submission_id`: Primary Key, SERIAL
+   - `assignment_id`: INTEGER, foreign key linking to the Assignments table
+   - `student_id`: INTEGER, foreign key linking to the Students table
+   - `submission_date`: TIMESTAMP, the date and time of submission
+   - `grade`: INTEGER, the grade awarded for the submission
+
+### SQL Code for Table Creation
+
+```sql
+CREATE TABLE Teachers (
+    teacher_id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE Classes (
+    class_id SERIAL PRIMARY KEY,
+    class_name VARCHAR(255),
+    teacher_id INTEGER REFERENCES Teachers(teacher_id)
+);
+
+CREATE TABLE Students (
+    student_id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    class_id INTEGER REFERENCES Classes(class_id)
+);
+
+CREATE TABLE Assignments (
+    assignment_id SERIAL PRIMARY KEY,
+    title VARCHAR(255),

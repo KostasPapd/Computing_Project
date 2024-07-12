@@ -21,6 +21,21 @@ def hashPassword(password):
     hashPass = hash_object.hexdigest()
     return hashPass
 
+def getTeachID(tName):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT id FROM admin_acc WHERE teacher = '{tName}'")
+        res = cur.fetchall()
+        print(res)
+        return res
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to find ID")
+        print(e)
+
 def registerAcc(email, password, name, teacher):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -29,8 +44,8 @@ def registerAcc(email, password, name, teacher):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         passw = hashPassword(password)
-        cur.execute(f"INSERT INTO main_acc (name, password, email, teacher) "
-                    f"VALUES ('{name}', '{passw}', '{email}', '{teacher}')")
+        cur.execute(f"INSERT INTO main_acc (class_id name, password, email, teacher) "
+                    f"VALUES ('NULL', '{name}', '{passw}', '{email}', '{teacher}')")
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
@@ -198,5 +213,6 @@ def addQuestion():
 
 if __name__ == "__main__":
     # For testing
+    getTeachID("Kostas Papadopoulos")
     # getStudents("Kostas Papadopoulos")
     pass
