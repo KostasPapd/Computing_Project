@@ -28,13 +28,15 @@ def getTeachID(tName):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT id FROM admin_acc WHERE teacher = '{tName}'")
-        res = cur.fetchall()
-        print(res)
-        return res
+        cur.execute(f"SELECT id FROM admin_acc WHERE name = '{tName}'")
+        res = cur.fetchone()
+        if res:
+            return res[0]
+        else:
+            return None
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to find ID")
-        print(e)
+        return None
 
 def registerAcc(email, password, name, teacher):
     load_dotenv()
