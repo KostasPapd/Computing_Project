@@ -1,5 +1,5 @@
 """
-All the SQL/database functions will go in this program#
+All the SQL/database functions will go in this program
 
 Add to here:
 Send email function - search for the email entered and then return all the student's information
