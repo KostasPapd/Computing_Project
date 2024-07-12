@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, ttk
 from tkcalendar import Calendar
 import SQLfunctions
 
@@ -101,6 +101,15 @@ def createQs(name, tName):
     # CHANGE SO THE WRITING STARTS AT THE TOP AND IT GOES TO THE NEXT LINE WHEN IT REACHES THE END
     answerEntry = Text(win, font=('Arial', 10))
     answerEntry.place(relx=0.23, rely=0.32, relheight=0.5, relwidth=0.7)
+
+    typeLabel = Label(win, text="Type:", font=("Arial", 16))
+    typeLabel.place(relx=0.4, rely=0.22, relheight=0.06, relwidth=0.15)
+
+    options = ["Standard answer", "Calculation"]
+    clicked = StringVar()
+    clicked.set("Type of Question")
+    typeMenu = OptionMenu(win, clicked, *options)
+    typeMenu.place(relx=0.52, rely=0.21, relheight=0.08, relwidth=0.22)
 
     def open_file_dialog():
         filename = filedialog.askopenfilename()
