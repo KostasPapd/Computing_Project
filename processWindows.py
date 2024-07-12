@@ -152,7 +152,7 @@ def sendEmailCreate(email, password, name):
     smtpObj.quit()
 
 # COME BACK AND FIX EMPTY LIST
-def stuListUI(name, updated):
+def stuListUI(t_ID, updated):
     win = Toplevel()
 
     wWidth = 600
@@ -169,7 +169,7 @@ def stuListUI(name, updated):
     scroll = Scrollbar(win)
     scroll.pack(side=RIGHT, fill=Y)
 
-    students = SQLfunctions.getStudents(name)
+    students = SQLfunctions.getStudents(t_ID)
     stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
 
@@ -199,7 +199,7 @@ def stuListUI(name, updated):
     win.mainloop()
 
 
-def createClassUI(Tname):
+def createClassUI(t_ID):
     win = Toplevel()
 
     wWidth = 500
@@ -224,17 +224,17 @@ def createClassUI(Tname):
     def update_students(selected_students):
         nonlocal students
         students = selected_students
-    def addStu(Tname):
-        stuListUI(Tname, update_students)
+    def addStu(t_ID):
+        stuListUI(t_ID, update_students)
 
     stuLabel = Label(win, text="Students:", font=("Arial", 16))
     stuLabel.place(relx=0.09, rely=0.5, relheight=0.13, relwidth=0.3)
-    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: addStu(Tname))
+    stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: addStu(t_ID))
     # Add command that opens a new window and runs the sql
     stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
     def create_class():
-        # SQLfunctions.createClass(nameVar.get(), Tname, students)
+        # SQLfunctions.createClass(nameVar.get(), t_ID, students)
         win.destroy()
 
     createBut = Button(win, text="Create Class", font=("Arial", 16), command=create_class)
@@ -251,6 +251,6 @@ def createClassUI(Tname):
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    createClassUI("Kostas Papadopoulos")
-    # stuListUI("Kostas Papadopoulos")
+    createClassUI(1)
+    # stuListUI(1)
     pass

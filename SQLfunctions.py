@@ -150,7 +150,7 @@ def getStudents(teacher):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT name FROM main_acc WHERE teacher = '{teacher}'")
+        cur.execute(f"SELECT name FROM main_acc WHERE teacher_id = '{teacher}'")
         res = cur.fetchall()
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
@@ -161,7 +161,7 @@ def getStudents(teacher):
         mg.showwarning("Connection Failed", "Unable to fetch students.")
         return []
 
-
+#CHANGE SO IT JUST CHANGES THE CLASS ID ON THE main_acc TABLE
 def createClass(name, teacher, stuList):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -177,13 +177,13 @@ def createClass(name, teacher, stuList):
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create class.")
 
-def getClass(tName):
+def getClass(t_ID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT classNames FROM studClasses WHERE teacher = '{tName}'")
+        cur.execute(f"SELECT classNames FROM studClasses WHERE teacher_id = '{t_ID}'")
         res = cur.fetchall()
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
@@ -194,17 +194,17 @@ def getClass(tName):
         mg.showwarning("Connection Failed", "Unable to search for classes.")
         return []
 
-def createAssign(name, Tname, win):
+def createAssign(name, t_ID, win):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
-        table_name = f"\"{name}_{Tname}\""
+        table_name = f"\"{name}_{t_ID}\""
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
                     f"question varchar(255), answer varchar(255))")
         conn.commit()
-        assignProcess.nextAssign(name, Tname, win)
+        assignProcess.nextAssign(name, t_ID, win)
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create assignment.")
         print(e)
