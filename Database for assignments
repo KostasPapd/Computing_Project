@@ -1,4 +1,5 @@
-To store the assignment databases effectively for a homework program, consider the following approach using PostgreSQL, which aligns with the database interactions already present in your project:
+To store the assignment databases effectively for a homework program, consider the following approach using PostgreSQL,
+which aligns with the database interactions already present in your project:
 
 ### Database Schema Design
 
