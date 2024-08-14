@@ -33,6 +33,9 @@ def createTable(tID, cID):
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    assignLabel = Label(win, text="Assignments", font=("Arial", 20))
+    assignLabel.pack()
+
     assignments = database(tID, cID)
 
     for i in range(len(assignments)):
