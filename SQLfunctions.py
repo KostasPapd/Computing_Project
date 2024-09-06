@@ -214,9 +214,23 @@ def addQuestion():
     pass
 
 
+def checkType(assign_name, question_num):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT question_type FROM {assign_name} WHERE question_id = {question_num}")
+        res = cur.fetchone()
+        return res[0]
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
+        return None
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")
     # getStudents("Kostas Papadopoulos")
-    registerAcc("test", "test", "test", 1)
+    # registerAcc("test", "test", "test", 1)
+    checkType("test_assignment", 1)
     pass
