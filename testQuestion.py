@@ -38,6 +38,25 @@ def createWindow(assignName, questionNum):
 
     def open_file_dialog():
         filename = filedialog.askopenfilename()
+        if filename:
+            # Define the directory where you want to save the files
+            save_directory = "uploaded_files/"
+            if not os.path.exists(save_directory):
+                os.makedirs(save_directory)
+
+            # Get the base name of the file
+            base_filename = os.path.basename(filename)
+
+            # Define the full path where the file will be saved
+            save_path = os.path.join(save_directory, base_filename)
+
+            # Copy the file to the save directory
+            with open(filename, 'rb') as src_file:
+                with open(save_path, 'wb') as dest_file:
+                    dest_file.write(src_file.read())
+
+            return save_path
+        return None
 
 
     if checkType(assignName, questionNum) == "Standard answer":
