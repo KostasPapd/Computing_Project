@@ -7,6 +7,13 @@ from dotenv import load_dotenv
 
 from SQLfunctions import checkType
 
+def next(assignID, questionNum):
+    questionNum += 1
+    createWindow(assignID, questionNum)
+
+def previous(assignID, questionNum):
+    questionNum -= 1
+    createWindow(assignID, questionNum)
 
 def pullQuestions(assignment, questionNum):
     load_dotenv()
@@ -22,7 +29,24 @@ def pullQuestions(assignment, questionNum):
         mg.showwarning("Connection Failed", e)
 
 
-def createWindow(assignName, questionNum):
+def add_placeholder(text_widget, placeholder_text):
+    def on_focus_in(event):
+        if text_widget.get("1.0", "end-1c") == placeholder_text:
+            text_widget.delete("1.0", "end")
+            text_widget.config(fg='black')
+
+    def on_focus_out(event):
+        if text_widget.get("1.0", "end-1c") == "":
+            text_widget.insert("1.0", placeholder_text)
+            text_widget.config(fg='grey')
+
+    text_widget.insert("1.0", placeholder_text)
+    text_widget.config(fg='grey')
+    text_widget.bind("<FocusIn>", on_focus_in)
+    text_widget.bind("<FocusOut>", on_focus_out)
+
+
+def createWindow(assignID, questionNum):
     win = Tk()
 
     win.title("Test Questions")
@@ -59,16 +83,20 @@ def createWindow(assignName, questionNum):
         return None
 
 
-    if checkType(assignName, questionNum) == "Standard answer":
-        orLabel = Label(win, text="or (show all working out)", font=("Arial", 20))
+    if checkType(assignID, questionNum) == "Calculation":
+        orLabel = Label(win, text="or", font=("Arial", 20))
         orLabel.place(relx=0.5, rely=0.15)
         answerButton = Button(win, text="Upload Answer", font=("Arial", 18), command=lambda: open_file_dialog())
         answerButton.place(relx=0.2, rely=0.14, relheight=0.1, relwidth=0.25)
         answerEntry = Text(win, font=("Arial", 14))
+        add_placeholder(answerEntry, "Enter your answer here... (show all working out)")
         answerEntry.place(relx=0.2, rely=0.3, relheight=0.4, relwidth=0.7)
+    else:
+        answerEntry = Text(win, font=("Arial", 14))
+        add_placeholder(answerEntry, "Enter your answer here...")
+        answerEntry.place(relx=0.2, rely=0.17, relheight=0.6, relwidth=0.75)
 
-
-    data = pullQuestions(assignName, questionNum)
+    data = pullQuestions(assignID, questionNum)
     questionLabel = Label(win, text=data[0], font=("Arial", 20))
     questionLabel.pack()
 
@@ -76,9 +104,7 @@ def createWindow(assignName, questionNum):
     win.mainloop()
 
 
-def main(assignName, questionNum):
-    questionNum += 1
-    createWindow(assignName, questionNum)
+
 
 if __name__ == "__main__":
-    main("test_assignment", 0)
+    next(1, 0)

@@ -8,6 +8,7 @@ from tkinter import messagebox as mg
 import psycopg2
 import os
 from dotenv import load_dotenv
+from testQuestion import next
 
 def database(tID, cID):
     load_dotenv()
@@ -21,6 +22,7 @@ def database(tID, cID):
         return data
     except Exception as e:
         mg.showwarning("Connection Failed", e)
+        return []
 
 def createTable(tID, cID):
     win = Tk()
@@ -38,8 +40,12 @@ def createTable(tID, cID):
 
     assignments = database(tID, cID)
 
-    for i in range(len(assignments)):
-        Button(win, text=f"Assignment: {assignments[i][1]} , Due: {assignments[i][3]}", font=("Arial", 16)).pack()
+    if not assignments:
+        Label(win, text="No assignments found.", font=("Arial", 16)).pack()
+    else:
+        for i in range(len(assignments)):
+            Button(win, text=f"Assignment: {assignments[i][1]} , Due: {assignments[i][3]}", font=("Arial", 16),
+                   command=lambda: ).pack()
 
     win.resizable(False, False)
     win.mainloop()
