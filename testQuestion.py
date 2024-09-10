@@ -1,3 +1,7 @@
+"""
+Change so it takes name of assignment or find a different way
+"""
+
 from tkinter import *
 from tkinter import messagebox as mg
 from tkinter import filedialog, ttk
