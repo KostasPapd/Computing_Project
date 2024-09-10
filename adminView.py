@@ -2,6 +2,7 @@ from tkinter import *
 import registerMenu
 import logInMenu
 from processWindows import changeEmailUI, changePassUI, createClassUI
+from assignProcess import createAssign
 
 def signOut(win):
     win.destroy()
@@ -43,7 +44,6 @@ class MenuBar(Frame):
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
         toolBar.add_cascade(label="Classes", menu=classMenu)
-        toolBar.add_command(label="Assignments")
         toolBar.add_command(label="Sign Out", command=lambda: signOut(self.master))
         toolBar.add_command(label="Exit", command=self.exit)
 
@@ -54,10 +54,20 @@ class MenuBar(Frame):
 def createView(user, password, teach_id):
     win = Tk()
     win.title("The Physics Lab - Admin")
-    win.geometry("500x500")
+    wWidth = 500
+    wHeight = 500
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
     toolB = MenuBar(user, password, teach_id)
 
-    win.state("zoomed")
+    welcomeLabel = Label(win, text=f"Welcome, {user}", font=("Helvetica", 20))
+    welcomeLabel.place(relx= 0.25, rely= 0.02, relheight= 0.1, relwidth= 0.5)
+
+    createAssignButtton = Button(win, text="Create Assignment", font=("Helvetica", 18),
+                                 command=lambda: createAssign(teach_id))
+    createAssignButtton.place(relx=0.25, rely=0.2, relheight=0.1, relwidth=0.5)
+
     win.resizable(False, False)
     win.mainloop()
 

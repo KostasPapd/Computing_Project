@@ -5,7 +5,7 @@ from tkcalendar import Calendar
 import SQLfunctions
 
 
-def createAssign(tName):
+def createAssign(tID):
     win = Toplevel()
     win.title("Create Assignment")
 
@@ -56,7 +56,7 @@ def createAssign(tName):
     dueButton.place(relx=0.4, rely=0.55, relheight=0.1, relwidth=0.25)
 
     nextButton = Button(win, text="Next", font=("Arial", 16), command=lambda: SQLfunctions.createAssign(nameVar.get()
-                                                                                                        , tName, win))
+                                                                                                        , tID, win))
     nextButton.place(relx=0.6, rely=0.7, relheight=0.13, relwidth=0.2)
 
     cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
@@ -129,6 +129,6 @@ def createQs(name, tName):
 
 
 if __name__ == "__main__":
-    createAssign("Kostas Papadopoulos")
+    createAssign(1)
     # createQs("Test", "Kostas Papadopoulos")
     pass

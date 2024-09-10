@@ -3,6 +3,9 @@ import logInMenu
 import processWindows
 
 # ADD CLASS TO CREATE MENU BAR
+"""
+Add the assignments list to the student view
+"""
 
 def signOut(win):
     win.destroy()
@@ -59,12 +62,6 @@ class MenuBar(Frame):
             self.frames["assignments"] = Assignments(self.master)
         self.frames["assignments"].pack(fill="both", expand=True)
 
-    def showStats(self):
-        self.hide()
-        if "statistics" not in self.frames:
-            self.frames["statistics"] = Statistics(self.master)
-        self.frames["statistics"].pack(fill="both", expand=True)
-
     def exit(self):
         self.quit()
 
@@ -74,12 +71,15 @@ def createStudent(name, email, password):
     win = Tk()
     nameText = name
     win.title(f"The Physics Lab - {name}")
-    win.geometry("500x500")
+    wWidth = 500
+    wHeight = 500
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
     toolB = MenuBar(email, password)
 
     Assignments()
 
-    win.state("zoomed")
     win.resizable(False, False)
     win.mainloop()
 
