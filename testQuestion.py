@@ -1,5 +1,6 @@
 """
 Change so it takes name of assignment or find a different way
+Change to classes
 """
 
 from tkinter import *
