@@ -198,7 +198,7 @@ def createAssign(name, t_ID, win):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
-        table_name = f"\"{name}_{t_ID}\""
+        table_name = processWindows.createAssignmentNumber()
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
@@ -226,6 +226,22 @@ def checkType(assign_name, question_num):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
         return None
+
+def checkAssignmentNumber(ID):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("SELECT 1 FROM assignments WHERE title_id = %s", (ID,))
+        res = cur.fetchone()
+        return res is not None
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to check title ID. {e}")
+        return False
+    finally:
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     # For testing

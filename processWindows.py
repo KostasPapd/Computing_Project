@@ -1,4 +1,7 @@
 """
+MAKE ASSIGNMENT TABLE THE ASSIGNMENT ID AND PUT THAT INTO ASSIGNMENTS TABLE SO I CAN SEARCH USING THE TITLE ID
+
+
 The UI and many processes will go in here
 
 Add:
@@ -11,7 +14,7 @@ from tkinter import *
 import smtplib
 from tkinter import messagebox as mg
 import SQLfunctions
-
+import random
 
 def checkPassword(passw, repassw, level, user, window):
     from isValid import validatePassword
@@ -247,10 +250,21 @@ def createClassUI(t_ID):
     win.resizable(False, False)
     win.mainloop()
 
+def createAssignmentNumber():
+    assignmentID = ""
+    for i in range(8):
+        assignmentID += str(random.randint(0, 9))
+    if SQLfunctions.checkAssignmentNumber(assignmentID) == False:
+        return assignmentID
+    else:
+        createAssignmentNumber()
+
+
 
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    createClassUI(1)
+    #createClassUI(1)
     # stuListUI(1)
+    createAssignmentNumber()
     pass
