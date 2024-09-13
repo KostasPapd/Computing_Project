@@ -1,6 +1,11 @@
 """
 All the SQL/database functions will go in this program
 
+CHANGE THE CODE SO NO INJECTIONS
+e.g.
+sql = "SELECT id FROM admin_acc WHERE name = %s"
+cur.execute(sql, (tName))
+
 Add to here:
 Send email function - search for the email entered and then return all the student's information
 """
@@ -68,7 +73,7 @@ def checkEmail(email):
         else:
             return True
     except Exception as e:
-        mg.showwarning("Connection Failed", "Unable to check if user exists.")
+        mg.showwarning("Connection Failed", f"Unable to check if user exists. {e}")
 
 def checkLogIn(user, passw):
     load_dotenv()
@@ -92,7 +97,7 @@ def checkLogIn(user, passw):
             except Exception as e:
                 mg.showwarning("Connection Failed", "Unable to check if user exists.")
     except Exception as e:
-        mg.showwarning("Connection Failed", "Unable to check if user exists.")
+        mg.showwarning("Connection Failed", f"Unable to check if user exists. {e}")
 
 
 
@@ -183,7 +188,7 @@ def getClass(t_ID):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT classNames FROM studClasses WHERE teacher_id = '{t_ID}'")
+        cur.execute(f"SELECT class_names FROM stud_classes WHERE teacher_id = '{t_ID}'")
         res = cur.fetchall()
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
@@ -194,19 +199,42 @@ def getClass(t_ID):
         mg.showwarning("Connection Failed", "Unable to search for classes.")
         return []
 
-def createAssign(name, t_ID, win):
+def getClassID(className):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
-        table_name = processWindows.createAssignmentNumber()
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
-                    f"question varchar(255), answer varchar(255))")
-        conn.commit()
-        assignProcess.nextAssign(name, t_ID, win)
+        cur.execute("SELECT id FROM stud_classes WHERE class_names = %s", (className,))
+        res = cur.fetchone()
+        return res[0]
     except Exception as e:
-        mg.showwarning("Connection Failed", "Unable to create assignment.")
+        mg.showwarning("Connection Failed", e)
+
+def createAssign(t_ID, win, title, className, dueDate):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        table_name = table_name = f"\"a{processWindows.createAssignmentNumber()}\""
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+
+        class_id = getClassID(className)
+        if class_id is None:
+            class_id = 'NULL'
+        else:
+            class_id = f"'{class_id}'"
+
+        cur.execute(f"INSERT INTO assignments (title_id, title, class_id, due_date, teacher_id) VALUES "
+                    f"('{table_name}', '{title}', {class_id}, '{dueDate}', '{t_ID}')")
+
+        cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
+                    f"assignment_id INT REFERENCES assignments(assign_id),"
+                    f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))")
+        conn.commit()
+        assignProcess.nextAssign(t_ID, win)
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to create assignment. {e}")
         print(e)
 
 
@@ -248,5 +276,5 @@ if __name__ == "__main__":
     # getTeachID("Kostas Papadopoulos")
     # getStudents("Kostas Papadopoulos")
     # registerAcc("test", "test", "test", 1)
-    checkType("test_assignment", 1)
+    # checkType("test_assignment", 1)
     pass

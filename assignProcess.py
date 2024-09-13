@@ -30,11 +30,13 @@ def createAssign(tID):
 
     # classes = SQLfunctions.getClass(tName)
 
-    classes = ["Class 1", "Class 2", "Class 3"]
+    classes = ["Class 1", "Class 2", "Class 3", "Test Class"]
     clicked = StringVar()
     clicked.set("Class")
     classMenu = OptionMenu(win, clicked, *classes)
     classMenu.place(relx=0.4, rely=0.41, relheight=0.1, relwidth=0.25)
+
+    dateVar = StringVar()
 
     def calendar():
         top = Toplevel(win)
@@ -44,10 +46,12 @@ def createAssign(tID):
 
         def get_date():
             date = cal.selection_get()
+            dateVar.set(date)
             top.destroy()
 
         select = Button(top, text="Select", font=("Arial", 14), command=get_date)
         select.pack()
+
 
     dueLabel = Label(win, text="Due:", font=("Arial", 16))
     dueLabel.place(relx=0.26, rely=0.55, relheight=0.1, relwidth=0.15)
@@ -55,8 +59,9 @@ def createAssign(tID):
     dueButton = Button(win, text="Choose Date", font=("Arial", 10), command=lambda: calendar())
     dueButton.place(relx=0.4, rely=0.55, relheight=0.1, relwidth=0.25)
 
-    nextButton = Button(win, text="Next", font=("Arial", 16), command=lambda: SQLfunctions.createAssign(nameVar.get()
-                                                                                                        , tID, win))
+    nextButton = Button(win, text="Next", font=("Arial", 16),
+                        command=lambda: SQLfunctions.createAssign(tID, win, nameVar.get(), clicked.get(),
+                                                                  dateVar.get()))
     nextButton.place(relx=0.6, rely=0.7, relheight=0.13, relwidth=0.2)
 
     cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
@@ -65,11 +70,11 @@ def createAssign(tID):
     win.resizable(False, False)
     win.mainloop()
 
-def nextAssign(name, tName, win):
+def nextAssign(tName, win):
     win.destroy()
-    createQs(name, tName)
+    createQs(tName)
 
-def createQs(name, tName):
+def createQs(tName):
     win = Toplevel()
     win.title("Create Question")
 

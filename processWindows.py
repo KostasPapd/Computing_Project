@@ -260,7 +260,6 @@ def createAssignmentNumber():
         createAssignmentNumber()
 
 
-
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
