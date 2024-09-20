@@ -17,7 +17,7 @@ from tkinter import messagebox as mg
 import processWindows
 import assignProcess
 
-
+# Takes the password, adds the salt, hashes it and returns the hashed password
 def hashPassword(password):
     import hashlib
     salt = "lr4h"
@@ -26,13 +26,14 @@ def hashPassword(password):
     hashPass = hash_object.hexdigest()
     return hashPass
 
+# Searches the database and gets the teacher ID and returns it
 def getTeachID(tName):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # takes the database key from the .env file
 
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor() # creates a cursor
         cur.execute(f"SELECT id FROM admin_acc WHERE name = '{tName}'")
         res = cur.fetchone()
         if res:
@@ -43,6 +44,7 @@ def getTeachID(tName):
         mg.showwarning("Connection Failed", "Unable to find ID")
         return None
 
+# Takes in all the parameters and adds them to the main_acc database as a new account
 def registerAcc(email, password, name, teacher):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -240,7 +242,19 @@ def createAssign(t_ID, win, title, className, dueDate):
 
 def addQuestion():
     pass
-
+# Fix this
+def getQuest(num, assignName):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    assign_name = "a00000001"
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT question FROM assign_name WHERE question_id = {num}")
+        res = cur.fetchone()
+        return res[0]
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get questions. {e}")
 
 def checkType(assign_name, question_num):
     load_dotenv()
@@ -277,4 +291,5 @@ if __name__ == "__main__":
     # getStudents("Kostas Papadopoulos")
     # registerAcc("test", "test", "test", 1)
     # checkType("test_assignment", 1)
+    print(getQuest(1, "a00000001"))
     pass
