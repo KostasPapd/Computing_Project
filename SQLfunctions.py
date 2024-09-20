@@ -60,7 +60,7 @@ def registerAcc(email, password, name, teacher):
         mg.showwarning("Connection Failed", "Unable to create account")
         print(e)
 
-
+# checks if the email entered is already in use
 def checkEmail(email):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -77,6 +77,7 @@ def checkEmail(email):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to check if user exists. {e}")
 
+# checks the log in info and checks if the user has admin rights
 def checkLogIn(user, passw):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -102,7 +103,7 @@ def checkLogIn(user, passw):
         mg.showwarning("Connection Failed", f"Unable to check if user exists. {e}")
 
 
-
+# changes the password of the user
 def changePass(user, level, passw):
     if level == "Admin":
         load_dotenv()
@@ -127,7 +128,7 @@ def changePass(user, level, passw):
         except Exception as e:
             mg.showwarning("Connection Failed", "Unable to change password.")
 
-
+# changes the email of the user
 def changeEmail(level, user, email):
     if level == "Admin":
         load_dotenv()
@@ -150,7 +151,7 @@ def changeEmail(level, user, email):
         except Exception as e:
             mg.showwarning("Connection Failed", "Unable to change email.")
 
-
+# gets a list off all students under a teacher's name (used to create classes)
 def getStudents(teacher):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -168,7 +169,9 @@ def getStudents(teacher):
         mg.showwarning("Connection Failed", "Unable to fetch students.")
         return []
 
+
 #CHANGE SO IT JUST CHANGES THE CLASS ID ON THE main_acc TABLE
+# creates a class in the database
 def createClass(name, teacher, stuList):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -184,6 +187,7 @@ def createClass(name, teacher, stuList):
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create class.")
 
+# gets all the students in a specified class
 def getClass(t_ID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -201,6 +205,7 @@ def getClass(t_ID):
         mg.showwarning("Connection Failed", "Unable to search for classes.")
         return []
 
+# gets the id of a class
 def getClassID(className):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -213,6 +218,7 @@ def getClassID(className):
     except Exception as e:
         mg.showwarning("Connection Failed", e)
 
+# creates a new table and adds the assignment to the assignments table
 def createAssign(t_ID, win, title, className, dueDate):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -242,6 +248,8 @@ def createAssign(t_ID, win, title, className, dueDate):
 
 def addQuestion():
     pass
+
+# gets the specified question
 # Fix this
 def getQuest(num, assignName):
     load_dotenv()
@@ -256,6 +264,7 @@ def getQuest(num, assignName):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get questions. {e}")
 
+# checks what type of question (calculation or written) a question is
 def checkType(assign_name, question_num):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -269,6 +278,7 @@ def checkType(assign_name, question_num):
         mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
         return None
 
+# gets the assignment id
 def checkAssignmentNumber(ID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
