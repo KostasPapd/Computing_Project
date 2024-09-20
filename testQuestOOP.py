@@ -7,10 +7,20 @@ from dotenv import load_dotenv
 from SQLfunctions import checkType
 
 class Questions():
-    def __init__(self, teacherID, questionNum, assignID):
+    def __init__(self, teacherID, questionNum, assignName):
         self.teachID = teacherID
         self.questionNum = questionNum
-        self.assignID = assignID
+        self.assignName = assignName
+
+    def nextQ(self, win):
+        self.questionNum += 1
+        win.destroy()
+        self.createWindow()
+
+    def back(self, win):
+        self.questionNum -= 1
+        win.destroy()
+        self.createWindow()
 
     def createWindow(self):
         win = Tk()
@@ -47,7 +57,7 @@ class Questions():
                 return save_path
             return None
 
-        if checkType(self.assignID, self.questionNum) == "Calculation":
+        if checkType(self.assignName, self.questionNum) == "Calculation":
             orLabel = Label(win, text="or", font=("Arial", 20))
             orLabel.place(relx=0.5, rely=0.15)
             answerButton = Button(win, text="Upload Answer", font=("Arial", 18), command=lambda: open_file_dialog())
@@ -64,13 +74,12 @@ class Questions():
         #questionLabel = Label(win, text=data[0], font=("Arial", 20))
         #questionLabel.pack()
 
+        nextButton = Button(win, text="Next", command=lambda: self.nextQ(win))
+        nextButton.pack()
+
+
         win.resizable(False, False)
         win.mainloop()
 
-
-def nextQuestion(self):
-        self.questionNum += 1
-        self.createWindow()
-
-question = Questions(1, 1, 1)
+question = Questions(1, 1, "a00000001")
 question.createWindow()
