@@ -2,6 +2,7 @@ import tkinter
 from tkinter import *
 from tkinter import filedialog, ttk
 from tkcalendar import Calendar
+import datetime
 import SQLfunctions
 
 
@@ -41,7 +42,9 @@ def createAssign(tID):
     def calendar():
         top = Toplevel(win)
         top.title("Choose Date")
-        cal = Calendar(top, selectmode='day', year=2024, month=1, day=1)
+
+        today = datetime.date.today()
+        cal = Calendar(top, selectmode='day', year=today.year, month=today.month, day=today.day)
         cal.pack(pady=20)
 
         def get_date():
