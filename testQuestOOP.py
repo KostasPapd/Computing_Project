@@ -1,10 +1,8 @@
 from tkinter import *
-from tkinter import messagebox as mg
-from tkinter import filedialog, ttk
-import psycopg2
+from tkinter import filedialog
 import os
-from dotenv import load_dotenv
 from SQLfunctions import checkType, getQuest
+
 
 
 class Questions():
@@ -86,5 +84,6 @@ class Questions():
         win.resizable(False, False)
         win.mainloop()
 
-question = Questions(1, 1, "a00000001")
-question.createWindow()
+if __name__ == "__main__":
+    question = Questions(1, 1, "a00000001")
+    question.createWindow()
