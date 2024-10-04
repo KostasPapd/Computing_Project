@@ -4,7 +4,8 @@ from tkinter import filedialog, ttk
 import psycopg2
 import os
 from dotenv import load_dotenv
-from SQLfunctions import checkType
+from SQLfunctions import checkType, getQuest
+
 
 class Questions():
     def __init__(self, teacherID, questionNum, assignName):
@@ -70,12 +71,16 @@ class Questions():
             #add_placeholder(answerEntry, "Enter your answer here...")
             answerEntry.place(relx=0.2, rely=0.17, relheight=0.6, relwidth=0.75)
 
-        #data = pullQuestions(assignID, questionNum)
-        #questionLabel = Label(win, text=data[0], font=("Arial", 20))
-        #questionLabel.pack()
+        questionLabel = Label(win, text=getQuest(self.questionNum, self.assignName), font=("Arial", 20))
+        questionLabel.pack()
 
-        nextButton = Button(win, text="Next", command=lambda: self.nextQ(win))
-        nextButton.pack()
+
+        if self.questionNum > 1:
+            backButton = Button(win, text="Back", font=("Arial", 18), command=lambda: self.back(win))
+            backButton.place(relx = 0.3, rely = 0.85, relheight = 0.1, relwidth = 0.15)
+
+        nextButton = Button(win, text="Next", font=("Arial", 18), command=lambda: self.nextQ(win))
+        nextButton.place(relx = 0.6, rely = 0.85, relheight = 0.1, relwidth = 0.15)
 
 
         win.resizable(False, False)

@@ -254,15 +254,15 @@ def addQuestion():
 def getQuest(num, assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
-    assign_name = "a00000001"
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question FROM assign_name WHERE question_id = {num}")
+        cur.execute(f"SELECT question FROM {assignName} WHERE question_id = {num}")
         res = cur.fetchone()
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get questions. {e}")
+        print(e)
 
 # checks what type of question (calculation or written) a question is
 def checkType(assign_name, question_num):
