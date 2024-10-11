@@ -12,7 +12,7 @@ import os
 from dotenv import load_dotenv
 from testQuestOOP import Questions
 
-def database(tID, cID, sID):
+def database(tID, sID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
 
@@ -20,23 +20,24 @@ def database(tID, cID, sID):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
 
-        # checks if student is in the class
-        cur.execute(f"SELECT * FROM main_acc WHERE id = '{sID}' AND class_id = '{cID}'")
-        inClass = cur.fetchone()
-        if not inClass:
-            mg.showwarning("Not Enrolled", "Student is not enrolled in this class.")
-            return []
-
+        cur.execute(f"SELECT class_id FROM main_acc WHERE id = '{sID}'")
+        classID = cur.fetchone()[0]
 
         # check if the teacher has any assignments for the class
-        cur.execute(f"SELECT * FROM assignments WHERE teacher_id = '{tID}' AND class_id = '{cID}'")
+        cur.execute(f"SELECT * FROM assignments WHERE teacher_id = '{tID}' AND class_id = '{classID}'")
         data = cur.fetchall()
         return data
     except Exception as e:
         mg.showwarning("Connection Failed", e)
+        print(e)
         return []
 
-def createTable(tID, cID, sID):
+def openAssign(win, tID, assignments):
+    instance = Questions(tID, 1, assignments[0][5])
+    win.destroy()
+    instance.createWindow()
+
+def createTable(tID, sID):
     win = Tk()
 
     win.title("Test Assignments List")
@@ -50,18 +51,18 @@ def createTable(tID, cID, sID):
     assignLabel = Label(win, text="Assignments", font=("Arial", 20))
     assignLabel.pack()
 
-    assignments = database(tID, cID, sID)
+    assignments = database(tID, sID)
 
     if not assignments:
         Label(win, text="No assignments found.", font=("Arial", 16)).pack()
     else:
         for i in range(len(assignments)):
             Button(win, text=f"Assignment: {assignments[i][1]} , Due: {assignments[i][3]}", font=("Arial", 16),
-                   command=lambda: Questions.nextQ(assignments[i])).pack()
+                   command=lambda: openAssign(win, tID, assignments)).pack()
 
     win.resizable(False, False)
     win.mainloop()
 
 
 if __name__ == "__main__":
-    createTable("1", "1", "1")
+    createTable("1",  "3")

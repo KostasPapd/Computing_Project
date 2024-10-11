@@ -257,7 +257,7 @@ def getQuest(num, assignName):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question FROM {assignName} WHERE question_id = {num}")
+        cur.execute(f"SELECT question FROM {assignName} WHERE question_id = %s", (num,))
         res = cur.fetchone()
         return res[0]
     except Exception as e:
