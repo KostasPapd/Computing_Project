@@ -1,13 +1,12 @@
 from tkinter import *
 from tkinter import filedialog
 import os
-from SQLfunctions import checkType, getQuest
+from SQLfunctions import checkType, getQuest, getLast
 
 """
 Do next:
-- Function so it knows when the last question is
-- Add submit button
 - Store the answers when the user clicks next
+- Function so when submit is pressed, it stores answers in the database and begins the marking process
 """
 
 class Questions():
@@ -82,8 +81,12 @@ class Questions():
             backButton = Button(win, text="Back", font=("Arial", 18), command=lambda: self.back(win))
             backButton.place(relx = 0.3, rely = 0.85, relheight = 0.1, relwidth = 0.15)
 
-        nextButton = Button(win, text="Next", font=("Arial", 18), command=lambda: self.nextQ(win))
-        nextButton.place(relx = 0.6, rely = 0.85, relheight = 0.1, relwidth = 0.15)
+        if self.questionNum != getLast(self.assignName):
+            nextButton = Button(win, text="Next", font=("Arial", 18), command=lambda: self.nextQ(win))
+            nextButton.place(relx = 0.6, rely = 0.85, relheight = 0.1, relwidth = 0.15)
+        elif self.questionNum == getLast(self.assignName):
+            submitButton = Button(win, text="Submit", font=("Arial", 18))
+            submitButton.place(relx = 0.6, rely = 0.85, relheight = 0.1, relwidth = 0.15)
 
 
         win.resizable(False, False)
