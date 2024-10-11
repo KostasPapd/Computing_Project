@@ -5,6 +5,12 @@ from tkcalendar import Calendar
 import datetime
 import SQLfunctions
 
+"""
+Do next:
+- Add classes and class IDs
+- Add the ability to add questions
+- Add the ability to add files
+"""
 
 def createAssign(tID):
     win = Toplevel()

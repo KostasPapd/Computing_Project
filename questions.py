@@ -3,7 +3,12 @@ from tkinter import filedialog
 import os
 from SQLfunctions import checkType, getQuest
 
-
+"""
+Do next:
+- Function so it knows when the last question is
+- Add submit button
+- Store the answers when the user clicks next
+"""
 
 class Questions():
     def __init__(self, teacherID, questionNum, assignName):
