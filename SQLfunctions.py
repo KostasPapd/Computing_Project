@@ -256,7 +256,7 @@ def getQuest(num, assignName):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question FROM {assignName} WHERE question_id = %s", (num,))
+        cur.execute(f"SELECT question FROM {assignName} WHERE questionnum = %s", (num,))
         res = cur.fetchone()
         return res[0]
     except Exception as e:
@@ -270,7 +270,7 @@ def checkType(assign_name, question_num):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question_type FROM {assign_name} WHERE question_id = {question_num}")
+        cur.execute(f"SELECT question_type FROM {assign_name} WHERE questionnum = {question_num}")
         res = cur.fetchone()
         return res[0]
     except Exception as e:
@@ -322,7 +322,7 @@ def getLast(assign_name):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question_id FROM {assign_name} WHERE question_id = (SELECT MAX(question_id) FROM {assign_name})")
+        cur.execute(f"SELECT questionnum FROM {assign_name} WHERE questionnum = (SELECT MAX(questionnum) FROM {assign_name})")
         res = cur.fetchone()
         return res[0]
     except Exception as e:

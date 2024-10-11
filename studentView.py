@@ -37,7 +37,7 @@ def database(tID, sID):
         return []
 
 def openAssign(win, tID, assignments):
-    instance = Questions(tID, 1, assignments[0][5])
+    instance = Questions(tID, 1, assignments[5])
     win.destroy()
     instance.createWindow()
 
@@ -60,7 +60,7 @@ class Assignments(Frame):
         else:
             for i in range(len(assignments)):
                 Button(self, text=f"Assignment: {assignments[i][1]} , Due: {assignments[i][3]}", font=("Arial", 16),
-                       command=lambda: openAssign(self.master, self.tID, assignments)).pack()
+                       command=lambda a=assignments[i]: openAssign(self.master, self.tID, a)).pack()
 
 
 
