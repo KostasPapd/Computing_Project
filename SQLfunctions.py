@@ -250,7 +250,6 @@ def addQuestion():
     pass
 
 # gets the specified question
-# Fix this
 def getQuest(num, assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -294,6 +293,25 @@ def checkAssignmentNumber(ID):
     finally:
         if conn:
             conn.close()
+def getIDs(name):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("SELECT id, teacher_id FROM main_acc WHERE name = %s", (name,))
+        res = cur.fetchone()
+        if res:
+            return res[0], res[1]
+        else:
+            return None
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get ID. {e}")
+        print(e)
+        return None
+    finally:
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     # For testing
@@ -301,5 +319,6 @@ if __name__ == "__main__":
     # getStudents("Kostas Papadopoulos")
     # registerAcc("test", "test", "test", 1)
     # checkType("test_assignment", 1)
-    print(getQuest(1, "a00000001"))
+    # print(getQuest(1, "a00000001"))
+    print(getIDs("Kostas Papadopoulos"))
     pass

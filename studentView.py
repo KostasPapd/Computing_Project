@@ -1,6 +1,12 @@
 from tkinter import *
 import logInMenu
 import processWindows
+from tkinter import messagebox as mg
+import psycopg2
+import os
+from dotenv import load_dotenv
+from SQLfunctions import getIDs
+from questions import Questions
 
 # ADD CLASS TO CREATE MENU BAR
 """
@@ -11,15 +17,51 @@ def signOut(win):
     win.destroy()
     logInMenu.createLogIn()
 
-class Assignments(Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.pack()
-        self.widgets()
+def database(tID, sID):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
 
-    def widgets(self):
+        cur.execute(f"SELECT class_id FROM main_acc WHERE id = '{sID}'")
+        classID = cur.fetchone()[0]
+
+        # check if the teacher has any assignments for the class
+        cur.execute(f"SELECT * FROM assignments WHERE teacher_id = '{tID}' AND class_id = '{classID}'")
+        data = cur.fetchall()
+        return data
+    except Exception as e:
+        mg.showwarning("Connection Failed", e)
+        print(e)
+        return []
+
+def openAssign(win, tID, assignments):
+    instance = Questions(tID, 1, assignments[0][5])
+    win.destroy()
+    instance.createWindow()
+
+class Assignments(Frame):
+    def __init__(self, master=None, tID=None, sID=None):
+        super().__init__(master)
+        self.tID = tID
+        self.sID = sID
+        self.pack()
+        self.showAssign()
+
+    def showAssign(self):
         self.label = Label(self, text="Your Assignments", font=("Helvetica", 20))
         self.label.pack()  # Pack puts it at the top of the page
+
+        assignments = database(self.tID, self.sID)
+
+        if not assignments:
+            Label(self, text="No assignments found.", font=("Arial", 16)).pack()
+        else:
+            for i in range(len(assignments)):
+                Button(self, text=f"Assignment: {assignments[i][1]} , Due: {assignments[i][3]}", font=("Arial", 16),
+                       command=lambda: openAssign(self.master, self.tID, assignments)).pack()
+
 
 
 class MenuBar(Frame):
@@ -47,8 +89,6 @@ class MenuBar(Frame):
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
-        # toolBar.add_cascade(label="Assignments", command=self.showAssign)  # ADD COMMAND THAT SHOWS ASSIGNMENTS
-        # toolBar.add_cascade(label="Statistics", command=self.showStats)  # ADD COMMAND THAT SHOWS STATISTICS
         toolBar.add_cascade(label="Settings", menu=accMenu)
         toolBar.add_command(label="Exit", command=self.exit)
 
@@ -78,7 +118,10 @@ def createStudent(name, email, password):
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
     toolB = MenuBar(email, password)
 
-    Assignments()
+    studentID = getIDs(name)[0]
+    teacherID = getIDs(name)[1]
+
+    Assignments(win, teacherID, studentID)
 
     win.resizable(False, False)
     win.mainloop()
