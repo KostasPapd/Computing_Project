@@ -20,10 +20,6 @@ class Questions():
         win.destroy()
         self.createWindow()
 
-    def back(self, win):
-        self.questionNum -= 1
-        win.destroy()
-        self.createWindow()
 
     def createWindow(self):
         win = Tk()
@@ -76,14 +72,9 @@ class Questions():
         questionLabel = Label(win, text=getQuest(self.questionNum, self.assignName), font=("Arial", 20))
         questionLabel.pack()
 
-
-        if self.questionNum > 1:
-            backButton = Button(win, text="Back", font=("Arial", 18), command=lambda: self.back(win))
-            backButton.place(relx = 0.3, rely = 0.85, relheight = 0.1, relwidth = 0.15)
-
         if self.questionNum != getLast(self.assignName):
             nextButton = Button(win, text="Next", font=("Arial", 18), command=lambda: self.nextQ(win))
-            nextButton.place(relx = 0.6, rely = 0.85, relheight = 0.1, relwidth = 0.15)
+            nextButton.place(relx = 0.45, rely = 0.85, relheight = 0.1, relwidth = 0.15)
         elif self.questionNum == getLast(self.assignName):
             submitButton = Button(win, text="Submit", font=("Arial", 18))
             submitButton.place(relx = 0.6, rely = 0.85, relheight = 0.1, relwidth = 0.15)
