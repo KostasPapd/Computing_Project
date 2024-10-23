@@ -13,7 +13,6 @@ def validEmail(email):
 def verifyEmail(email):
     client = kickbox.Client("test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674edb1218e7a5972c5aa369d2c")  # API key
     kick = client.kickbox()
-
     res = kick.verify(email)
 
     if res.body['result'] != "undeliverable":
