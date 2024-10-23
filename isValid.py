@@ -38,15 +38,6 @@ def validatePassword(pas):
         return False
 
 
-# def validateUsername(username):
-#    import re
-#
-#    if re.fullmatch(r'[A-Za-z0-9!_*#+]{3,}', username):  # Sets what characters are allowed in the username
-#        # The {5,} sets the minimum length of the username
-#        return True
-#    else:
-#        return False
-
 if __name__ == "__main__":
     # Testing
     # print(validatePassword("password"))
