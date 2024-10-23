@@ -1,3 +1,5 @@
+# https://www.pythonanywhere.com/user/Kostas1/
+
 from fastapi import FastAPI, HTTPException
 from supabase import create_client, Client
 import os
