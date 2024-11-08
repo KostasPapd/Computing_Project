@@ -53,17 +53,6 @@ mydb = mysql.connector.connect(
 )
 
 
-Need for this project:
-Email validation and verification - done
-Username validation - done
-Password validation - done
-Make register and login windows - done
-Error messages for invalid data - done
-Add designs to the menus
-Username verification (for logging in) - done
-Password verification - done
-Answer data validation
-Create admin accounts
 
 
 ------------------------------------------------------------------------------------------------------------------------
