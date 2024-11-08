@@ -13,7 +13,6 @@ def validEmail(email):
 def verifyEmail(email):
     client = kickbox.Client("test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674edb1218e7a5972c5aa369d2c")  # API key
     kick = client.kickbox()
-
     res = kick.verify(email)
 
     if res.body['result'] != "undeliverable":
@@ -37,15 +36,6 @@ def validatePassword(pas):
     else:
         return False
 
-
-# def validateUsername(username):
-#    import re
-#
-#    if re.fullmatch(r'[A-Za-z0-9!_*#+]{3,}', username):  # Sets what characters are allowed in the username
-#        # The {5,} sets the minimum length of the username
-#        return True
-#    else:
-#        return False
 
 if __name__ == "__main__":
     # Testing
