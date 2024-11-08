@@ -315,7 +315,7 @@ def getIDs(name):
         if conn:
             conn.close()
 
-# gets the last question from and assignment
+# gets the last question from an assignment
 def getLast(assign_name):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -327,11 +327,23 @@ def getLast(assign_name):
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get last question. {e}")
-        print(e)
         return None
     finally:
         if conn:
             conn.close()
+
+def getAnsw(assignName, questionNum):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"SELECT answer FROM {assignName} WHERE questionnum = {questionNum}")
+        res = cur.fetchone()
+        return res[0]
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get answer. {e}")
+        return None
 
 if __name__ == "__main__":
     # For testing
