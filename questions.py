@@ -94,24 +94,39 @@ class Marking():
             win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
             # answer, your answer, mark
+            canvas = Canvas(win)
+            scrollbar = Scrollbar(win, orient="vertical", command=canvas.yview)
+            frame = Frame(canvas)
 
+            frame.bind(
+                "<Configure>",
+                lambda e: canvas.configure(
+                    scrollregion=canvas.bbox("all")
+                )
+            )
 
-            correctAnswer = getAnsw(self.assignName, questionNum)
-            correctAnswerLabel = Label(win, text=f"Correct Answer: {correctAnswer}", font=("Arial", 16), wraplength=675)
-            correctAnswerLabel.place(relx=0.05, rely=0.1)
-            yourAnswerLabel = Label(win, text=f"Your Answer: {answer}", font=("Arial", 16), wraplength=675)
-            yourAnswerLabel.place(relx=0.05, rely=0.3)
-            marksLabel = Label(win, text=f"Mark:", font=("Arial", 16))
-            marksLabel.place(relx=0.05, rely=0.5)
-            marksEntry = Entry(win, font=("Arial", 16))
-            # marksEntry.place(relx=0.22, rely=0.5, relwidth=0.1)
+            canvas.create_window((0, 0), window=frame, anchor="nw")
+            canvas.configure(yscrollcommand=scrollbar.set)
 
+            c_answer = getAnsw(self.assignName, questionNum)
+            answerLabel = Label(frame, text=f"Correct Answer: {c_answer}", font=("Arial", 16), wraplength=700)
+            answerLabel.pack(anchor="w", padx=10, pady=5)
+            yourAnswerLabel = Label(frame, text=f"Your Answer: {answer}", font=("Arial", 16), wraplength=700)
+            yourAnswerLabel.pack(anchor="w", padx=10, pady=5)
+            marksLabel = Label(frame, text=f"Mark:", font=("Arial", 16))
+            marksLabel.pack(anchor="w", padx=10, pady=5)
+            marksEntry = Entry(frame, font=("Arial", 16))
+            marksEntry.pack(anchor="w", padx=10, pady=5)
+
+            canvas.pack(side="left", fill="both", expand=True)
+            scrollbar.pack(side="right", fill="y")
 
             win.resizable(False, False)
             win.mainloop()
 
 if __name__ == "__main__":
-    # question = Questions(1, 1, "a00000001", 1)
-    # question.createWindow()
-    mark = Marking("a00000001")
-    mark.create_window({1: "5"})
+    question = Questions(1, 1, "a00000001", 1)
+    question.createWindow()
+    # mark = Marking("a00000001")
+    # mark.create_window({1: "5"})
+    pass
