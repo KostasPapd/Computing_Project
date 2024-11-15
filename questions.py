@@ -1,6 +1,7 @@
 from tkinter import *
 import json
 from SQLfunctions import checkType, getQuest, getLast, getAnsw
+import re
 """
 Do next:
 - Store the answers when the user clicks next
@@ -26,7 +27,8 @@ class Questions():
         self.answers[self.questionNum] = answer
 
     def save_answers_to_file(self):
-        with open(f"{self.assignName}_answers.json", "w") as file:
+        name = re.sub(r'[<>:"/\\|?*]', '', self.assignName)
+        with open(f"{name}_answers.json", "w") as file:
             json.dump(self.answers, file)
 
     def createWindow(self):
