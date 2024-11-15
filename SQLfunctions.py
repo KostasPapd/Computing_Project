@@ -30,7 +30,6 @@ def hashPassword(password):
 def getTeachID(tName):
     load_dotenv() # loads the .env file
     connector_key = os.getenv("DB_KEY") # takes the database key from the .env file
-
     try:
         conn = psycopg2.connect(connector_key) # connects to the database
         cur = conn.cursor() # creates a cursor
@@ -38,8 +37,6 @@ def getTeachID(tName):
         res = cur.fetchone()
         if res:
             return res[0]
-        else:
-            return None
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to find ID")
         return None
@@ -94,7 +91,7 @@ def checkLogIn(user, passw):
                 cur.execute(f"SELECT * FROM admin_acc WHERE email = '{user}' AND password = '{passw}'")
                 result = cur.fetchone()
                 if result is not None:
-                    return "Admin", result[3], getTeachID(user), passw
+                    return "Admin", result[3], getTeachID(result[3]), passw
                 else:
                     return None
             except Exception as e:
@@ -166,6 +163,7 @@ def getStudents(teacher):
         else:
             return []
     except Exception as e:
+        print(e)
         mg.showwarning("Connection Failed", "Unable to fetch students.")
         return []
 
