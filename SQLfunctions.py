@@ -7,7 +7,7 @@ sql = "SELECT id FROM admin_acc WHERE name = %s"
 cur.execute(sql, (tName))
 
 Add to here:
-Send email function - search for the email entered and then return all the student's information
+Inserts new class into stud_classes table
 """
 
 import psycopg2
