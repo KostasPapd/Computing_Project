@@ -237,7 +237,7 @@ def createClassUI(t_ID):
     stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
     def create_class():
-        # SQLfunctions.createClass(nameVar.get(), t_ID, students)
+        SQLfunctions.createClass(nameVar.get(), t_ID, students)
         win.destroy()
 
     createBut = Button(win, text="Create Class", font=("Arial", 16), command=create_class)

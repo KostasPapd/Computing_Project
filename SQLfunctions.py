@@ -179,12 +179,17 @@ def createClass(name, teacher, stuList):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         table_name = f"\"{name}_{teacher}\""  # Creates the table name
-        cur.execute(f"CREATE TABLE {table_name} (student_name varchar(255))")  # Creates the table
+        cur.execute(f"CREATE TABLE {table_name} (student_id INT PRIMARY KEY , student_name varchar(255))")  # Creates the table
         for student in stuList:
+            cur.execute("SELECT id FROM main_acc WHERE name = %s", (student,))
+            student_id = cur.fetchone()[0]
+
             # Inserts the students into the table
-            cur.execute(f"INSERT INTO {table_name} (student_name) VALUES ('{student}')")
+            cur.execute(f"INSERT INTO {table_name} (student_id, student_name) VALUES (%s, %s)", (student_id, student))
+
         conn.commit()
     except Exception as e:
+        print(e)
         mg.showwarning("Connection Failed", "Unable to create class.")
 
 # gets all the students in a specified class
