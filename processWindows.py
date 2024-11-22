@@ -1,6 +1,7 @@
 """
 MAKE ASSIGNMENT TABLE THE ASSIGNMENT ID AND PUT THAT INTO ASSIGNMENTS TABLE SO I CAN SEARCH USING THE TITLE ID
 
+FIX EMAILLKHOIAJ
 
 The UI and many processes will go in here
 
@@ -12,6 +13,7 @@ Change Email - get value and validation
 import tkinter
 from tkinter import *
 import smtplib
+from smtplib import SMTPAuthenticationError, SMTPException
 from tkinter import messagebox as mg
 import SQLfunctions
 import random
@@ -138,23 +140,30 @@ def changeEmailUI(user, level):
     win.mainloop()
 
 def sendEmailCreate(email, password, name):
-    smtpObj = smtplib.SMTP('smtp-mail.outlook.com', 587)
-    smtpObj.ehlo()
-    smtpObj.starttls()
-    smtpObj.login("physics12305@outlook.com", "PhysicsEmail1")
+    try:
+        smtpObj = smtplib.SMTP('smtp.gmail.com', 465)
+        smtpObj.ehlo()
+        smtpObj.starttls()
+        smtpObj.login("thephysicslab12@gmail.com", "PhysicsEmail1!")
 
-    sender = "physics12305@outlook.com"
-    receiver = email
-    message = (f"Subject: Account Created\n\nHello {name},\n\n Your teacher has created a Physics Lab account for you. "
-               f"Your details are below:\n\n"
-               f"Username: {email}\nPassword: {password}\n\n"
-               f"Make sure to log in and change your password to something more secure. "
-               f"Please keep this information safe and do not share it with anyone.")
+        sender = "thephysicslab12@gmail.com"
+        receiver = email
+        message = (f"Subject: Account Created\n\nHello {name},\n\n Your teacher has created a Physics Lab account for you. "
+                   f"Your details are below:\n\n"
+                   f"Username: {email}\nPassword: {password}\n\n"
+                   f"Make sure to log in and change your password to something more secure. "
+                   f"Please keep this information safe and do not share it with anyone.")
 
-    smtpObj.sendmail(sender, receiver, message)
-    smtpObj.quit()
+        smtpObj.sendmail(sender, receiver, message)
+        smtpObj.quit()
+        print("Email sent successfully")
+    except SMTPAuthenticationError:
+        print("Failed to authenticate with the SMTP server. Please check the username and password.")
+    except SMTPException as e:
+        print(f"SMTP error occurred: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-# COME BACK AND FIX EMPTY LIST
 def stuListUI(t_ID, updated):
     win = Toplevel()
 
@@ -233,7 +242,6 @@ def createClassUI(t_ID):
     stuLabel = Label(win, text="Students:", font=("Arial", 16))
     stuLabel.place(relx=0.09, rely=0.5, relheight=0.13, relwidth=0.3)
     stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: addStu(t_ID))
-    # Add command that opens a new window and runs the sql
     stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
     def create_class():
@@ -241,7 +249,6 @@ def createClassUI(t_ID):
         win.destroy()
 
     createBut = Button(win, text="Create Class", font=("Arial", 16), command=create_class)
-    # Add command that runs the SQL to create the class
     createBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 
     cancelBut = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())

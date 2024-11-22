@@ -50,8 +50,8 @@ def registerAcc(email, password, name, teacher):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         passw = hashPassword(password)
-        cur.execute(f"INSERT INTO main_acc (class_id name, password, email, teacher_id) "
-                    f"VALUES ('NULL', '{name}', '{passw}', '{email}', '{teacher}')")
+        cur.execute(f"INSERT INTO main_acc (name, password, email, teacher_id) "
+                    f"VALUES ('{name}', '{passw}', '{email}', '{teacher}')")
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
@@ -178,6 +178,7 @@ def createClass(name, teacher, stuList):
         cur = conn.cursor()
         table_name = f"\"{name}_{teacher}\""  # Creates the table name
         cur.execute(f"CREATE TABLE {table_name} (student_id INT PRIMARY KEY , student_name varchar(255))")  # Creates the table
+        cur.execute(f"INSERT INTO stud_classes (class_names, teacher_id) VALUES ('{name}', '{teacher}')")  # Inserts the class into the table
         for student in stuList:
             cur.execute("SELECT id FROM main_acc WHERE name = %s", (student,))
             student_id = cur.fetchone()[0]
@@ -355,5 +356,5 @@ if __name__ == "__main__":
     # registerAcc("test", "test", "test", 1)
     # checkType("test_assignment", 1)
     # print(getQuest(1, "a00000001"))
-    print(getIDs("Kostas Papadopoulos"))
+    print(getClass(1))
     pass

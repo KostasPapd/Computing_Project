@@ -35,9 +35,9 @@ def createAssign(tID):
     classLabel = Label(win, text="Class:", font=("Arial", 16))
     classLabel.place(relx=0.225, rely=0.4, relheight=0.13, relwidth=0.2)
 
-    # classes = SQLfunctions.getClass(tName)
+    class_list = SQLfunctions.getClass(tID)
 
-    classes = ["Class 1", "Class 2", "Class 3", "Test Class"]
+    classes = class_list
     clicked = StringVar()
     clicked.set("Class")
     classMenu = OptionMenu(win, clicked, *classes)
