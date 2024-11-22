@@ -141,7 +141,7 @@ def changeEmailUI(user, level):
 
 def sendEmailCreate(email, password, name):
     try:
-        smtpObj = smtplib.SMTP('smtp.gmail.com', 465)
+        smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
         smtpObj.ehlo()
         smtpObj.starttls()
         smtpObj.login("thephysicslab12@gmail.com", "PhysicsEmail1!")
