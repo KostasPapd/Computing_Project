@@ -16,6 +16,8 @@ import smtplib
 from smtplib import SMTPAuthenticationError, SMTPException
 from tkinter import messagebox as mg
 import SQLfunctions
+import ssl
+from email.message import EmailMessage
 import random
 
 def checkPassword(passw, repassw, level, user, window):
@@ -141,24 +143,34 @@ def changeEmailUI(user, level):
 
 def sendEmailCreate(email, password, name):
     try:
-        smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
-        smtpObj.ehlo()
-        smtpObj.starttls()
-        smtpObj.login("thephysicslab12@gmail.com", "PhysicsEmail1!")
+        server = "smtp.gmail.com"
+        port = 465
+        email_s = "thephysicslab12@gmail.com"
+        passw = "ihbi vcsv tgjr npmu"
 
-        sender = "thephysicslab12@gmail.com"
         receiver = email
-        message = (f"Subject: Account Created\n\nHello {name},\n\n Your teacher has created a Physics Lab account for you. "
+
+        subject = "Account Created"
+        message = (f"Hello {name},\n\nYour teacher has created a Physics Lab account for you. "
                    f"Your details are below:\n\n"
                    f"Username: {email}\nPassword: {password}\n\n"
                    f"Make sure to log in and change your password to something more secure. "
                    f"Please keep this information safe and do not share it with anyone.")
 
-        smtpObj.sendmail(sender, receiver, message)
-        smtpObj.quit()
+        email_c = EmailMessage()
+        email_c['From'] = email
+        email_c['to'] = receiver
+        email_c['Subject'] = subject
+        email_c.set_content(message)
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(server, port, context=context) as server:
+            server.login(email_s, passw)
+            server.sendmail(email_s, receiver, email_c.as_string())
+
         print("Email sent successfully")
-    except SMTPAuthenticationError:
-        print("Failed to authenticate with the SMTP server. Please check the username and password.")
+    except SMTPAuthenticationError as e:
+        print(f"Failed to authenticate with the SMTP server. {e}")
     except SMTPException as e:
         print(f"SMTP error occurred: {e}")
     except Exception as e:
