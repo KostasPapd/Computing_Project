@@ -62,7 +62,7 @@ def createView(teach_id, password, user):
     toolB = MenuBar(user, password, teach_id)
 
     welcomeLabel = Label(win, text=f"Welcome, {user}", font=("Helvetica", 20))
-    welcomeLabel.place(relx= 0.05, rely= 0.02, relheight= 0.1, relwidth= 1)
+    welcomeLabel.place(relx= 0.0, rely= 0.02, relheight= 0.1, relwidth= 1)
 
     createAssignButtton = Button(win, text="Create Assignment", font=("Helvetica", 18),
                                  command=lambda: createAssign(teach_id))
