@@ -46,10 +46,6 @@ def database(tID, sID):
             data = cur.fetchall()
             if data:
                 return data
-
-
-
-        # return data
     except Exception as e:
         mg.showwarning("Connection Failed", e)
         print(e)
