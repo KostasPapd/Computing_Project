@@ -1,5 +1,3 @@
-https://trello.com/b/T0sCBC5N/computing-project
-
 GitHub repository: https://github.com/KostasPapd/Computing_Project
 
 Email verification website: https://app.kickbox.com/accounts/GelrCwkY/verify/api
@@ -7,7 +5,7 @@ Kickbox (email checker) API key: test_2b2aef53aee36dba0ce05a17fdf6c20e0b772674ed
 
 Supabase database: https://supabase.com/dashboard/project/pvvduzraadbgtljdkmyg
 
-Email: physics12305@outlook.com, PhysicsEmail1
+Email: thephysicslab12@gmail.com, ihbi vcsv tgjr npmu
 
 Always write functions, no code by itself. Classes are fine
 
@@ -15,27 +13,9 @@ FIND STAKEHOLDERS
 
 
 DO SOON:
-CHANGE EVERY FILE TO TEACHER ID
-
-
 ADD INTRODUCTION TO ANALYSIS
 
-DO THE MAIN FUNCTIONALITY BEFORE DOING EVERYTHING ELSE
-
-MAYBE GET RID OF STATISTICS
-
-CREATE A DATABASE TABLE WHEN CREATING A CLASS
-
-EMAIL SENDING WHEN ACCOUNT REGISTERED -DONE
-LINK TO REGISTER WINDOW - DONE
-ADD FUNCTION TO CHANGE EMAIL BUTTON
-ADD FUNCTION TO CHANGE PASSWORD BUTTON - DONE
-Link password and email button subroutines to both views - DONE
 ADD VERIFICATION TO SEE IF EMAIL ALREADY EXISTS WHEN CHANGING IT
-Add name = main to every file (can use it for testing)
-Do unittest for every file that returns a bool val
-
-Do flow diagrams
 
 
 Supabase for databases
@@ -51,21 +31,6 @@ mydb = mysql.connector.connect(
         user="yourUsername"
         password="yourPassword"
 )
-
-
-
-
-- get student id
-- get all classes by teacher
-- check if student is in those classes and make list
-- get all assignments in those classes
-
-
-
-
-
-
-
 
 
 ------------------------------------------------------------------------------------------------------------------------
