@@ -24,13 +24,32 @@ def database(tID, sID):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
 
-        cur.execute(f"SELECT class_id FROM main_acc WHERE id = '{sID}'")
-        classID = cur.fetchone()[0]
+        cur.execute(f"SELECT id FROM stud_classes WHERE teacher_id = '{tID}'")
+        class_id = cur.fetchall()
 
-        # check if the teacher has any assignments for the class
-        cur.execute(f"SELECT * FROM assignments WHERE teacher_id = '{tID}' AND class_id = '{classID}'")
-        data = cur.fetchall()
-        return data
+        names = []
+        for i in range(len(class_id)):
+            cur.execute(f"SELECT class_names FROM stud_classes WHERE id = '{class_id[i][0]}'")
+            names.append(cur.fetchall()[0][0])
+
+        valid_ids = []
+        for name in range(len(names)):
+            cur.execute(f'SELECT 1 FROM "{names[name]}_1" WHERE student_id = %s', (sID,))
+            result = cur.fetchone()
+            if result:
+                cur.execute(f"SELECT id FROM stud_classes WHERE class_names = '{names[name]}'")
+                valid_ids.append(cur.fetchone()[0])
+
+
+        for id in range(len(valid_ids)):
+            cur.execute(f"SELECT * FROM assignments WHERE teacher_id = '{tID}' AND class_id = '{valid_ids[id]}'")
+            data = cur.fetchall()
+            if data:
+                return data
+
+
+
+        # return data
     except Exception as e:
         mg.showwarning("Connection Failed", e)
         print(e)
@@ -129,5 +148,6 @@ def createStudent(name, email, password):
 
 if __name__ == "__main__":
     # Testing
-    createStudent("Kostas Papadopoulos", "email", "password")
+    # createStudent("Kostas Papadopoulos", "email", "password")
+    database(1, 3)
     pass

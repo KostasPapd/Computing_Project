@@ -55,6 +55,19 @@ mydb = mysql.connector.connect(
 
 
 
+- get student id
+- get all classes by teacher
+- check if student is in those classes and make list
+- get all assignments in those classes
+
+
+
+
+
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------
                                                       Student View
 ------------------------------------------------------------------------------------------------------------------------
