@@ -11,7 +11,6 @@ Change Email - get value and validation
 import tkinter
 from tkinter import *
 import smtplib
-from smtplib import SMTPAuthenticationError, SMTPException
 from tkinter import messagebox as mg
 import SQLfunctions
 import ssl
@@ -166,13 +165,8 @@ def sendEmailCreate(email, password, name):
             server.login(email_s, passw)
             server.sendmail(email_s, receiver, email_c.as_string())
 
-        print("Email sent successfully")
-    except SMTPAuthenticationError as e:
-        print(f"Failed to authenticate with the SMTP server. {e}")
-    except SMTPException as e:
-        print(f"SMTP error occurred: {e}")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        mg.showwarning("Email not sent", f"An error occurred: {e}")
 
 def stuListUI(t_ID, updated):
     win = Toplevel()
@@ -276,11 +270,38 @@ def createAssignmentNumber():
     else:
         createAssignmentNumber()
 
+def sendEmailOTP(email, otp):
+    try:
+        server = "smtp.gmail.com"
+        port = 465
+        email_s = "thephysicslab12@gmail.com"
+        passw = "ihbi vcsv tgjr npmu"
+
+        receiver = email
+
+        subject = "One-Time Password"
+        message = f"Here is your one-time password: {otp}\n\n Do not share this code with anyone."
+
+        email_c = EmailMessage()
+        email_c['From'] = email
+        email_c['to'] = receiver
+        email_c['Subject'] = subject
+        email_c.set_content(message)
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(server, port, context=context) as server:
+            server.login(email_s, passw)
+            server.sendmail(email_s, receiver, email_c.as_string())
+
+    except Exception as e:
+        mg.showwarning("Email not sent", f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
     #createClassUI(1)
     # stuListUI(1)
-    createAssignmentNumber()
+    # createAssignmentNumber()
+    sendEmailOTP("kostispapd@outlook.com", "123456")
     pass

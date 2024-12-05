@@ -94,7 +94,6 @@ class MenuBar(Frame):
 
         accMenu = Menu(toolBar)
 
-        # accMenu.add_command(label="Join Class", font=("Helvetica", 10)) - maybe do
         accMenu.add_command(label="Change Email", font=("Helvetica", 10),
                             command=lambda: processWindows.changeEmailUI(self.email, "Student"))
         # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
@@ -122,7 +121,7 @@ class MenuBar(Frame):
 
 
 
-def createStudent(name, email, password):
+def createStudent(name, id, password):
     win = Tk()
     nameText = name
     win.title(f"The Physics Lab - {name}")
@@ -131,7 +130,7 @@ def createStudent(name, email, password):
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
-    toolB = MenuBar(email, password)
+    toolB = MenuBar(id, password)
 
     studentID = getIDs(name)[0]
     teacherID = getIDs(name)[1]
