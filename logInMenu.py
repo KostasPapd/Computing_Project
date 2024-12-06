@@ -1,7 +1,5 @@
 import tkinter
 from tkinter import *
-import studentView
-import adminView
 import SQLfunctions
 from twoFactorAuth import createWindow
 from tkinter import messagebox
@@ -10,19 +8,11 @@ from tkinter import messagebox
 def logIn(username, password, win):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
     password = password.get().strip()
-    check = SQLfunctions.checkLogIn(username, password)  # Check if the login is correct
+    check = SQLfunctions.checkLogIn(username, password) # Check if the login is correct
     if check is None:
         messagebox.showwarning("Incorrect Login", "Incorrect username or password")
     else:
-        if check[0] == "Student":
-            win.destroy()
-            studentView.createStudent(check[1], check[2], check[3])
-        elif check[0] == "Admin":
-            win.destroy()
-            adminView.createView(check[2], check[3], check[1])
-
-
-
+        createWindow(check, win)
 
 def togglePass(passBox):
     if passBox.cget("show") == "•":

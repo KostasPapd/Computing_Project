@@ -11,6 +11,8 @@ import pyotp
 from tkinter import messagebox as mg
 from tkinter import *
 from processWindows import sendEmailOTP
+import studentView
+import adminView
 
 def generateKey():
     key = pyotp.random_base32()
@@ -22,12 +24,9 @@ def generateOTP(key):
 
 def verify(key, otp):
     totp = pyotp.TOTP(key)
-    if totp.verify(otp, valid_window=1):
-        print("Correct") # CHANGE TO LOG YOU IN
-    else:
-        mg.showwarning("Incorrect OTP", "The OTP entered is incorrect. Please try again.")
+    return totp.verify(otp, valid_window=1)
 
-def createWindow(email):
+def createWindow(check, logInWin):
     win = Toplevel()
 
     win.title("Two-Factor Authentication")
@@ -40,7 +39,7 @@ def createWindow(email):
 
     key = generateKey()
     otp = generateOTP(key)
-    sendEmailOTP(email, otp)
+    sendEmailOTP(check[2], otp)
 
     titleLabel = Label(win, font=("Arial", 16), text="Two-Factor Authentication")
     titleLabel.place(relx=0.1, rely=0.05, relwidth=0.8, relheight=0.1)
@@ -54,10 +53,21 @@ def createWindow(email):
     codeBox = Entry(win, font=("Arial", 12))
     codeBox.place(relx=0.22, rely=0.46, relwidth=0.65, relheight=0.09)
 
-    verifyButton = Button(win, font=("Arial", 16), text="Verify", command=lambda: verify(key, codeBox.get()))
+    def logIn(check, key, logInWin):
+        if verify(key, codeBox.get()):
+            if check[0] == "Student":
+                win.destroy()
+                logInWin.destroy()
+                studentView.createStudent(check[1], check[2], check[3])
+            elif check[0] == "Admin":
+                win.destroy()
+                logInWin.destroy()
+                adminView.createView(check[2], check[3], check[1])
+
+    verifyButton = Button(win, font=("Arial", 16), text="Verify", command=lambda: logIn(check, key, logInWin))
     verifyButton.place(relx=0.6, rely=0.7, relwidth=0.3, relheight=0.15)
 
-    reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(email, otp))
+    reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(check[2], otp))
     reSendButton.place(relx=0.1, rely=0.7, relwidth=0.3, relheight=0.15)
 
     codeBox.focus()

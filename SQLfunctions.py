@@ -349,11 +349,6 @@ def getAnsw(assignName, questionNum):
         mg.showwarning("Connection Failed", f"Unable to get answer. {e}")
         return None
 
-def getEmail(sID):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
-    pass
-
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")
