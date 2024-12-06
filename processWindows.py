@@ -270,20 +270,23 @@ def createAssignmentNumber():
     else:
         createAssignmentNumber()
 
-def sendEmailOTP(email, otp):
+def sendEmailOTP(check, otp):
     try:
         server = "smtp.gmail.com"
         port = 465
         email_s = "thephysicslab12@gmail.com"
         passw = "ihbi vcsv tgjr npmu"
 
-        receiver = email
+        if check[0] == "Student":
+            receiver = check[2]
+        elif check[0] == "Admin":
+            receiver = check[4]
 
         subject = "One-Time Password"
         message = f"Here is your one-time password: {otp}\n\n Do not share this code with anyone."
 
         email_c = EmailMessage()
-        email_c['From'] = email
+        email_c['From'] = email_s
         email_c['to'] = receiver
         email_c['Subject'] = subject
         email_c.set_content(message)
@@ -295,6 +298,7 @@ def sendEmailOTP(email, otp):
 
     except Exception as e:
         mg.showwarning("Email not sent", f"An error occurred: {e}")
+        print(e)
 
 
 if __name__ == "__main__":

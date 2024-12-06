@@ -39,7 +39,7 @@ def createWindow(check, logInWin):
 
     key = generateKey()
     otp = generateOTP(key)
-    sendEmailOTP(check[2], otp)
+    sendEmailOTP(check, otp)
 
     titleLabel = Label(win, font=("Arial", 16), text="Two-Factor Authentication")
     titleLabel.place(relx=0.1, rely=0.05, relwidth=0.8, relheight=0.1)
@@ -67,7 +67,7 @@ def createWindow(check, logInWin):
     verifyButton = Button(win, font=("Arial", 16), text="Verify", command=lambda: logIn(check, key, logInWin))
     verifyButton.place(relx=0.6, rely=0.7, relwidth=0.3, relheight=0.15)
 
-    reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(check[2], otp))
+    reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(check, otp))
     reSendButton.place(relx=0.1, rely=0.7, relwidth=0.3, relheight=0.15)
 
     codeBox.focus()
@@ -76,5 +76,4 @@ def createWindow(check, logInWin):
     win.mainloop()
 
 if __name__ == "__main__":
-    createWindow("sokihay381@iminko.com")
     pass

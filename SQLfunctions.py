@@ -55,7 +55,6 @@ def registerAcc(email, password, name, teacher):
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
-        print(e)
 
 # checks if the email entered is already in use
 def checkEmail(email):
@@ -91,7 +90,7 @@ def checkLogIn(user, passw):
                 cur.execute(f"SELECT * FROM admin_acc WHERE email = '{user}' AND password = '{passw}'")
                 result = cur.fetchone()
                 if result is not None:
-                    return "Admin", result[3], getTeachID(result[3]), passw
+                    return "Admin", result[3], getTeachID(result[3]), passw, user
                 else:
                     return None
             except Exception as e:
@@ -188,7 +187,6 @@ def createClass(name, teacher, stuList):
 
         conn.commit()
     except Exception as e:
-        print(e)
         mg.showwarning("Connection Failed", "Unable to create class.")
 
 # gets all the students in a specified class
@@ -247,7 +245,6 @@ def createAssign(t_ID, win, title, className, dueDate):
         assignProcess.nextAssign(t_ID, win)
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to create assignment. {e}")
-        print(e)
 
 
 def addQuestion():
@@ -265,7 +262,6 @@ def getQuest(num, assignName):
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get questions. {e}")
-        print(e)
 
 # checks what type of question (calculation or written) a question is
 def checkType(assign_name, question_num):
@@ -313,7 +309,6 @@ def getIDs(name):
             return None
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get ID. {e}")
-        print(e)
         return None
     finally:
         if conn:
