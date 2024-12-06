@@ -1,7 +1,6 @@
 import tkinter
 from tkinter import *
 import SQLfunctions
-from twoFactorAuth import createWindow
 from tkinter import messagebox
 
 
@@ -12,6 +11,7 @@ def logIn(username, password, win):
     if check is None:
         messagebox.showwarning("Incorrect Login", "Incorrect username or password")
     else:
+        from twoFactorAuth import createWindow
         createWindow(check, win)
 
 def togglePass(passBox):
