@@ -337,9 +337,9 @@ def getAnsw(assignName, questionNum):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT answer FROM {assignName} WHERE questionnum = {questionNum}")
+        cur.execute(f"SELECT answer, marks FROM {assignName} WHERE questionnum = {questionNum}")
         res = cur.fetchone()
-        return res[0]
+        return res
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get answer. {e}")
         return None

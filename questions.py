@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox as mg
 import json
 from SQLfunctions import checkType, getQuest, getLast, getAnsw
 import re
@@ -79,50 +80,113 @@ class Questions():
 class Marking():
     def __init__(self, assignName):
         self.assignName = assignName
+        self.questionNum = 1
+        self.marks = []
 
     # add save to database
 
+    def nextMark(self, win, marksEntry, answers):
+        mark = marksEntry.get()
+        if self.saveMark(mark):
+            self.questionNum += 1
+            win.destroy()
+            self.create_window(answers)
+        else:
+            mg.showerror("Error", "Please enter a valid mark")
+
+    def saveMark(self, mark):
+        try:
+            mark = int(mark)
+            if mark >= 0 and mark <= getAnsw(self.assignName, self.questionNum)[1]:
+                self.marks.append(mark)
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
+
+    def getAnswers(self):
+        name = re.sub(r'[<>:"/\\|?*]', '', self.assignName)
+        file_name = f"{name}_answers.json"
+
+        try:
+            with open(file_name, "r") as file:
+                data = json.load(file)
+                return data.get(str(self.questionNum), None)
+        except Exception as e:
+            mg.showerror("Error", f"Error: {e}")
+
+    def submitMarks(self, win, marksEntry):
+        if self.saveMark(marksEntry.get()):
+            total_marks = sum(self.marks)
+            mg.showinfo("Marks", f"Total Marks: {total_marks} out of {sum([getAnsw(self.assignName, i)[1] for i in range(1, getLast(self.assignName) + 1)])}")
+            # save to submissions
+            win.destroy()
+            # open student view
+
+
+
     def create_window(self, answers):
-        for questionNum, answer in answers.items():
-            win = Tk()
-            win.title("Marking")
+        win = Tk()
+        win.title("Marking")
 
-            wWidth = 750
-            wHeight = 500
-            xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
-            yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
-            win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+        wWidth = 750
+        wHeight = 500
+        xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+        yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+        win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
-            # answer, your answer, mark
-            canvas = Canvas(win)
-            scrollbar = Scrollbar(win, orient="vertical", command=canvas.yview)
-            frame = Frame(canvas)
+        # answer, your answer, mark
+        canvas = Canvas(win)
+        scrollbar = Scrollbar(win, orient="vertical", command=canvas.yview)
+        frame = Frame(canvas)
 
-            frame.bind(
-                "<Configure>",
-                lambda e: canvas.configure(
-                    scrollregion=canvas.bbox("all")
-                )
+        frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(
+                scrollregion=canvas.bbox("all")
             )
+        )
 
-            canvas.create_window((0, 0), window=frame, anchor="nw")
-            canvas.configure(yscrollcommand=scrollbar.set)
+        canvas.create_window((0, 0), window=frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
 
-            c_answer = getAnsw(self.assignName, questionNum)
-            answerLabel = Label(frame, text=f"Correct Answer: {c_answer}", font=("Arial", 16), wraplength=700)
-            answerLabel.pack(anchor="w", padx=10, pady=5)
-            yourAnswerLabel = Label(frame, text=f"Your Answer: {answer}", font=("Arial", 16), wraplength=700)
-            yourAnswerLabel.pack(anchor="w", padx=10, pady=5)
-            marksLabel = Label(frame, text=f"Mark:", font=("Arial", 16))
-            marksLabel.pack(anchor="w", padx=10, pady=5)
-            marksEntry = Entry(frame, font=("Arial", 16))
-            marksEntry.pack(anchor="w", padx=10, pady=5)
+        question_info = getAnsw(self.assignName, self.questionNum)
+        c_answer = question_info[0]
+        mark = question_info[1]
 
-            canvas.pack(side="left", fill="both", expand=True)
-            scrollbar.pack(side="right", fill="y")
+        answer = self.getAnswers()
 
-            win.resizable(False, False)
-            win.mainloop()
+        answerLabel = Label(frame, text=f"Correct Answer: {c_answer}", font=("Arial", 16), wraplength=700)
+        answerLabel.pack(anchor="w", padx=10, pady=5)
+
+        yourAnswerLabel = Label(frame, text=f"Your Answer: {answer}", font=("Arial", 16), wraplength=700)
+        yourAnswerLabel.pack(anchor="w", padx=10, pady=5)
+
+        marksFrame = Frame(frame)
+        marksFrame.pack(anchor="w", padx=10, pady=5)
+
+        marksLabel = Label(marksFrame, text="Mark:", font=("Arial", 16))
+        marksLabel.pack(side="left")
+
+        marksEntry = Entry(marksFrame, font=("Arial", 16))
+        marksEntry.pack(side="left", padx=5)
+
+        marksTextLabel = Label(marksFrame, text=f"out of {mark}", font=("Arial", 16))
+        marksTextLabel.pack(side="left")
+
+        if self.questionNum != getLast(self.assignName):
+            nextButton = Button(frame, text="Next", font=("Arial", 16), command=lambda: self.nextMark(win, marksEntry, answers))
+            nextButton.pack(pady=5)
+        elif self.questionNum == getLast(self.assignName):
+            submitButton = Button(frame, text="Submit", font=("Arial", 16), command=lambda: self.submitMarks(win, marksEntry))
+            submitButton.pack(pady=5)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+        win.resizable(False, False)
+        win.mainloop()
 
 if __name__ == "__main__":
     question = Questions(1, 1, "a00000001", 1)
