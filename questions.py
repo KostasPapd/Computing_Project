@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import messagebox as mg
 import json
-from SQLfunctions import checkType, getQuest, getLast, getAnsw
+from SQLfunctions import checkType, getQuest, getLast, getAnsw, getAssignID, saveSub
 import re
+import datetime
+import os
 """
 Do next:
 - Store the answers when the user clicks next
@@ -66,6 +68,8 @@ class Questions():
             submitButton = Button(win, text="Submit", font=("Arial", 18), command=lambda: self.submit_answers(answerEntry, win))
             submitButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.15)
 
+        answerEntry.focus()
+
         win.resizable(False, False)
         win.mainloop()
 
@@ -74,12 +78,13 @@ class Questions():
         self.save_answer(answer)
         self.save_answers_to_file()
         win.destroy()
-        marking = Marking(self.assignName)
+        marking = Marking(self.assignName, self.studentID)
         marking.create_window(self.answers)
 
 class Marking():
-    def __init__(self, assignName):
+    def __init__(self, assignName, studentID):
         self.assignName = assignName
+        self.studentID = studentID
         self.questionNum = 1
         self.marks = []
 
@@ -120,8 +125,18 @@ class Marking():
         if self.saveMark(marksEntry.get()):
             total_marks = sum(self.marks)
             mg.showinfo("Marks", f"Total Marks: {total_marks} out of {sum([getAnsw(self.assignName, i)[1] for i in range(1, getLast(self.assignName) + 1)])}")
-            # save to submissions
+            assign_id = getAssignID(self.assignName)
+            date = datetime.date.today()
+            saveSub(assign_id, self.studentID, date, total_marks)
+
+            name = re.sub(r'[<>:"/\\|?*]', '', self.assignName)
+            file_name = f"{name}_answers.json"
+            if os.path.exists(file_name):
+                os.remove(file_name)
+
+
             win.destroy()
+            # delete assignment from list
             # open student view
 
 

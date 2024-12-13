@@ -344,6 +344,34 @@ def getAnsw(assignName, questionNum):
         mg.showwarning("Connection Failed", f"Unable to get answer. {e}")
         return None
 
+def getAssignID(assignName):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignName,))
+        res = cur.fetchone()
+        print(res)
+        return res[0]
+    except Exception as e:
+        print(e)
+        mg.showwarning("Connection Failed", f"Unable to get assignment ID. {e}")
+        return None
+
+def saveSub(assignID, studentID, date, mark):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("INSERT INTO submissions (assignment_id, student_id, submission_date, mark) VALUES (%s, %s, %s, %s)",
+                    (assignID, studentID, date, mark))
+        conn.commit()
+    except Exception as e:
+        print(e)
+        mg.showwarning("Connection Failed", f"Unable to save submission. {e}")
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")
