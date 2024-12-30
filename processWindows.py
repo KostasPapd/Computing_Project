@@ -300,12 +300,58 @@ def sendEmailOTP(check, otp):
         mg.showwarning("Email not sent", f"An error occurred: {e}")
         print(e)
 
+def deleteClassUI(teacher_id):
+    win = Toplevel()
+
+    wWidth = 600
+    wHeight = 600
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    win.title("Delete Class")
+
+    titleLabel = Label(win, text="Delete Class", font=("Arial", 20))
+    titleLabel.pack()
+
+    scroll = Scrollbar(win)
+    scroll.pack(side=RIGHT, fill=Y)
+
+    classes = SQLfunctions.getClass(teacher_id)
+    classList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
+                      yscrollcommand=scroll.set)
+
+    if classes is not None:
+        students = sorted(classes)
+        for student in students:
+            classList.insert(END, student)
+    classList.pack(side=LEFT, fill=BOTH)
+
+    selectedClass = []
+
+    def delete():
+        nonlocal selectedClass
+        selected = classList.curselection()
+        selectedClass = [classList.get(n) for n in selected]
+        win.destroy()
+
+    selectButton = Button(win, text="Select", font=("Arial", 18), command=delete)
+    selectButton.place(relx=0.75, rely=0.3, relheight=0.1, relwidth=0.2)
+
+    cancelBut = Button(win, text="Cancel", font=("Arial", 18), command=lambda: win.destroy())
+    cancelBut.place(relx=0.75, rely=0.5, relheight=0.1, relwidth=0.2)
+
+
+    win.resizable(False, False)
+    win.mainloop()
+
 
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
-    #createClassUI(1)
+    # createClassUI(1)
     # stuListUI(1)
     # createAssignmentNumber()
-    sendEmailOTP("kostispapd@outlook.com", "123456")
+    # sendEmailOTP("kostispapd@outlook.com", "123456")
+    deleteClassUI(1)
     pass

@@ -204,7 +204,7 @@ class Marking():
         win.mainloop()
 
 if __name__ == "__main__":
-    question = Questions(1, 1, "a00000001", 1)
+    question = Questions(1, 1, "a00000001", 3)
     question.createWindow()
     # mark = Marking("a00000001")
     # mark.create_window({1: "5"})

@@ -225,7 +225,7 @@ def createAssign(t_ID, win, title, className, dueDate):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
-        table_name = table_name = f"\"a{processWindows.createAssignmentNumber()}\""
+        table_name = f"\"a{processWindows.createAssignmentNumber()}\""
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
 
@@ -348,11 +348,11 @@ def getAssignID(assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
+        assignName = f"\"{assignName}\""
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignName,))
         res = cur.fetchone()
-        print(res)
         return res[0]
     except Exception as e:
         print(e)
