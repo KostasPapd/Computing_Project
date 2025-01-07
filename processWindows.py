@@ -329,13 +329,18 @@ def deleteClassUI(teacher_id):
 
     selectedClass = []
 
-    def delete():
+    def delete(teacher_id):
         nonlocal selectedClass
         selected = classList.curselection()
         selectedClass = [classList.get(n) for n in selected]
+        deleteClass = SQLfunctions.deleteClass(teacher_id, selectedClass)
+        if deleteClass == True:
+            mg.showinfo("Class Deleted", "The class has been deleted")
+        else:
+            mg.showwarning("Error", "An error occurred. Please try again")
         win.destroy()
 
-    selectButton = Button(win, text="Select", font=("Arial", 18), command=delete)
+    selectButton = Button(win, text="Delete", font=("Arial", 18), command=lambda: delete(teacher_id))
     selectButton.place(relx=0.75, rely=0.3, relheight=0.1, relwidth=0.2)
 
     cancelBut = Button(win, text="Cancel", font=("Arial", 18), command=lambda: win.destroy())

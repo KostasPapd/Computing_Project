@@ -1,7 +1,7 @@
 from tkinter import *
 import registerMenu
 import logInMenu
-from processWindows import changeEmailUI, changePassUI, createClassUI
+from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI
 from assignProcess import createAssign
 
 def signOut(win):
@@ -40,7 +40,8 @@ class MenuBar(Frame):
         classMenu = Menu(toolBar)
         classMenu.add_command(label="Create Class", font=("Helvetica", 9),
                               command=lambda: createClassUI(self.id))
-        classMenu.add_command(label="Delete Class", font=("Helvetica", 9))
+        classMenu.add_command(label="Delete Class", font=("Helvetica", 9),
+                              command=lambda: deleteClassUI(self.id))
 
         toolBar.add_cascade(label="Accounts", menu=accMenu)
         toolBar.add_cascade(label="Classes", menu=classMenu)
@@ -51,7 +52,7 @@ class MenuBar(Frame):
         self.quit()
 
 
-def createView(teach_id, password, user):
+def createView(user, password, teach_id):
     win = Tk()
     win.title("The Physics Lab - Admin")
     wWidth = 500

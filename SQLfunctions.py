@@ -369,8 +369,23 @@ def saveSub(assignID, studentID, date, mark):
                     (assignID, studentID, date, mark))
         conn.commit()
     except Exception as e:
-        print(e)
         mg.showwarning("Connection Failed", f"Unable to save submission. {e}")
+
+def deleteClass(t_id, classes):
+    for i in classes:
+        load_dotenv()
+        connector_key = os.getenv("DB_KEY")
+        try:
+            conn = psycopg2.connect(connector_key)
+            cur = conn.cursor()
+            table_name = f"\"{i}_{t_id}\""
+            cur.execute(f"DROP TABLE {table_name}")
+            cur.execute(f"DELETE FROM stud_classes WHERE class_names = '{i}'")
+            conn.commit()
+            return True
+        except Exception as e:
+            mg.showwarning("Connection Failed", f"Unable to delete class. {e}")
+            return False
 
 if __name__ == "__main__":
     # For testing
