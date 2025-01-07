@@ -79,11 +79,11 @@ def createAssign(tID):
     win.resizable(False, False)
     win.mainloop()
 
-def nextAssign(tName, win):
+def nextAssign(assign_id, win):
     win.destroy()
-    createQs(tName)
+    createQs(assign_id)
 
-def createQs(tName):
+def createQs(assign_id):
     win = Toplevel()
     win.title("Create Question")
 
@@ -131,7 +131,7 @@ def createQs(tName):
     addFileButton = Button(win, text="Add File", font=("Arial", 16), command=lambda: open_file_dialog())
     # addFileButton.place(relx=0.05, rely=0.4, relheight=0.1, relwidth=0.17)
 
-    nextButton = Button(win, text="Add question", font=("Arial", 16))
+    nextButton = Button(win, text="Add question", font=("Arial", 16), command=lambda: SQLfunctions.addQuestion(assign_id, quest.get(), answerEntry.get("1.0", "end"), marksEntry.get("1.0", "end"), clicked.get(), win))
     nextButton.place(relx=0.55, rely=0.85, relheight=0.1, relwidth=0.22)
 
     cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())

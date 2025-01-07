@@ -125,7 +125,7 @@ class Marking():
         if self.saveMark(marksEntry.get()):
             total_marks = sum(self.marks)
             mg.showinfo("Marks", f"Total Marks: {total_marks} out of {sum([getAnsw(self.assignName, i)[1] for i in range(1, getLast(self.assignName) + 1)])}")
-            assign_id = getAssignID(self.assignName)
+            assign_id = getAssignID(f"\"{self.assignName}\"")
             date = datetime.date.today()
             saveSub(assign_id, self.studentID, date, total_marks)
 

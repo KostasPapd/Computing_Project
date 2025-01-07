@@ -50,6 +50,7 @@ def registerAcc(email, password, name, teacher):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         passw = hashPassword(password)
+        email = email.lower()
         cur.execute(f"INSERT INTO main_acc (name, password, email, teacher_id) "
                     f"VALUES ('{name}', '{passw}', '{email}', '{teacher}')")
         conn.commit()
@@ -242,13 +243,39 @@ def createAssign(t_ID, win, title, className, dueDate):
                     f"assignment_id INT REFERENCES assignments(assign_id),"
                     f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))")
         conn.commit()
-        assignProcess.nextAssign(t_ID, win)
+
+        assign_id = getAssignID(table_name)
+        assignProcess.nextAssign(assign_id, win)
+
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to create assignment. {e}")
 
+def getAssignName(assignID):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("SELECT title_id FROM assignments WHERE assign_id = %s", (assignID,))
+        res = cur.fetchone()
+        return res[0]
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get assignment name. {e}")
+        return None
 
-def addQuestion():
-    pass
+def addQuestion(assign_id, question, answer, marks, question_type, win):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        table_name = getAssignName(assign_id)
+        cur.execute(f"INSERT INTO {table_name} (assignment_id, question, answer, marks, question_type) VALUES (%s, %s, %s, %s, %s)",
+                    (assign_id, question, answer, marks, question_type))
+        conn.commit()
+        assignProcess.nextAssign(assign_id, win)
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to add question. {e}")
 
 # gets the specified question
 def getQuest(num, assignName):
@@ -348,12 +375,15 @@ def getAssignID(assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
-        assignName = f"\"{assignName}\""
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignName,))
         res = cur.fetchone()
-        return res[0]
+        if res:
+            return res[0]
+        else:
+            mg.showwarning("No Results", "No assignment found with the given name.")
+            return None
     except Exception as e:
         print(e)
         mg.showwarning("Connection Failed", f"Unable to get assignment ID. {e}")

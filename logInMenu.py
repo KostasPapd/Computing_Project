@@ -7,7 +7,7 @@ from tkinter import messagebox
 def logIn(username, password, win):
     username = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
     password = password.get().strip()
-    check = SQLfunctions.checkLogIn(username, password) # Check if the login is correct
+    check = SQLfunctions.checkLogIn(username.lower(), password) # Check if the login is correct
     if check is None:
         messagebox.showwarning("Incorrect Login", "Incorrect username or password")
     else:
