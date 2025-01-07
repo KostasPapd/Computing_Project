@@ -127,26 +127,18 @@ def changePass(user, level, passw):
 
 # changes the email of the user
 def changeEmail(level, user, email):
-    if level == "Admin":
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
-        try:
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
-            cur.execute(f"UPDATE admin_acc SET email = '{email}' WHERE email = '{user}'")
-            conn.commit()
-        except Exception as e:
-            mg.showwarning("Connection Failed", "Unable to change email.")
-    else:
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
-        try:
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
-            cur.execute(f"UPDATE main_acc SET email = '{email}' WHERE email = '{user}'")
-            conn.commit()
-        except Exception as e:
-            mg.showwarning("Connection Failed", "Unable to change email.")
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        if level == "Admin":
+            cur.execute("UPDATE admin_acc SET email = %s WHERE name = %s", (email, user))
+        else:
+            cur.execute("UPDATE main_acc SET email = %s WHERE email = %s", (email, user))
+        conn.commit()
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to change email. {e}")
 
 # gets a list off all students under a teacher's name (used to create classes)
 def getStudents(teacher):

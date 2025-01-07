@@ -52,7 +52,7 @@ class MenuBar(Frame):
         self.quit()
 
 
-def createView(user, password, teach_id):
+def createView(teach_id, password, user):
     win = Tk()
     win.title("The Physics Lab - Admin")
     wWidth = 500
