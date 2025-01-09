@@ -54,7 +54,10 @@ def createLogIn():
     exitButton.config(font=("Arial", 16))
     exitButton.place(relx=0.55, rely=0.8, relheight=0.13, relwidth=0.15)
 
-    logButton = Button(win, text="Log In", command=lambda: logIn(userBox, passBox, win))
+    def enter(event=None):
+        logIn(userBox, passBox, win)
+
+    logButton = Button(win, text="Log In", command=enter)
     logButton.config(font=("Arial", 16))
     logButton.place(relx=0.28, rely=0.8, relheight=0.13, relwidth=0.2)
 
@@ -74,6 +77,8 @@ def createLogIn():
     showPassImg = showPassImg.subsample(15, 15)
     showPass = Button(win, image=showPassImg, borderwidth=0, command=lambda: togglePass(passBox))
     showPass.place(relx=0.85, rely=0.63, relheight=0.07, relwidth=0.1)
+
+    win.bind("<Return>", enter)
 
     userBox.focus()
     win.resizable(False, False)

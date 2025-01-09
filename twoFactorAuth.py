@@ -63,11 +63,16 @@ def createWindow(check, logInWin):
                 logInWin.destroy()
                 adminView.createView(check[2], check[3], check[1])
 
-    verifyButton = Button(win, font=("Arial", 16), text="Verify", command=lambda: logIn(check, key, logInWin))
+    def enter(event=None):
+        logIn(check, key, logInWin)
+
+    verifyButton = Button(win, font=("Arial", 16), text="Verify", command=enter)
     verifyButton.place(relx=0.6, rely=0.7, relwidth=0.3, relheight=0.15)
 
     reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(check, otp))
     reSendButton.place(relx=0.1, rely=0.7, relwidth=0.3, relheight=0.15)
+
+    win.bind("<Return>", enter)
 
     codeBox.focus()
 
