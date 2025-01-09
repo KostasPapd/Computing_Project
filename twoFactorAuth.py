@@ -1,10 +1,9 @@
 """
-- When loging in
-    - Generate key and OTP
-    - Send email with OTP
-    - Create window to ask for password
+- When called from logIn.py, this file will:
+    - Generate a key and OTP
+    - Send an email with OTP
+    - Create window to ask for OTP
     - Log in once OTP is correct
-
 """
 
 import pyotp
@@ -13,18 +12,22 @@ from processWindows import sendEmailOTP
 import studentView
 import adminView
 
+# Generate a key for the user
 def generateKey():
     key = pyotp.random_base32()
     return key
 
+# Generate the OTP for the user
 def generateOTP(key):
     otp = pyotp.TOTP(key)
     return otp.now()
 
+# Verifies the OTP that was entered
 def verify(key, otp):
     totp = pyotp.TOTP(key)
     return totp.verify(otp, valid_window=1)
 
+# Creates the window for the user to enter the OTP
 def createWindow(check, logInWin):
     win = Toplevel()
 
@@ -52,7 +55,7 @@ def createWindow(check, logInWin):
     codeBox = Entry(win, font=("Arial", 12))
     codeBox.place(relx=0.22, rely=0.46, relwidth=0.65, relheight=0.09)
 
-    def logIn(check, key, logInWin):
+    def logIn(check, key, logInWin): # Logs in the user and shows the appropriate window (Admin or Student)
         if verify(key, codeBox.get()):
             if check[0] == "Student":
                 win.destroy()
@@ -64,7 +67,7 @@ def createWindow(check, logInWin):
                 adminView.createView(check[2], check[3], check[1])
 
     def enter(event=None):
-        logIn(check, key, logInWin)
+        logIn(check, key, logInWin) # Calls the logIn function
 
     verifyButton = Button(win, font=("Arial", 16), text="Verify", command=enter)
     verifyButton.place(relx=0.6, rely=0.7, relwidth=0.3, relheight=0.15)
@@ -72,7 +75,7 @@ def createWindow(check, logInWin):
     reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(check, otp))
     reSendButton.place(relx=0.1, rely=0.7, relwidth=0.3, relheight=0.15)
 
-    win.bind("<Return>", enter)
+    win.bind("<Return>", enter) # Calls the enter function when the enter key is pressed
 
     codeBox.focus()
 
