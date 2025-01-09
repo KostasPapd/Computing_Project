@@ -8,7 +8,6 @@
 """
 
 import pyotp
-from tkinter import messagebox as mg
 from tkinter import *
 from processWindows import sendEmailOTP
 import studentView
