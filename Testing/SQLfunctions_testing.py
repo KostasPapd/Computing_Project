@@ -3,13 +3,13 @@ import SQLfunctions
 
 class Validate_SQLfunctions(unittest.TestCase):
     def testCheckEmail(self):
-        data = "kostispapd@outlook.com"
+        data = "kostispapd@gmail.com"
         result = SQLfunctions.checkEmail(data)
-        expected = False
+        expected = True
         self.assertEqual(expected, result)
 
     def testCheckLogIn(self):
-        user = "admin_kostas"
+        user = "randomemail@outlook.com"
         password = "UnittestPassword"
         result = SQLfunctions.checkLogIn(user, password)
         expected = None

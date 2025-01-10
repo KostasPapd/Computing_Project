@@ -7,23 +7,23 @@ import isValid
 
 class Validate_isValid(unittest.TestCase):
     def testPassword(self):
-        data = "passwA!or33345"
-        result = isValid.validatePassword(data)    # call the function you want to test
-        expected = True
+        data = ""
+        result = isValid.validatePassword(data)
+        expected = False
         print(result, expected)
         self.assertEqual(expected, result)
 
     def testEmail(self):
-        data = "b32908@sfc.potteries.ac.uk"
+        data = "b32908@uk"
         result = isValid.validEmail(data)
-        expected = True
+        expected = False
         print(result, expected)
         self.assertEqual(expected, result)
 
     def testVerifyEmail(self):
-        data = "b32908@sfc.potteries.ac.uk"
+        data = "b32908@uk"
         result = isValid.verifyEmail(data)
-        expected = True
+        expected = False
         print(result, expected)
         self.assertEqual(expected, result)
 
