@@ -33,7 +33,7 @@ def getTeachID(tName):
     try:
         conn = psycopg2.connect(connector_key) # connects to the database
         cur = conn.cursor() # creates a cursor
-        cur.execute(f"SELECT id FROM admin_acc WHERE name = '{tName}'")
+        cur.execute(f"SELECT id FROM admin_acc WHERE name = %s", (tName,))
         res = cur.fetchone()
         if res:
             return res[0]
@@ -52,7 +52,7 @@ def registerAcc(email, password, name, teacher):
         passw = hashPassword(password)
         email = email.lower()
         cur.execute(f"INSERT INTO main_acc (name, password, email, teacher_id) "
-                    f"VALUES ('{name}', '{passw}', '{email}', '{teacher}')")
+                    f"VALUES (%s, %s, %s, %s)", (name, passw, email, teacher))
         conn.commit()
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
@@ -65,7 +65,7 @@ def checkEmail(email):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT email FROM main_acc WHERE email = '{email}'")
+        cur.execute(f"SELECT email FROM main_acc WHERE email = %s", (email,))
         res = cur.fetchone()
         if res is not None:
             return False
@@ -82,13 +82,13 @@ def checkLogIn(user, passw):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         passw = hashPassword(passw)
-        cur.execute(f"SELECT * FROM main_acc WHERE email = '{user}' AND password = '{passw}'")
+        cur.execute(f"SELECT * FROM main_acc WHERE email = %s AND password = %s", (user, passw))
         res = cur.fetchone()
         if res is not None:
             return "Student", res[1], user, passw
         else:
             try:
-                cur.execute(f"SELECT * FROM admin_acc WHERE email = '{user}' AND password = '{passw}'")
+                cur.execute(f"SELECT * FROM admin_acc WHERE email = %s AND password = %s", (user, passw))
                 result = cur.fetchone()
                 if result is not None:
                     return "Admin", result[3], getTeachID(result[3]), passw, user
@@ -109,7 +109,7 @@ def changePass(user, level, passw):
             conn = psycopg2.connect(connector_key)
             cur = conn.cursor()
             passw = hashPassword(passw)
-            cur.execute(f"UPDATE admin_acc SET password = '{passw}' WHERE email = '{user}'")
+            cur.execute(f"UPDATE admin_acc SET password = %s WHERE email = %s", (passw, user))
             conn.commit()
         except Exception as e:
             mg.showwarning("Connection Failed", "Unable to change password.")
@@ -120,7 +120,7 @@ def changePass(user, level, passw):
             conn = psycopg2.connect(connector_key)
             cur = conn.cursor()
             passw = hashPassword(passw)
-            cur.execute(f"UPDATE main_acc SET password = '{passw}' WHERE email = '{user}'")
+            cur.execute(f"UPDATE main_acc SET password = %s WHERE email = %s", (passw, user))
             conn.commit()
         except Exception as e:
             mg.showwarning("Connection Failed", "Unable to change password.")
@@ -147,7 +147,7 @@ def getStudents(teacher):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT name FROM main_acc WHERE teacher_id = '{teacher}'")
+        cur.execute(f"SELECT name FROM main_acc WHERE teacher_id = %s", (teacher,))
         res = cur.fetchall()
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
@@ -169,8 +169,8 @@ def createClass(name, teacher, stuList):
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
         table_name = f"\"{name}_{teacher}\""  # Creates the table name
-        cur.execute(f"CREATE TABLE {table_name} (student_id INT PRIMARY KEY , student_name varchar(255))")  # Creates the table
-        cur.execute(f"INSERT INTO stud_classes (class_names, teacher_id) VALUES ('{name}', '{teacher}')")  # Inserts the class into the table
+        cur.execute(f"CREATE TABLE %s (student_id INT PRIMARY KEY , student_name varchar(255))", (table_name,))  # Creates the table
+        cur.execute(f"INSERT INTO stud_classes (class_names, teacher_id) VALUES (%s, %s)", (name, teacher))  # Inserts the class into the table
         for student in stuList:
             cur.execute("SELECT id FROM main_acc WHERE name = %s", (student,))
             student_id = cur.fetchone()[0]
@@ -189,7 +189,7 @@ def getClass(t_ID):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT class_names FROM stud_classes WHERE teacher_id = '{t_ID}'")
+        cur.execute(f"SELECT class_names FROM stud_classes WHERE teacher_id = %s", (t_ID,))
         res = cur.fetchall()
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
@@ -229,11 +229,11 @@ def createAssign(t_ID, win, title, className, dueDate):
             class_id = f"'{class_id}'"
 
         cur.execute(f"INSERT INTO assignments (title_id, title, class_id, due_date, teacher_id) VALUES "
-                    f"('{table_name}', '{title}', {class_id}, '{dueDate}', '{t_ID}')")
+                    f"(%s, %s, %s, %s, %s)", (table_name, title, class_id, dueDate, t_ID))
 
-        cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
+        cur.execute(f"CREATE TABLE %s (questionNum SERIAL PRIMARY KEY, "
                     f"assignment_id INT REFERENCES assignments(assign_id),"
-                    f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))")
+                    f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))", (table_name,))
         conn.commit()
 
         assign_id = getAssignID(table_name)
@@ -289,7 +289,7 @@ def checkType(assign_name, question_num):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question_type FROM {assign_name} WHERE questionnum = {question_num}")
+        cur.execute(f"SELECT question_type FROM %s WHERE questionnum = %s", (assign_name, question_num))
         res = cur.fetchone()
         return res[0]
     except Exception as e:
@@ -340,7 +340,7 @@ def getLast(assign_name):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT questionnum FROM {assign_name} WHERE questionnum = (SELECT MAX(questionnum) FROM {assign_name})")
+        cur.execute(f"SELECT questionnum FROM %s WHERE questionnum = (SELECT MAX(questionnum) FROM %s)", (assign_name, assign_name))
         res = cur.fetchone()
         return res[0]
     except Exception as e:
@@ -356,7 +356,7 @@ def getAnsw(assignName, questionNum):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT answer, marks FROM {assignName} WHERE questionnum = {questionNum}")
+        cur.execute(f"SELECT answer, marks FROM %s WHERE questionnum = %s", (assignName, questionNum))
         res = cur.fetchone()
         return res
     except Exception as e:
@@ -402,7 +402,7 @@ def deleteClass(t_id, classes):
             cur = conn.cursor()
             table_name = f"\"{i}_{t_id}\""
             cur.execute(f"DROP TABLE {table_name}")
-            cur.execute(f"DELETE FROM stud_classes WHERE class_names = '{i}'")
+            cur.execute(f"DELETE FROM stud_classes WHERE class_names = %s", (i,))
             conn.commit()
             return True
         except Exception as e:
