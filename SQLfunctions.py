@@ -401,7 +401,7 @@ def deleteClass(t_id, classes):
             conn = psycopg2.connect(connector_key)
             cur = conn.cursor()
             table_name = f"\"{i}_{t_id}\""
-            cur.execute(f"DROP TABLE {table_name}")
+            cur.execute(f"DROP TABLE %s", (table_name,))
             cur.execute(f"DELETE FROM stud_classes WHERE class_names = %s", (i,))
             conn.commit()
             return True
