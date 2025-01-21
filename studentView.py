@@ -143,6 +143,6 @@ def createStudent(name, id, password):
 
 if __name__ == "__main__":
     # Testing
-    # createStudent("Kostas Papadopoulos", "email", "password")
-    database(1, 3)
+    createStudent("Kostas Papadopoulos", "email", "password")
+    # database(1, 3)
     pass

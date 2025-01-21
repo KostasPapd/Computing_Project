@@ -276,7 +276,7 @@ def getQuest(num, assignName):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question FROM {assignName} WHERE questionnum = %s", (num,))
+        cur.execute(f"SELECT question FROM {assignName} WHERE questionnum = %s", (str(num),))
         res = cur.fetchone()
         return res[0]
     except Exception as e:
@@ -289,11 +289,12 @@ def checkType(assign_name, question_num):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT question_type FROM %s WHERE questionnum = %s", (assign_name, question_num))
+        cur.execute(f"SELECT question_type FROM {assign_name} WHERE questionnum = %s", str(question_num))
         res = cur.fetchone()
         return res[0]
     except Exception as e:
-        mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
+        print(e)
+        # mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
         return None
 
 # gets the assignment id
@@ -340,7 +341,7 @@ def getLast(assign_name):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT questionnum FROM %s WHERE questionnum = (SELECT MAX(questionnum) FROM %s)", (assign_name, assign_name))
+        cur.execute(f"SELECT questionnum FROM {assign_name} WHERE questionnum = (SELECT MAX(questionnum) FROM {assign_name})")
         res = cur.fetchone()
         return res[0]
     except Exception as e:
@@ -356,7 +357,7 @@ def getAnsw(assignName, questionNum):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"SELECT answer, marks FROM %s WHERE questionnum = %s", (assignName, questionNum))
+        cur.execute(f"SELECT answer, marks FROM {assignName} WHERE questionnum = %s", (str(questionNum)))
         res = cur.fetchone()
         return res
     except Exception as e:
@@ -367,9 +368,10 @@ def getAssignID(assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
+        assignmentName = f"\"{assignName}\""
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignName,))
+        cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignmentName,))
         res = cur.fetchone()
         if res:
             return res[0]
@@ -401,7 +403,7 @@ def deleteClass(t_id, classes):
             conn = psycopg2.connect(connector_key)
             cur = conn.cursor()
             table_name = f"\"{i}_{t_id}\""
-            cur.execute(f"DROP TABLE %s", (table_name,))
+            cur.execute(f"DROP TABLE {table_name}")
             cur.execute(f"DELETE FROM stud_classes WHERE class_names = %s", (i,))
             conn.commit()
             return True

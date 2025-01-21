@@ -15,7 +15,7 @@ class Questions():
     def __init__(self, teacherID, questionNum, assignName, studentID):
         self.teachID = teacherID
         self.questionNum = questionNum
-        self.assignName = assignName
+        self.assignName = assignName.strip('"')
         self.studentID = studentID
         self.answers = {}
 
