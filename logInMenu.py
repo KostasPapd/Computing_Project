@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import *
 import SQLfunctions
+from PIL import Image, ImageTk
 from tkinter import messagebox
 
 
@@ -34,21 +35,20 @@ def createLogIn():
 
     password_variable = tkinter.StringVar()
 
-    # ADD WHEN LOGO IS DONE
-    # frame = Frame(win, width=60, height=40)
-    # frame.pack()
-    # frame.place(x=90, y=50) # Change to rel pos
+    frame = Frame(win, width=1, height=1)
+    frame.pack()
+    frame.place(relx=0.5, rely=0.175, anchor="center")  # Adjusted to place the logo in the middle
 
-    # img = Image.open("iconNotPng.png")  # LOGO GOES HERE
-    # img = img.resize((120, 120))
-    # img = ImageTk.PhotoImage(img)
+    img = Image.open("Pictures\\logo.png")  # LOGO GOES HERE
+    img = img.resize((int(img.width * 0.3), int(img.height * 0.3)))
+    img = ImageTk.PhotoImage(img)
 
-    # label = Label(frame, image=img)
-    # label.pack()
+    label = Label(frame, image=img)
+    label.pack()
 
     titleLabel = Label(win, text="Log In")
     titleLabel.config(font=("Arial", 20))
-    titleLabel.place(relx=0.13, rely=0.05, relheight=0.1, relwidth=0.7)
+    titleLabel.place(relx=0.15, rely=0.275, relheight=0.1, relwidth=0.7)
 
     exitButton = Button(win, text="Exit", command=lambda: win.destroy())
     exitButton.config(font=("Arial", 16))
