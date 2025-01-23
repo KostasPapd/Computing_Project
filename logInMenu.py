@@ -37,9 +37,9 @@ def createLogIn():
 
     frame = Frame(win, width=1, height=1)
     frame.pack()
-    frame.place(relx=0.5, rely=0.175, anchor="center")  # Adjusted to place the logo in the middle
+    frame.place(relx=0.5, rely=0.175, anchor="center")
 
-    img = Image.open("Pictures\\logo.png")  # LOGO GOES HERE
+    img = Image.open("Pictures\\logo.png")
     img = img.resize((int(img.width * 0.3), int(img.height * 0.3)))
     img = ImageTk.PhotoImage(img)
 
