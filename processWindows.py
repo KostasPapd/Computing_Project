@@ -12,6 +12,7 @@ import tkinter
 from tkinter import *
 import smtplib
 from tkinter import messagebox as mg
+from tkinter import ttk
 import SQLfunctions
 import ssl
 from email.message import EmailMessage
@@ -350,6 +351,44 @@ def deleteClassUI(teacher_id):
     win.resizable(False, False)
     win.mainloop()
 
+def assignmentObjects(frame):
+    pass
+
+def submissionObjects(frame):
+    title = Label(frame, text="Submissions", font=("Arial", 20))
+    title.pack()
+
+def submissionViewCreate(window):
+    # window.destroy()
+
+    win = Tk()
+
+    wWidth = 600
+    wHeight = 500
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    win.title("Assignments")
+
+    notebook = ttk.Notebook(win)
+    notebook.grid()
+
+    assignments = Frame(notebook)
+    submissions = Frame(notebook)
+
+    assignmentObjects(assignments)
+    submissionObjects(submissions)
+
+    assignments.grid()
+    submissions.grid()
+
+    notebook.add(assignments, text="View Assignments")
+    notebook.add(submissions, text="View Submissions")
+
+
+    win.resizable(False, False)
+    win.mainloop()
 
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
@@ -358,5 +397,6 @@ if __name__ == "__main__":
     # stuListUI(1)
     # createAssignmentNumber()
     # sendEmailOTP("kostispapd@outlook.com", "123456")
-    deleteClassUI(1)
+    # deleteClassUI(1)
+    submissionViewCreate(1)
     pass

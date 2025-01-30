@@ -1,7 +1,7 @@
 from tkinter import *
 import registerMenu
 import logInMenu
-from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI
+from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI, submissionViewCreate
 from assignProcess import createAssign
 
 def signOut(win):
@@ -68,6 +68,9 @@ def createView(teach_id, password, user):
     createAssignButtton = Button(win, text="Create Assignment", font=("Helvetica", 18),
                                  command=lambda: createAssign(teach_id))
     createAssignButtton.place(relx=0.25, rely=0.2, relheight=0.1, relwidth=0.5)
+
+    viewAssignButton = Button(win, text="View Assignments", font=("Helvetica", 18), command=lambda: submissionViewCreate(win))
+    viewAssignButton.place(relx=0.25, rely=0.4, relheight=0.1, relwidth=0.5)
 
     win.resizable(False, False)
     win.mainloop()
