@@ -6,12 +6,17 @@ from tkinter import messagebox
 
 
 def logIn(username, password, win):
-    usernameVal = username.get("1.0", "end-1c").strip()  # Pass these value to check against the database
+    # Gets the username entered in the log in window
+    usernameVal = username.get("1.0", "end-1c").strip()
+    # Gets the password entered in the log in window
     passwordVal = password.get().strip()
-    check = SQLfunctions.checkLogIn(usernameVal.lower(), passwordVal) # Check if the login is correct
+    # Passes the values to the database and checks if the credentials are correct
+    check = SQLfunctions.checkLogIn(usernameVal.lower(), passwordVal)
+    # If the credentials are incorrect, show a warning message
     if check is None:
         messagebox.showwarning("Incorrect Login", "Incorrect username or password")
     else:
+        # If the credentials are correct, show the two-factor authentication window
         from twoFactorAuth import createWindow
         createWindow(check, win)
 
@@ -25,6 +30,7 @@ def togglePass(passBox):
 def createLogIn():
     win = Tk()
 
+    # Calculates the center of the screen and displays the window there
     wWidth = 500
     wHeight = 350
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))

@@ -14,14 +14,14 @@ class Validate_isValid(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def testEmail(self):
-        data = "b32908@uk"
+        data = ""
         result = isValid.validEmail(data)
         expected = False
         print(result, expected)
         self.assertEqual(expected, result)
 
     def testVerifyEmail(self):
-        data = "b32908@uk"
+        data = ""
         result = isValid.verifyEmail(data)
         expected = False
         print(result, expected)

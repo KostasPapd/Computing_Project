@@ -76,27 +76,39 @@ def checkEmail(email):
 
 # checks the log in info and checks if the user has admin rights
 def checkLogIn(user, passw):
+    # loads the .env file
     load_dotenv()
+    # takes the database key from the .env file
     connector_key = os.getenv("DB_KEY")
     try:
+        # connects to the database
         conn = psycopg2.connect(connector_key)
+        # creates a cursor
         cur = conn.cursor()
+        # hashes the password entered
         passw = hashPassword(passw)
+        # checks if the user is a student
         cur.execute(f"SELECT * FROM main_acc WHERE email = %s AND password = %s", (user, passw))
         res = cur.fetchone()
+        # if the user is a student, return the user's information (Student, name, email and password)
         if res is not None:
             return "Student", res[1], user, passw
+        # if the user is not a student, check if the user is an admin
         else:
             try:
                 cur.execute(f"SELECT * FROM admin_acc WHERE email = %s AND password = %s", (user, passw))
                 result = cur.fetchone()
                 if result is not None:
+                    # if the user is an admin, return the user's information (Admin, name, teacherId, password and email)
                     return "Admin", result[3], getTeachID(result[3]), passw, user
                 else:
+                    # returns None if the user doesn't exist
                     return None
             except Exception as e:
+                # error handling
                 mg.showwarning("Connection Failed", "Unable to check if user exists.")
     except Exception as e:
+        # error handling
         mg.showwarning("Connection Failed", f"Unable to check if user exists. {e}")
 
 
