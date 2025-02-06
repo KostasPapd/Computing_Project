@@ -16,5 +16,18 @@ class Validate_SQLfunctions(unittest.TestCase):
         self.assertEqual(expected, result)
 
 
+    """
+    getStudents
+    getClass
+    getAssignName
+    checkType
+    checkAssignmentNumber
+    getIDs
+    getLast
+    getAnsw
+    deleteClass
+    """
+
+
 if __name__ == "__main__":
     unittest.main()
