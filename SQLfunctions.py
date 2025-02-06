@@ -61,7 +61,6 @@ def registerAcc(email, password, name, teacher):
 def checkEmail(email):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
-
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
