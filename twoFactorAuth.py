@@ -5,10 +5,13 @@
     - Create window to ask for OTP
     - Log in once OTP is correct
 """
-
+# imports the pyotp library to generate the OTP
 import pyotp
+# imports the tkinter library to create the UI
 from tkinter import *
+# imports the processWindows file to send the email
 from processWindows import sendEmailOTP
+# imports the studentView and adminView files to show the appropriate window
 import studentView
 import adminView
 
