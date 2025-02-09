@@ -429,5 +429,5 @@ if __name__ == "__main__":
     # registerAcc("test", "test", "test", 1)
     # checkType("test_assignment", 1)
     # print(getQuest(1, "a00000001"))
-    print(getClass(1))
+    # print(getClass(1))
     pass
