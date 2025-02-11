@@ -354,12 +354,52 @@ def deleteClassUI(teacher_id):
 def assignmentObjects(frame):
     pass
 
-def submissionObjects(frame):
+def submissionObjects(frame, id):
     title = Label(frame, text="Submissions", font=("Arial", 20))
     title.pack()
 
-def submissionViewCreate(window):
-    # window.destroy()
+    submissions = SQLfunctions.getSubmissions(id)
+
+    if submissions:
+        columns = ("Title", "Submission ID", "Student Name", "Mark", "Submission Date")
+        tree = ttk.Treeview(frame, columns=columns, show="headings")
+        tree.heading("Title", text="Assignment Title")
+        tree.heading("Submission ID", text="Submission ID")
+        tree.heading("Student Name", text="Student Name")
+        tree.heading("Mark", text="Mark")
+        tree.heading("Submission Date", text="Submission Date")
+
+        tree.column("Title", width=150)
+        tree.column("Submission ID", width=100)
+        tree.column("Student Name", width=150)
+        tree.column("Mark", width=50)
+        tree.column("Submission Date", width=150)
+
+        for submission in submissions:
+            tree.insert("", "end", values=submission)
+
+        tree.pack(fill=BOTH, expand=True)
+
+        def sort_by_column(tree, col, reverse):
+            l = [(tree.set(k, col), k) for k in tree.get_children('')]
+            l.sort(reverse=reverse)
+
+            for index, (val, k) in enumerate(l):
+                tree.move(k, '', index)
+
+            tree.heading(col, command=lambda: sort_by_column(tree, col, not reverse))
+
+        sort_by_id_button = Button(frame, text="Sort by Submission ID", command=lambda: sort_by_column(tree, "Submission ID", False))
+        sort_by_id_button.pack(side=LEFT, padx=10, pady=10)
+
+        sort_by_title_button = Button(frame, text="Sort by Title", command=lambda: sort_by_column(tree, "Title", False))
+        sort_by_title_button.pack(side=LEFT, padx=10, pady=10)
+    else:
+        no_data_label = Label(frame, text="No submissions found.", font=("Arial", 16))
+        no_data_label.pack()
+
+def submissionViewCreate(window, id):
+    window.destroy()
 
     win = Tk()
 
@@ -378,7 +418,7 @@ def submissionViewCreate(window):
     submissions = Frame(notebook)
 
     assignmentObjects(assignments)
-    submissionObjects(submissions)
+    submissionObjects(submissions, id)
 
     assignments.grid()
     submissions.grid()
@@ -398,5 +438,5 @@ if __name__ == "__main__":
     # createAssignmentNumber()
     # sendEmailOTP("kostispapd@outlook.com", "123456")
     # deleteClassUI(1)
-    submissionViewCreate(1)
+    submissionViewCreate(1, 1)
     pass

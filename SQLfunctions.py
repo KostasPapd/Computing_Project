@@ -422,6 +422,27 @@ def deleteClass(t_id, classes):
             mg.showwarning("Connection Failed", f"Unable to delete class. {e}")
             return False
 
+def getSubmissions(t_id):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("""
+                    SELECT a.title, s.subm_id, m.name, s.mark, s.submission_date
+                    FROM submissions s
+                    JOIN assignments a ON s.assignment_id = a.assign_id
+                    JOIN main_acc m ON s.student_id = m.id
+                    WHERE a.teacher_id = %s
+                """, (t_id,))
+        res = cur.fetchall()
+        if res:
+            return res
+        else:
+            return None
+    except Exception as e:
+         mg.showwarning("Connection Failed", f"Unable to get submissions. {e}")
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")
@@ -430,4 +451,5 @@ if __name__ == "__main__":
     # checkType("test_assignment", 1)
     # print(getQuest(1, "a00000001"))
     # print(getClass(1))
+    print(getSubmissions(1))
     pass

@@ -9,6 +9,7 @@
 import pyotp
 # imports the tkinter library to create the UI
 from tkinter import *
+from tkinter import messagebox as mg
 # imports the processWindows file to send the email
 from processWindows import sendEmailOTP
 # imports the studentView and adminView files to show the appropriate window
@@ -68,6 +69,8 @@ def createWindow(check, logInWin):
                 win.destroy()
                 logInWin.destroy()
                 adminView.createView(check[2], check[3], check[1])
+        else:
+            mg.showwarning("Invalid Code", "The code you entered is invalid. Please try again.")
 
     def enter(event=None):
         logIn(check, key, logInWin) # Calls the logIn function
