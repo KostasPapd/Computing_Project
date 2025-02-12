@@ -51,20 +51,20 @@ class MenuBar(Frame):
     def exit(self):
         self.quit()
 
-def createView(name, id, password):
-    win = Tk()
-    nameText = name
-    win.title(f"The Physics Lab - Admin")
-    wWidth = 300
-    wHeight = 300
-    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
-    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
-    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+#def createView(name, id, password):
+#    win = Tk()
+ #   nameText = name
+  #  win.title(f"The Physics Lab - Admin")
+   # wWidth = 300
+    #wHeight = 300
+    #xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    #yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    #win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
-    label = Label(win, text="Admin view", font=("Helvetica", 20))
-    label.place(relx=0.5, rely=0.5, anchor="center")
+    #label = Label(win, text="Admin view", font=("Helvetica", 20))
+    #label.place(relx=0.5, rely=0.5, anchor="center")
 
-def ccreateView(teach_id, password, user):
+def createView(teach_id, password, user):
     win = Tk()
     win.title("The Physics Lab - Admin")
     wWidth = 500
@@ -90,5 +90,5 @@ def ccreateView(teach_id, password, user):
 
 if __name__ == "__main__":
     # Testing
-    ccreateView(1, "password", "testing account")
+    createView(1, "password", "testing account")
     pass
