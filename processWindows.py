@@ -275,31 +275,36 @@ def sendEmailOTP(check, otp):
     try:
         server = "smtp.gmail.com"
         port = 465
+        # login for the email account
         email_s = "thephysicslab12@gmail.com"
         passw = "ihbi vcsv tgjr npmu"
 
+        # selects the receiving email
         if check[0] == "Student":
             receiver = check[2]
         elif check[0] == "Admin":
             receiver = check[4]
 
+        # email subject and message
         subject = "One-Time Password"
         message = f"Here is your one-time password: {otp}\n\n Do not share this code with anyone."
 
+        # creates the email using the EmailMessage class from the email module
         email_c = EmailMessage()
         email_c['From'] = email_s
         email_c['to'] = receiver
         email_c['Subject'] = subject
         email_c.set_content(message)
 
+        # creates a secure connection to the email server
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(server, port, context=context) as server:
             server.login(email_s, passw)
             server.sendmail(email_s, receiver, email_c.as_string())
 
     except Exception as e:
+        # error handling
         mg.showwarning("Email not sent", f"An error occurred: {e}")
-        print(e)
 
 def deleteClassUI(teacher_id):
     win = Toplevel()

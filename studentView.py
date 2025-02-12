@@ -17,6 +17,7 @@ def signOut(win):
     win.destroy()
     logInMenu.createLogIn()
 
+'change'
 def database(tID, sID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -48,7 +49,6 @@ def database(tID, sID):
                 return data
     except Exception as e:
         mg.showwarning("Connection Failed", e)
-        print(e)
         return []
 
 def openAssign(win, tID, assignments, sID):
@@ -119,9 +119,21 @@ class MenuBar(Frame):
     def exit(self):
         self.quit()
 
-
-
 def createStudent(name, id, password):
+    win = Tk()
+    nameText = name
+    win.title(f"The Physics Lab - {name}")
+    wWidth = 300
+    wHeight = 300
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    label = Label(win, text="Student view", font=("Helvetica", 20))
+    label.place(relx=0.5, rely=0.5, anchor="center")
+
+
+def chageTocreateStudent(name, id, password):
     win = Tk()
     nameText = name
     win.title(f"The Physics Lab - {name}")

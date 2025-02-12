@@ -1,13 +1,89 @@
 # imports tkinter for the UI
-import tkinter
 from tkinter import *
 from tkinter import messagebox
 # imports the SQLfunctions file to check the login credentials
 import SQLfunctions
 # imports the PIL imaging library to show the logo and show password button
 from PIL import Image, ImageTk
+# imports the studentView and adminView files to show the appropriate window
+import studentView
+import adminView
+# imports the pyotp library to generate the OTP
+import pyotp
+# imports the processWindows file to send the email
+from processWindows import sendEmailOTP
 
+# Generate a key for the user
+def generateKey():
+    key = pyotp.random_base32()
+    return key
 
+# Generate the OTP for the user
+def generateOTP(key):
+    otp = pyotp.TOTP(key)
+    return otp.now()
+
+# Verifies the OTP that was entered
+def verify(key, otp):
+    totp = pyotp.TOTP(key)
+    return totp.verify(otp, valid_window=1)
+
+# Creates the window for the user to enter the OTP
+def createWindow(check, logInWin):
+    win = Toplevel()
+
+    win.title("Two-Factor Authentication")
+
+    wWidth = 500
+    wHeight = 300
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    key = generateKey()
+    otp = generateOTP(key)
+    sendEmailOTP(check, otp)
+
+    titleLabel = Label(win, font=("Arial", 16), text="Two-Factor Authentication")
+    titleLabel.place(relx=0.1, rely=0.05, relwidth=0.8, relheight=0.1)
+
+    infoLabel = Label(win, font=("Arial", 12), text="Please enter the code sent to your email.\n If you did not receive the code, please check your spam folder.")
+    infoLabel.place(relx=0.05, rely=0.2, relwidth=0.9, relheight=0.15)
+
+    codeLabel = Label(win, font=("Arial", 16), text="Code:")
+    codeLabel.place(relx=0.05, rely=0.45, relwidth=0.2, relheight=0.1)
+
+    codeBox = Entry(win, font=("Arial", 12))
+    codeBox.place(relx=0.22, rely=0.46, relwidth=0.65, relheight=0.09)
+
+    def logIn(check, key, logInWin): # Logs in the user and shows the appropriate window (Admin or Student)
+        if verify(key, codeBox.get()):
+            if check[0] == "Student":
+                win.destroy()
+                logInWin.destroy()
+                studentView.createStudent(check[1], check[2], check[3])
+            elif check[0] == "Admin":
+                win.destroy()
+                logInWin.destroy()
+                adminView.createView(check[2], check[3], check[1])
+        else:
+            messagebox.showwarning("Invalid Code", "The code you entered is invalid. Please try again.")
+
+    def enter(event=None):
+        logIn(check, key, logInWin) # Calls the logIn function
+
+    verifyButton = Button(win, font=("Arial", 16), text="Verify", command=enter)
+    verifyButton.place(relx=0.6, rely=0.7, relwidth=0.3, relheight=0.15)
+
+    reSendButton = Button(win, font=("Arial", 16), text="Resend Code", command=lambda: sendEmailOTP(check, otp))
+    reSendButton.place(relx=0.1, rely=0.7, relwidth=0.3, relheight=0.15)
+
+    win.bind("<Return>", enter) # Calls the enter function when the enter key is pressed
+
+    codeBox.focus()
+
+    win.resizable(False, False)
+    win.mainloop()
 
 def logIn(username, password, win):
     # Gets the username entered in the log in window
@@ -20,8 +96,6 @@ def logIn(username, password, win):
     if check is None:
         messagebox.showwarning("Incorrect Login", "Incorrect username or password")
     else:
-        # If the credentials are correct, show the two-factor authentication window
-        from twoFactorAuth import createWindow
         createWindow(check, win)
 
 def togglePass(passBox):
@@ -30,7 +104,6 @@ def togglePass(passBox):
         passBox.config(show="")
     else:
         passBox.config(show="•")
-
 
 def createLogIn():
     win = Tk()
@@ -44,7 +117,7 @@ def createLogIn():
 
     win.title("The Physics Lab - Log In")
 
-    password_variable = tkinter.StringVar() # Variable to store the password
+    password_variable = StringVar() # Variable to store the password
 
     # Creates a frame to place the logo
     frame = Frame(win, width=1, height=1)
