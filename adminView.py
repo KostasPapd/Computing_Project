@@ -90,5 +90,5 @@ def ccreateView(teach_id, password, user):
 
 if __name__ == "__main__":
     # Testing
-    createView(1, "password", "testing account")
+    ccreateView(1, "password", "testing account")
     pass

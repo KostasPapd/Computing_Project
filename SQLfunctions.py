@@ -443,6 +443,26 @@ def getSubmissions(t_id):
     except Exception as e:
          mg.showwarning("Connection Failed", f"Unable to get submissions. {e}")
 
+def getAssignInfo(t_id):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("""
+                    SELECT a.assign_id, a.title, a.due_date, sc.class_names
+                    FROM assignments a
+                    JOIN stud_classes sc ON a.class_id = sc.id
+                    WHERE a.teacher_id = %s
+                """, (t_id,))
+        res = cur.fetchall()
+        if res:
+            return res
+        else:
+            return None
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get assignments. {e}")
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")
@@ -451,5 +471,6 @@ if __name__ == "__main__":
     # checkType("test_assignment", 1)
     # print(getQuest(1, "a00000001"))
     # print(getClass(1))
-    print(getSubmissions(1))
+    # print(getSubmissions(1))
+    print(getAssignInfo(1))
     pass

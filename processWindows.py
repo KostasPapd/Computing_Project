@@ -356,8 +356,48 @@ def deleteClassUI(teacher_id):
     win.resizable(False, False)
     win.mainloop()
 
-def assignmentObjects(frame):
-    pass
+def assignmentObjects(frame, id):
+    title = Label(frame, text="Assignments", font=("Arial", 20))
+    title.pack()
+
+    assignments = SQLfunctions.getAssignInfo(id)
+
+    if assignments:
+        columns = ("Assignment ID", "Title", "Due Date", "Class Name")
+        tree = ttk.Treeview(frame, columns=columns, show="headings")
+        tree.heading("Assignment ID", text="Assignment ID")
+        tree.heading("Title", text="Title")
+        tree.heading("Due Date", text="Due Date")
+        tree.heading("Class Name", text="Class Name")
+
+        tree.column("Assignment ID", width=50)
+        tree.column("Title", width=150)
+        tree.column("Due Date", width=60)
+        tree.column("Class Name", width=150)
+
+        for assignment in assignments:
+            tree.insert("", "end", values=assignment)
+
+        tree.pack(fill=BOTH, expand=True)
+
+        def sort_by_column(tree, col, reverse):
+            l = [(tree.set(k, col), k) for k in tree.get_children('')]
+            l.sort(reverse=reverse)
+
+            for index, (val, k) in enumerate(l):
+                tree.move(k, '', index)
+
+            tree.heading(col, command=lambda: sort_by_column(tree, col, not reverse))
+
+        sort_by_id_button = Button(frame, text="Sort by Assignment ID",
+                                   command=lambda: sort_by_column(tree, "Assignment ID", False))
+        sort_by_id_button.pack(side=LEFT, padx=10, pady=10)
+
+        sort_by_title_button = Button(frame, text="Sort by Title", command=lambda: sort_by_column(tree, "Title", False))
+        sort_by_title_button.pack(side=LEFT, padx=10, pady=10)
+    else:
+        no_data_label = Label(frame, text="No assignments found.", font=("Arial", 16))
+        no_data_label.pack()
 
 def submissionObjects(frame, id):
     title = Label(frame, text="Submissions", font=("Arial", 20))
@@ -404,7 +444,7 @@ def submissionObjects(frame, id):
         no_data_label.pack()
 
 def submissionViewCreate(window, id):
-    window.destroy()
+    # window.destroy()
 
     win = Tk()
 
@@ -422,7 +462,7 @@ def submissionViewCreate(window, id):
     assignments = Frame(notebook)
     submissions = Frame(notebook)
 
-    assignmentObjects(assignments)
+    assignmentObjects(assignments, id)
     submissionObjects(submissions, id)
 
     assignments.grid()
