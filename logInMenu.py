@@ -87,7 +87,7 @@ def createWindow(check, logInWin):
 
 def logIn(username, password, win):
     # Gets the username entered in the log in window
-    usernameVal = username.get("1.0", "end-1c").strip()
+    usernameVal = username.get("1.0", "end-1c").strip().lower()
     # Gets the password entered in the log in window
     passwordVal = password.get().strip()
     # Passes the values to the database and checks if the credentials are correct
