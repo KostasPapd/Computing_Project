@@ -131,7 +131,6 @@ def changeEmailUI(user, level):
 
     changeBut = Button(win, text="Change Email", font=("Arial", 16),
                        command=lambda: checkEmail(newEmailVar.get(), reEmailVar.get(), level, user, win))
-    # Add command that runs a value checker and then runs the SQL to change the database
     changeBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
 
     cancelBut = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
@@ -252,8 +251,11 @@ def createClassUI(t_ID):
     stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
     def create_class():
-        SQLfunctions.createClass(nameVar.get(), t_ID, students)
-        win.destroy()
+        if len(nameVar.get()) == 0 or len(students) == 0:
+            mg.showwarning("Error", "Please fill in all fields")
+        else:
+            SQLfunctions.createClass(nameVar.get(), t_ID, students)
+            win.destroy()
 
     createBut = Button(win, text="Create Class", font=("Arial", 16), command=create_class)
     createBut.place(relx=0.15, rely=0.75, relheight=0.13, relwidth=0.4)
@@ -447,7 +449,7 @@ def submissionObjects(frame, id):
         no_data_label.pack()
 
 def submissionViewCreate(window, id):
-    # window.destroy()
+    window.destroy()
 
     win = Tk()
 
@@ -600,7 +602,7 @@ def createQs(assign_id):
     nextButton = Button(win, text="Add question", font=("Arial", 16), command=lambda: SQLfunctions.addQuestion(assign_id, quest.get(), answerEntry.get("1.0", "end"), marksEntry.get("1.0", "end"), clicked.get(), win))
     nextButton.place(relx=0.55, rely=0.85, relheight=0.1, relwidth=0.22)
 
-    cancelButton = Button(win, text="Cancel", font=("Arial", 16), command=lambda: win.destroy())
+    cancelButton = Button(win, text="Finish", font=("Arial", 16), command=lambda: win.destroy())
     cancelButton.place(relx=0.23, rely=0.85, relheight=0.1, relwidth=0.2)
 
     questionEntry.focus()
