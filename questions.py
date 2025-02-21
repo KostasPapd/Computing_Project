@@ -88,7 +88,6 @@ class Questions():
             prevButton.place(relx=0.3, rely=0.85, relheight=0.1, relwidth=0.15)
 
         answerEntry.focus()
-
         win.resizable(False, False)
         win.mainloop()
 
@@ -221,6 +220,7 @@ class Marking():
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
 
+        marksEntry.focus()
         win.resizable(False, False)
         win.mainloop()
 

@@ -15,7 +15,6 @@ import os
 from dotenv import load_dotenv
 from tkinter import messagebox as mg
 import processWindows
-import assignProcess
 
 # Takes the password, adds the salt, hashes it and returns the hashed password
 def hashPassword(password):
@@ -237,21 +236,22 @@ def createAssign(t_ID, win, title, className, dueDate):
         if class_id is None:
             class_id = 'NULL'
         else:
-            class_id = f"'{class_id}'"
+            class_id = f"{class_id}"
 
         cur.execute(f"INSERT INTO assignments (title_id, title, class_id, due_date, teacher_id) VALUES "
                     f"(%s, %s, %s, %s, %s)", (table_name, title, class_id, dueDate, t_ID))
 
-        cur.execute(f"CREATE TABLE %s (questionNum SERIAL PRIMARY KEY, "
+        cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
                     f"assignment_id INT REFERENCES assignments(assign_id),"
-                    f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))", (table_name,))
+                    f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))")
         conn.commit()
 
         assign_id = getAssignID(table_name)
-        assignProcess.nextAssign(assign_id, win)
+        processWindows.nextAssign(assign_id, win)
 
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to create assignment. {e}")
+        print(e)
 
 def getAssignName(assignID):
     load_dotenv()
@@ -276,7 +276,7 @@ def addQuestion(assign_id, question, answer, marks, question_type, win):
         cur.execute(f"INSERT INTO {table_name} (assignment_id, question, answer, marks, question_type) VALUES (%s, %s, %s, %s, %s)",
                     (assign_id, question, answer, marks, question_type))
         conn.commit()
-        assignProcess.nextAssign(assign_id, win)
+        processWindows.nextAssign(assign_id, win)
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to add question. {e}")
 
@@ -379,10 +379,9 @@ def getAssignID(assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
-        assignmentName = f"\"{assignName}\""
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignmentName,))
+        cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignName,))
         res = cur.fetchone()
         if res:
             return res[0]

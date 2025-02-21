@@ -1,8 +1,7 @@
 from tkinter import *
 import registerMenu
 import logInMenu
-from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI, submissionViewCreate
-from assignProcess import createAssign
+from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI, submissionViewCreate, createAssign
 
 def signOut(win):
     win.destroy()
