@@ -463,6 +463,19 @@ def getAssignInfo(t_id):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get assignments. {e}")
 
+def getName(sId):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("SELECT name FROM main_acc WHERE id = %s", (sId,))
+        res = cur.fetchone()
+        return res[0]
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get name. {e}")
+        return None
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")

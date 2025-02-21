@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox as mg
 import json
-from SQLfunctions import checkType, getQuest, getLast, getAnsw, getAssignID, saveSub
+from SQLfunctions import checkType, getQuest, getLast, getAnsw, getAssignID, saveSub, getName
 import re
 import datetime
 import os
@@ -12,19 +12,30 @@ Do next:
 """
 
 class Questions():
-    def __init__(self, teacherID, questionNum, assignName, studentID):
+    def __init__(self, teacherID, questionNum, assignName, studentID, password):
         self.teachID = teacherID
         self.questionNum = questionNum
         self.assignName = assignName.strip('"')
         self.studentID = studentID
+        self.password = password
         self.answers = {}
 
-    def nextQ(self, win, answerEntry):
+    def prevQ(self, win, answerEntry):
         answer = answerEntry.get("1.0", END).strip()
         self.save_answer(answer)
-        self.questionNum += 1
+        self.questionNum -= 1
         win.destroy()
         self.createWindow()
+
+    def nextQ(self, win, answerEntry):
+        if len(answerEntry.get("1.0", END).strip()) == 0:
+            mg.showerror("Error", "Please enter an answer")
+        else:
+            answer = answerEntry.get("1.0", END).strip()
+            self.save_answer(answer)
+            self.questionNum += 1
+            win.destroy()
+            self.createWindow()
 
     def save_answer(self, answer):
         self.answers[self.questionNum] = answer
@@ -47,9 +58,12 @@ class Questions():
         answerLabel = Label(win, text="Answer:", font=("Arial", 20))
         answerLabel.place(relx=0.05, rely=0.15)
 
+        previous_answer = self.answers.get(self.questionNum, "")
+
         if checkType(self.assignName, self.questionNum) == "Calculation":
             answerEntry = Text(win, font=("Arial", 14))
             answerEntry.place(relx=0.2, rely=0.171, relheight=0.06, relwidth=0.3)
+            answerEntry.insert(END, previous_answer)
             workingLabel = Label(win, text="Working:", font=("Arial", 20))
             workingLabel.place(relx=0.03, rely=0.25)
             workingEntry = Text(win, font=("Arial", 14))
@@ -57,6 +71,7 @@ class Questions():
         else:
             answerEntry = Text(win, font=("Arial", 14))
             answerEntry.place(relx=0.2, rely=0.17, relheight=0.6, relwidth=0.75)
+            answerEntry.insert(END, previous_answer)
 
         questionLabel = Label(win, text=getQuest(self.questionNum, self.assignName), font=("Arial", 20))
         questionLabel.pack()
@@ -68,27 +83,33 @@ class Questions():
             submitButton = Button(win, text="Submit", font=("Arial", 18), command=lambda: self.submit_answers(answerEntry, win))
             submitButton.place(relx=0.6, rely=0.85, relheight=0.1, relwidth=0.15)
 
+        if self.questionNum != 1:
+            prevButton = Button(win, text="Previous", font=("Arial", 18), command=lambda: self.prevQ(win, answerEntry))
+            prevButton.place(relx=0.3, rely=0.85, relheight=0.1, relwidth=0.15)
+
         answerEntry.focus()
 
         win.resizable(False, False)
         win.mainloop()
 
     def submit_answers(self, answerEntry, win):
-        answer = answerEntry.get("1.0", END).strip()
-        self.save_answer(answer)
-        self.save_answers_to_file()
-        win.destroy()
-        marking = Marking(self.assignName, self.studentID)
-        marking.create_window(self.answers)
+        if len(answerEntry.get("1.0", END).strip()) == 0:
+            mg.showerror("Error", "Please enter an answer")
+        else:
+            answer = answerEntry.get("1.0", END).strip()
+            self.save_answer(answer)
+            self.save_answers_to_file()
+            win.destroy()
+            marking = Marking(self.assignName, self.studentID, self.password)
+            marking.create_window(self.answers)
 
 class Marking():
-    def __init__(self, assignName, studentID):
+    def __init__(self, assignName, studentID, password):
         self.assignName = assignName
         self.studentID = studentID
+        self.password = password
         self.questionNum = 1
         self.marks = []
-
-    # add save to database
 
     def nextMark(self, win, marksEntry, answers):
         mark = marksEntry.get()
@@ -134,12 +155,12 @@ class Marking():
             if os.path.exists(file_name):
                 os.remove(file_name)
 
+            self.endMarking(win)
 
-            win.destroy()
-            # delete assignment from list
-            # open student view
-
-
+    def endMarking(self, win):
+        from studentView import createStudent
+        win.destroy()
+        createStudent(getName(self.studentID), self.studentID, self.password)
 
     def create_window(self, answers):
         win = Tk()
@@ -204,7 +225,7 @@ class Marking():
         win.mainloop()
 
 if __name__ == "__main__":
-    question = Questions(1, 1, "a00000001", 3)
+    question = Questions(1, 1, "a00000001", 3, "hdb")
     question.createWindow()
     # mark = Marking("a00000001")
     # mark.create_window({1: "5"})

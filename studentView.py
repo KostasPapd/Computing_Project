@@ -17,8 +17,7 @@ def signOut(win):
     win.destroy()
     logInMenu.createLogIn()
 
-'change'
-def database(tID, sID):
+def getAssignments(tID, sID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
     try:
@@ -41,26 +40,31 @@ def database(tID, sID):
                 cur.execute(f"SELECT id FROM stud_classes WHERE class_names = '{names[name]}'")
                 valid_ids.append(cur.fetchone()[0])
 
-
+        assignments = []
         for id in range(len(valid_ids)):
             cur.execute(f"SELECT * FROM assignments WHERE teacher_id = '{tID}' AND class_id = '{valid_ids[id]}'")
             data = cur.fetchall()
-            if data:
-                return data
+            for assignment in data:
+                cur.execute(f"SELECT 1 FROM submissions WHERE assignment_id = %s AND student_id = %s", (assignment[0], sID))
+                if not cur.fetchone():
+                    assignments.append(assignment)
+
+        return assignments
     except Exception as e:
         mg.showwarning("Connection Failed", e)
         return []
 
-def openAssign(win, tID, assignments, sID):
-    instance = Questions(tID, 1, assignments[5], sID)
+def openAssign(win, tID, assignments, sID, password):
+    instance = Questions(tID, 1, assignments[5], sID, password)
     win.destroy()
     instance.createWindow()
 
 class Assignments(Frame):
-    def __init__(self, master=None, tID=None, sID=None):
+    def __init__(self, master=None, tID=None, sID=None, password=None):
         super().__init__(master)
         self.tID = tID
         self.sID = sID
+        self.password = password
         self.pack()
         self.showAssign()
 
@@ -68,14 +72,14 @@ class Assignments(Frame):
         self.label = Label(self, text="Your Assignments", font=("Helvetica", 20))
         self.label.pack()  # Pack puts it at the top of the page
 
-        assignments = database(self.tID, self.sID)
+        assignments = getAssignments(self.tID, self.sID)
 
         if not assignments:
             Label(self, text="No assignments found.", font=("Arial", 16)).pack()
         else:
             for i in range(len(assignments)):
                 Button(self, text=f"Assignment: {assignments[i][1]} , Due: {assignments[i][3]}", font=("Arial", 16),
-                       command=lambda a=assignments[i]: openAssign(self.master, self.tID, a, self.sID)).pack()
+                       command=lambda a=assignments[i]: openAssign(self.master, self.tID, a, self.sID, self.password)).pack()
 
 
 
@@ -135,7 +139,6 @@ class MenuBar(Frame):
 
 def createStudent(name, id, password):
     win = Tk()
-    nameText = name
     win.title(f"The Physics Lab - {name}")
     wWidth = 500
     wHeight = 500
@@ -147,7 +150,7 @@ def createStudent(name, id, password):
     studentID = getIDs(name)[0]
     teacherID = getIDs(name)[1]
 
-    Assignments(win, teacherID, studentID)
+    Assignments(win, teacherID, studentID, password)
 
     win.resizable(False, False)
     win.mainloop()
@@ -156,5 +159,4 @@ def createStudent(name, id, password):
 if __name__ == "__main__":
     # Testing
     createStudent("Kostas Papadopoulos", "email", "password")
-    # database(1, 3)
     pass
