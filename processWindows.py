@@ -609,6 +609,57 @@ def createQs(assign_id):
     win.resizable(False, False)
     win.mainloop()
 
+def studentProgress(s_id):
+    win = Toplevel()
+    win.title("Progress")
+
+    wWidth = 600
+    wHeight = 400
+    xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
+    yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
+    win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
+
+    submissions = SQLfunctions.getStudentProgress(s_id)
+
+    if submissions:
+        columns = ("Title", "Submission ID", "Mark", "Submission Date")
+        tree = ttk.Treeview(win, columns=columns, show="headings")
+        tree.heading("Title", text="Assignment Title")
+        tree.heading("Submission ID", text="Submission ID")
+        tree.heading("Mark", text="Mark")
+        tree.heading("Submission Date", text="Submission Date")
+
+        tree.column("Title", width=150)
+        tree.column("Submission ID", width=100)
+        tree.column("Mark", width=50)
+        tree.column("Submission Date", width=150)
+
+        for submission in submissions:
+            tree.insert("", "end", values=submission)
+
+        tree.pack(fill=BOTH, expand=True)
+
+        def sort_by_column(tree, col, reverse):
+            l = [(tree.set(k, col), k) for k in tree.get_children('')]
+            l.sort(reverse=reverse)
+
+            for index, (val, k) in enumerate(l):
+                tree.move(k, '', index)
+
+            tree.heading(col, command=lambda: sort_by_column(tree, col, not reverse))
+
+        sort_by_id_button = Button(win, text="Sort by Submission ID", command=lambda: sort_by_column(tree, "Submission ID", False))
+        sort_by_id_button.pack(side=LEFT, padx=10, pady=10)
+
+        sort_by_title_button = Button(win, text="Sort by Title", command=lambda: sort_by_column(tree, "Title", False))
+        sort_by_title_button.pack(side=LEFT, padx=10, pady=10)
+    else:
+        no_data_label = Label(win, text="No submissions found.", font=("Arial", 16))
+        no_data_label.pack()
+
+    win.resizable(False, False)
+    win.mainloop()
+
 if __name__ == "__main__":
     # changeEmailUI("test", "test")
     # changePassUI("test", "test", "Admin")
@@ -617,5 +668,8 @@ if __name__ == "__main__":
     # createAssignmentNumber()
     # sendEmailOTP("kostispapd@outlook.com", "123456")
     # deleteClassUI(1)
-    submissionViewCreate(1, 1)
+    # submissionViewCreate(1, 1)
+    # createQs(1)
+    # createAssign(1)
+    studentProgress(3)
     pass

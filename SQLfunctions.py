@@ -481,6 +481,39 @@ def getName(sId):
         mg.showwarning("Connection Failed", f"Unable to get name. {e}")
         return None
 
+def getID(email):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM main_acc WHERE email = %s", (email,))
+        res = cur.fetchone()
+        return res[0]
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get ID. {e}")
+        return None
+
+def getStudentProgress(s_id):
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute("""
+                    SELECT a.title, s.subm_id, s.mark, s.submission_date
+                    FROM submissions s
+                    JOIN assignments a ON s.assignment_id = a.assign_id
+                    WHERE s.student_id = %s
+                """, (s_id,))
+        res = cur.fetchall()
+        if res:
+            return res
+        else:
+            return None
+    except Exception as e:
+        mg.showwarning("Connection Failed", f"Unable to get progress. {e}")
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")

@@ -5,7 +5,7 @@ from tkinter import messagebox as mg
 import psycopg2
 import os
 from dotenv import load_dotenv
-from SQLfunctions import getIDs
+from SQLfunctions import getIDs, getID
 from questions import Questions
 
 # ADD CLASS TO CREATE MENU BAR
@@ -84,10 +84,11 @@ class Assignments(Frame):
 
 
 class MenuBar(Frame):
-    def __init__(self, email="", password=""):
+    def __init__(self, email="", password="", id=""):
         super().__init__()
         self.email = email
         self.passw = password
+        self.id = id
         self.pack()
         self.toolBarMenu()
         self.frames = {}
@@ -100,13 +101,12 @@ class MenuBar(Frame):
 
         accMenu.add_command(label="Change Email", font=("Helvetica", 10),
                             command=lambda: processWindows.changeEmailUI(self.email, "Student"))
-        # ADD COMMAND THAT CHANGES EMAIL TO SQL PROGRAM
         accMenu.add_command(label="Change Password", font=("Helvetica", 10),
                             command=lambda: processWindows.changePassUI(self.email, self.passw, "Student"))
-        # ADD COMMAND THAT CHANGES PASSWORD TO SQL PROGRAM
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 
+        toolBar.add_cascade(label="Progress", command=lambda: processWindows.studentProgress(self.id))
         toolBar.add_cascade(label="Settings", menu=accMenu)
         toolBar.add_command(label="Exit", command=self.exit)
 
@@ -137,7 +137,7 @@ class MenuBar(Frame):
     #label.place(relx=0.5, rely=0.5, anchor="center")
 
 
-def createStudent(name, id, password):
+def createStudent(name, email, password):
     win = Tk()
     win.title(f"The Physics Lab - {name}")
     wWidth = 500
@@ -145,7 +145,8 @@ def createStudent(name, id, password):
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
-    toolB = MenuBar(id, password)
+    s_id = getID(email)
+    toolB = MenuBar(email, password, s_id)
 
     studentID = getIDs(name)[0]
     teacherID = getIDs(name)[1]
@@ -158,5 +159,5 @@ def createStudent(name, id, password):
 
 if __name__ == "__main__":
     # Testing
-    createStudent("Kostas Papadopoulos", "email", "password")
+    createStudent("Kostas Papadopoulos", "kostispapd@outlook.com", "password")
     pass
