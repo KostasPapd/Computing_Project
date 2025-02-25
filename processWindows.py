@@ -83,7 +83,7 @@ def changePassUI(user, password, level):
     rePassBox = Entry(win, textvariable=rePassVar, font=('Arial', 12), show='•', width=27)
     rePassBox.place(relx=0.38, rely=0.54, relheight=0.06, relwidth=0.48)
 
-    showPassImg = PhotoImage(file="Pictures/showPassword.png")
+    showPassImg = PhotoImage(file="./Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
     showPass = Button(win, image=showPassImg, borderwidth=0, command=lambda: togglePass(newPassBox))
     showPass.place(relx=0.87, rely=0.33, relheight=0.07, relwidth=0.1)
@@ -448,9 +448,7 @@ def submissionObjects(frame, id):
         no_data_label = Label(frame, text="No submissions found.", font=("Arial", 16))
         no_data_label.pack()
 
-def submissionViewCreate(window, id):
-    window.destroy()
-
+def submissionViewCreate(id):
     win = Tk()
 
     wWidth = 600

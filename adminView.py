@@ -80,7 +80,7 @@ def createView(teach_id, password, user):
                                  command=lambda: createAssign(teach_id))
     createAssignButtton.place(relx=0.25, rely=0.2, relheight=0.1, relwidth=0.5)
 
-    viewAssignButton = Button(win, text="View Assignments", font=("Helvetica", 18), command=lambda: submissionViewCreate(win, teach_id))
+    viewAssignButton = Button(win, text="View Assignments", font=("Helvetica", 18), command=lambda: submissionViewCreate(teach_id))
     viewAssignButton.place(relx=0.25, rely=0.4, relheight=0.1, relwidth=0.5)
 
     win.resizable(False, False)

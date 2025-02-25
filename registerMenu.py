@@ -114,7 +114,7 @@ def createBox(teacherID):
 
 
 # Show password buttons
-    showPassImg = PhotoImage(file="Pictures/showPassword.png")
+    showPassImg = PhotoImage(file="./Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
     showPass = Button(window, image=showPassImg, borderwidth=0, command=lambda: togglePass(passBox))
     showPass.place(relx=0.87, rely=0.39, relheight=0.07, relwidth=0.1)

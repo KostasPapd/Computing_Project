@@ -125,7 +125,7 @@ def createLogIn():
     frame.place(relx=0.5, rely=0.175, anchor="center")
 
     # Loads the logo and resizes it
-    img = Image.open("Pictures\\logo.png")
+    img = Image.open("./Pictures/logo.png")
     img = img.resize((int(img.width * 0.3), int(img.height * 0.3)))
     img = ImageTk.PhotoImage(img)
 
@@ -164,7 +164,7 @@ def createLogIn():
     passBox = Entry(win, textvariable=password_variable, font=('Arial', 12), show='•', width=27)
     passBox.place(relx=0.34, rely=0.64, relheight=0.06, relwidth=0.48)
 
-    showPassImg = PhotoImage(file="Pictures/showPassword.png")
+    showPassImg = PhotoImage(file="./Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
     # Runs the togglePass function when the show password button is pressed
     showPass = Button(win, image=showPassImg, borderwidth=0, command=lambda: togglePass(passBox))
