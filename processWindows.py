@@ -666,8 +666,8 @@ if __name__ == "__main__":
     # createAssignmentNumber()
     # sendEmailOTP("kostispapd@outlook.com", "123456")
     # deleteClassUI(1)
-    # submissionViewCreate(1, 1)
+    submissionViewCreate(1)
     # createQs(1)
     # createAssign(1)
-    studentProgress(3)
+    # studentProgress(3)
     pass

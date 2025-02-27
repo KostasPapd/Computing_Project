@@ -1,15 +1,3 @@
-"""
-All the SQL/database functions will go in this program
-
-CHANGE THE CODE SO NO INJECTIONS
-e.g.
-sql = "SELECT id FROM admin_acc WHERE name = %s"
-cur.execute(sql, (tName))
-
-Add to here:
-Inserts new class into stud_classes table
-"""
-
 import psycopg2
 import os
 from dotenv import load_dotenv
@@ -170,7 +158,6 @@ def getStudents(teacher):
         return []
 
 
-#CHANGE SO IT JUST CHANGES THE CLASS ID ON THE main_acc TABLE
 # creates a class in the database
 def createClass(name, teacher, stuList):
     load_dotenv()
@@ -368,6 +355,7 @@ def getLast(assign_name):
         if conn:
             conn.close()
 
+# gets the answer for the specified question
 def getAnsw(assignName, questionNum):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -381,6 +369,7 @@ def getAnsw(assignName, questionNum):
         mg.showwarning("Connection Failed", f"Unable to get answer. {e}")
         return None
 
+# gets the assignment id
 def getAssignID(assignName):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -399,6 +388,7 @@ def getAssignID(assignName):
         mg.showwarning("Connection Failed", f"Unable to get assignment ID. {e}")
         return None
 
+# saves the student's submission
 def saveSub(assignID, studentID, date, mark):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -411,6 +401,7 @@ def saveSub(assignID, studentID, date, mark):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to save submission. {e}")
 
+# deletes the specified class
 def deleteClass(t_id, classes):
     for i in classes:
         load_dotenv()
@@ -427,6 +418,7 @@ def deleteClass(t_id, classes):
             mg.showwarning("Connection Failed", f"Unable to delete class. {e}")
             return False
 
+# gets all the submissions for a teacher
 def getSubmissions(t_id):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -448,6 +440,7 @@ def getSubmissions(t_id):
     except Exception as e:
          mg.showwarning("Connection Failed", f"Unable to get submissions. {e}")
 
+# gets all the assignments for a teacher
 def getAssignInfo(t_id):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -468,6 +461,7 @@ def getAssignInfo(t_id):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get assignments. {e}")
 
+# gets the student's name
 def getName(sId):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -481,6 +475,7 @@ def getName(sId):
         mg.showwarning("Connection Failed", f"Unable to get name. {e}")
         return None
 
+# gets the student's id
 def getID(email):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -494,6 +489,7 @@ def getID(email):
         mg.showwarning("Connection Failed", f"Unable to get ID. {e}")
         return None
 
+# gets the student's progress
 def getStudentProgress(s_id):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -523,5 +519,6 @@ if __name__ == "__main__":
     # print(getQuest(1, "a00000001"))
     # print(getClass(1))
     # print(getSubmissions(1))
-    print(getAssignInfo(1))
+    # print(getAssignInfo(1))
+    print(hashPassword("Password1!"))
     pass
