@@ -1,7 +1,6 @@
 from tkinter import *
-import registerMenu
 import logInMenu
-from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI, submissionViewCreate, createAssign
+from processWindows import changeEmailUI, changePassUI, createClassUI, deleteClassUI, submissionViewCreate, createAssign, createBox
 
 def signOut(win):
     win.destroy()
@@ -28,7 +27,7 @@ class MenuBar(Frame):
 
         accMenu = Menu(toolBar)
         accMenu.add_command(label="Create Student Account",  font=("Helvetica", 9),
-                            command=lambda: registerMenu.createBox(self.id))
+                            command=lambda: createBox(self.id))
         accMenu.add_command(label="- "*18, font=("Helvetica", 9))
         accMenu.add_command(label="Your Account:", font=("Helvetica", 9))
         accMenu.add_command(label="Change Email", font=("Helvetica", 9),
