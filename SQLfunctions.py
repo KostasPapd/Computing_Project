@@ -92,7 +92,7 @@ def checkLogIn(user, passw):
                     return None
             except Exception as e:
                 # error handling
-                mg.showwarning("Connection Failed", "Unable to check if user exists.")
+                mg.showwarning("Connection Failed", f"Unable to check if user exists.{e}")
     except Exception as e:
         # error handling
         mg.showwarning("Connection Failed", f"Unable to check if user exists. {e}")
