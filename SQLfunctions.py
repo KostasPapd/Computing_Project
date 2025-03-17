@@ -51,6 +51,7 @@ def checkEmail(email):
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
+        email = email.lower()
         cur.execute(f"SELECT email FROM main_acc WHERE email = %s", (email,))
         res = cur.fetchone()
         if res is not None:
@@ -100,28 +101,20 @@ def checkLogIn(user, passw):
 
 # changes the password of the user
 def changePass(user, level, passw):
-    if level == "Admin":
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
-        try:
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
-            passw = hashPassword(passw)
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        passw = hashPassword(passw)
+        if level == "Admin":
             cur.execute(f"UPDATE admin_acc SET password = %s WHERE email = %s", (passw, user))
-            conn.commit()
-        except Exception as e:
-            mg.showwarning("Connection Failed", "Unable to change password.")
-    else:
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
-        try:
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
-            passw = hashPassword(passw)
+        else:
             cur.execute(f"UPDATE main_acc SET password = %s WHERE email = %s", (passw, user))
-            conn.commit()
-        except Exception as e:
-            mg.showwarning("Connection Failed", "Unable to change password.")
+        conn.commit()
+    except Exception as e:
+        mg.showwarning("Connection Failed", "Unable to change password.")
+
 
 # changes the email of the user
 def changeEmail(level, user, email):
@@ -179,7 +172,7 @@ def createClass(name, teacher, stuList):
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create class.")
 
-# gets all the students in a specified class
+# gets all of the classes under a teacher's name
 def getClass(t_ID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
