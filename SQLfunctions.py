@@ -217,7 +217,7 @@ def createAssign(t_ID, win, title, className, dueDate):
 
             class_id = getClassID(className)
             if class_id is None:
-                class_id = 'NULL'
+                mg.showerror("Class Not Found", "Class not found.")
             else:
                 class_id = f"{class_id}"
 
@@ -279,7 +279,7 @@ def getQuest(num, assignName):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get questions. {e}")
 
-# checks what type of question (calculation or written) a question is
+# checks what type of question a question is (calculation or standard answer)
 def checkType(assign_name, question_num):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
@@ -290,8 +290,7 @@ def checkType(assign_name, question_num):
         res = cur.fetchone()
         return res[0]
     except Exception as e:
-        print(e)
-        # mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
+        mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
         return None
 
 # gets the assignment id
