@@ -293,7 +293,7 @@ def checkType(assign_name, question_num):
         mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
         return None
 
-# gets the assignment id
+
 def checkAssignmentNumber(ID):
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
