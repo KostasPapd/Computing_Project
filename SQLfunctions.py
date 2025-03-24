@@ -21,7 +21,7 @@ def getTeachID(tName):
         conn = psycopg2.connect(connector_key) # connects to the database
         cur = conn.cursor() # creates a cursor
         cur.execute(f"SELECT id FROM admin_acc WHERE name = %s", (tName,))
-        res = cur.fetchone()
+        res = cur.fetchone() # loads results from the database
         if res:
             return res[0]
     except Exception as e:
@@ -30,30 +30,29 @@ def getTeachID(tName):
 
 # Takes in all the parameters and adds them to the main_acc database as a new account
 def registerAcc(email, password, name, teacher):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
-
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         passw = hashPassword(password)
         email = email.lower()
         cur.execute(f"INSERT INTO main_acc (name, password, email, teacher_id) "
                     f"VALUES (%s, %s, %s, %s)", (name, passw, email, teacher))
-        conn.commit()
+        conn.commit()# saves database changes
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create account")
 
 # checks if the email entered is already in use
 def checkEmail(email):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         email = email.lower()
         cur.execute(f"SELECT email FROM main_acc WHERE email = %s", (email,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         if res is not None:
             return False
         else:
@@ -76,7 +75,7 @@ def checkLogIn(user, passw):
         passw = hashPassword(passw)
         # checks if the user is a student
         cur.execute(f"SELECT * FROM main_acc WHERE email = %s AND password = %s", (user, passw))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         # if the user is a student, return the user's information (Student, name, email and password)
         if res is not None:
             return "Student", res[1], user, passw
@@ -101,45 +100,45 @@ def checkLogIn(user, passw):
 
 # changes the password of the user
 def changePass(user, level, passw):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         passw = hashPassword(passw)
         if level == "Admin":
             cur.execute(f"UPDATE admin_acc SET password = %s WHERE email = %s", (passw, user))
         else:
             cur.execute(f"UPDATE main_acc SET password = %s WHERE email = %s", (passw, user))
-        conn.commit()
+        conn.commit()# saves database changes
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to change password.")
 
 
 # changes the email of the user
 def changeEmail(level, user, email):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         if level == "Admin":
             cur.execute("UPDATE admin_acc SET email = %s WHERE name = %s", (email, user))
         else:
             cur.execute("UPDATE main_acc SET email = %s WHERE email = %s", (email, user))
-        conn.commit()
+        conn.commit()# saves database changes
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to change email. {e}")
 
 # gets a list off all students under a teacher's name (used to create classes)
 def getStudents(teacher):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv()# loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute(f"SELECT name FROM main_acc WHERE teacher_id = %s", (teacher,))
-        res = cur.fetchall()
+        res = cur.fetchall()# loads results from the database
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
             return names
@@ -153,34 +152,34 @@ def getStudents(teacher):
 
 # creates a class in the database
 def createClass(name, teacher, stuList):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         table_name = f"\"{name}_{teacher}\""  # Creates the table name
         cur.execute(f"CREATE TABLE %s (student_id INT PRIMARY KEY , student_name varchar(255))", (table_name,))  # Creates the table
         cur.execute(f"INSERT INTO stud_classes (class_names, teacher_id) VALUES (%s, %s)", (name, teacher))  # Inserts the class into the table
         for student in stuList:
             cur.execute("SELECT id FROM main_acc WHERE name = %s", (student,))
-            student_id = cur.fetchone()[0]
+            student_id = cur.fetchone()[0]# loads results from the database
 
             # Inserts the students into the table
             cur.execute(f"INSERT INTO {table_name} (student_id, student_name) VALUES (%s, %s)", (student_id, student))
 
-        conn.commit()
+        conn.commit()# saves database changes
     except Exception as e:
         mg.showwarning("Connection Failed", "Unable to create class.")
 
 # gets all of the classes under a teacher's name
 def getClass(t_ID):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute(f"SELECT class_names FROM stud_classes WHERE teacher_id = %s", (t_ID,))
-        res = cur.fetchall()
+        res = cur.fetchall()# loads results from the database
         if res is not None:
             names = [row[0] for row in res]  # Extract the names from the tuples
             return names
@@ -192,13 +191,13 @@ def getClass(t_ID):
 
 # gets the id of a class
 def getClassID(className):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key) # connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT id FROM stud_classes WHERE class_names = %s", (className,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", e)
@@ -208,12 +207,12 @@ def createAssign(t_ID, win, title, className, dueDate):
     if len(title) == 0 or len(className) == 0 or len(dueDate) == 0:
         mg.showwarning("Empty Fields", "Please fill in all fields.")
     else:
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
+        load_dotenv() # loads the .env file
+        connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
         try:
             table_name = f"\"a{processWindows.createAssignmentNumber()}\""
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
+            conn = psycopg2.connect(connector_key)# connects to the database
+            cur = conn.cursor()# creates a cursor
 
             class_id = getClassID(className)
             if class_id is None:
@@ -227,7 +226,7 @@ def createAssign(t_ID, win, title, className, dueDate):
             cur.execute(f"CREATE TABLE {table_name} (questionNum SERIAL PRIMARY KEY, "
                         f"assignment_id INT REFERENCES assignments(assign_id),"
                         f"question varchar(255), answer varchar(255), marks int, question_type varchar(255))")
-            conn.commit()
+            conn.commit()# saves database changes
 
             assign_id = getAssignID(table_name)
             processWindows.nextAssign(assign_id, win)
@@ -237,13 +236,13 @@ def createAssign(t_ID, win, title, className, dueDate):
             print(e)
 
 def getAssignName(assignID):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT title_id FROM assignments WHERE assign_id = %s", (assignID,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get assignment name. {e}")
@@ -253,41 +252,41 @@ def addQuestion(assign_id, question, answer, marks, question_type, win):
     if len(question) == 0 or len(answer) == 0 or len(marks) == 0 or len(question_type) == 0:
         mg.showwarning("Empty Fields", "Please fill in all fields.")
     else:
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
+        load_dotenv() # loads the .env file
+        connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
         try:
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
+            conn = psycopg2.connect(connector_key)# connects to the database
+            cur = conn.cursor()# creates a cursor
             table_name = getAssignName(assign_id)
             cur.execute(f"INSERT INTO {table_name} (assignment_id, question, answer, marks, question_type) VALUES (%s, %s, %s, %s, %s)",
                         (assign_id, question, answer, marks, question_type))
-            conn.commit()
+            conn.commit()# saves database changes
             processWindows.nextAssign(assign_id, win)
         except Exception as e:
             mg.showwarning("Connection Failed", f"Unable to add question. {e}")
 
 # gets the specified question
 def getQuest(num, assignName):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute(f"SELECT question FROM {assignName} WHERE questionnum = %s", (str(num),))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get questions. {e}")
 
 # checks what type of question a question is (calculation or standard answer)
 def checkType(assign_name, question_num):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute(f"SELECT question_type FROM {assign_name} WHERE questionnum = %s", str(question_num))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to check question type. {e}")
@@ -295,13 +294,13 @@ def checkType(assign_name, question_num):
 
 
 def checkAssignmentNumber(ID):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT 1 FROM assignments WHERE title_id = %s", (ID,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res is not None
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to check title ID. {e}")
@@ -312,13 +311,13 @@ def checkAssignmentNumber(ID):
 
 # gets the student and teacher id
 def getIDs(name):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT id, teacher_id FROM main_acc WHERE name = %s", (name,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         if res:
             return res[0], res[1]
         else:
@@ -332,13 +331,13 @@ def getIDs(name):
 
 # gets the last question from an assignment
 def getLast(assign_name):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute(f"SELECT questionnum FROM {assign_name} WHERE questionnum = (SELECT MAX(questionnum) FROM {assign_name})")
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get last question. {e}")
@@ -349,13 +348,13 @@ def getLast(assign_name):
 
 # gets the answer for the specified question
 def getAnsw(assignName, questionNum):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute(f"SELECT answer, marks FROM {assignName} WHERE questionnum = %s", (str(questionNum)))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get answer. {e}")
@@ -363,13 +362,13 @@ def getAnsw(assignName, questionNum):
 
 # gets the assignment id
 def getAssignID(assignName):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT assign_id FROM assignments WHERE title_id = %s", (assignName,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         if res:
             return res[0]
         else:
@@ -382,29 +381,29 @@ def getAssignID(assignName):
 
 # saves the student's submission
 def saveSub(assignID, studentID, date, mark):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("INSERT INTO submissions (assignment_id, student_id, submission_date, mark) VALUES (%s, %s, %s, %s)",
                     (assignID, studentID, date, mark))
-        conn.commit()
+        conn.commit()# saves database changes
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to save submission. {e}")
 
 # deletes the specified class
 def deleteClass(t_id, classes):
     for i in classes:
-        load_dotenv()
-        connector_key = os.getenv("DB_KEY")
+        load_dotenv() # loads the .env file
+        connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
         try:
-            conn = psycopg2.connect(connector_key)
-            cur = conn.cursor()
+            conn = psycopg2.connect(connector_key)# connects to the database
+            cur = conn.cursor()# creates a cursor
             table_name = f"\"{i}_{t_id}\""
             cur.execute(f"DROP TABLE {table_name}")
             cur.execute(f"DELETE FROM stud_classes WHERE class_names = %s", (i,))
-            conn.commit()
+            conn.commit()# saves database changes
             return True
         except Exception as e:
             mg.showwarning("Connection Failed", f"Unable to delete class. {e}")
@@ -412,11 +411,11 @@ def deleteClass(t_id, classes):
 
 # gets all the submissions for a teacher
 def getSubmissions(t_id):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("""
                     SELECT a.title, s.subm_id, m.name, s.mark, s.submission_date
                     FROM submissions s
@@ -424,7 +423,7 @@ def getSubmissions(t_id):
                     JOIN main_acc m ON s.student_id = m.id
                     WHERE a.teacher_id = %s
                 """, (t_id,))
-        res = cur.fetchall()
+        res = cur.fetchall()# loads results from the database
         if res:
             return res
         else:
@@ -434,18 +433,18 @@ def getSubmissions(t_id):
 
 # gets all the assignments for a teacher
 def getAssignInfo(t_id):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("""
                     SELECT a.assign_id, a.title, a.due_date, sc.class_names
                     FROM assignments a
                     JOIN stud_classes sc ON a.class_id = sc.id
                     WHERE a.teacher_id = %s
                 """, (t_id,))
-        res = cur.fetchall()
+        res = cur.fetchall()# loads results from the database
         if res:
             return res
         else:
@@ -455,13 +454,13 @@ def getAssignInfo(t_id):
 
 # gets the student's name
 def getName(sId):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT name FROM main_acc WHERE id = %s", (sId,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get name. {e}")
@@ -469,13 +468,13 @@ def getName(sId):
 
 # gets the student's id
 def getID(email):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("SELECT id FROM main_acc WHERE email = %s", (email,))
-        res = cur.fetchone()
+        res = cur.fetchone()# loads results from the database
         return res[0]
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get ID. {e}")
@@ -483,18 +482,18 @@ def getID(email):
 
 # gets the student's progress
 def getStudentProgress(s_id):
-    load_dotenv()
-    connector_key = os.getenv("DB_KEY")
+    load_dotenv() # loads the .env file
+    connector_key = os.getenv("DB_KEY") # fetches the database key from the .env file
     try:
-        conn = psycopg2.connect(connector_key)
-        cur = conn.cursor()
+        conn = psycopg2.connect(connector_key)# connects to the database
+        cur = conn.cursor()# creates a cursor
         cur.execute("""
                     SELECT a.title, s.subm_id, s.mark, s.submission_date
                     FROM submissions s
                     JOIN assignments a ON s.assignment_id = a.assign_id
                     WHERE s.student_id = %s
                 """, (s_id,))
-        res = cur.fetchall()
+        res = cur.fetchall()# loads results from the database
         if res:
             return res
         else:
