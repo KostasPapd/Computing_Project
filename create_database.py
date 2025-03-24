@@ -2,21 +2,20 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
-
 def create_tables():
     load_dotenv()
     connector_key = os.getenv("DB_KEY")
 
     commands = [
-        """
+        ("admin_acc", """
         CREATE TABLE IF NOT EXISTS admin_acc(
             Id SERIAL PRIMARY KEY,
             Email VARCHAR(255) NOT NULL,
             Password VARCHAR(255) NOT NULL,
             Name VARCHAR(100) NOT NULL
         )
-        """,
-        """
+        """),
+        ("main_acc", """
         CREATE TABLE IF NOT EXISTS main_acc(
             Id SERIAL PRIMARY KEY,
             Name VARCHAR(100) NOT NULL,
@@ -25,16 +24,16 @@ def create_tables():
             Teacher_id INT NOT NULL,
             FOREIGN KEY(Teacher_id) REFERENCES admin_acc(Id)
         )
-        """,
-        """
+        """),
+        ("stud_classes", """
         CREATE TABLE IF NOT EXISTS stud_classes(
             Id SERIAL PRIMARY KEY,
             Class_names VARCHAR(255) NOT NULL,
             Teacher_id INT NOT NULL,
             FOREIGN KEY(Teacher_id) REFERENCES admin_acc(Id)
         )
-        """,
-        """
+        """),
+        ("assignments", """
         CREATE TABLE IF NOT EXISTS assignments(
             Assign_id SERIAL PRIMARY KEY,
             Title VARCHAR(255) NOT NULL,
@@ -45,8 +44,8 @@ def create_tables():
             FOREIGN KEY(Class_id) REFERENCES stud_classes(Id),
             FOREIGN KEY(Teacher_id) REFERENCES admin_acc(Id)
         )
-        """,
-        """
+        """),
+        ("submissions", """
         CREATE TABLE IF NOT EXISTS submissions(
             Subm_id SERIAL PRIMARY KEY,
             Assignment_id INT NOT NULL,
@@ -56,20 +55,20 @@ def create_tables():
             FOREIGN KEY(Assignment_id) REFERENCES assignments(Assign_id),
             FOREIGN KEY(Student_id) REFERENCES main_acc(Id)
         )
-        """
+        """)
     ]
 
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        for command in commands:
+        for table_name, command in commands:
             cur.execute(command)
+            print(f"Table created: {table_name}")
         conn.commit()
         cur.close()
         conn.close()
     except Exception as e:
         print(f"Error: {e}")
-
 
 if __name__ == "__main__":
     create_tables()

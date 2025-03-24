@@ -511,5 +511,6 @@ if __name__ == "__main__":
     # print(getClass(1))
     # print(getSubmissions(1))
     # print(getAssignInfo(1))
-    print(hashPassword("Password1!"))
+    # print(hashPassword("Password1!"))
+    print(checkLogIn("Test", "test"))
     pass
