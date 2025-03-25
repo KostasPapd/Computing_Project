@@ -507,10 +507,11 @@ def testing():
     try:
         conn = psycopg2.connect(connector_key)
         cur = conn.cursor()
-        cur.execute(f"DELETE FROM stud_classes WHERE class_names = 'test'")
-        mg.showinfo("Success", "Data deleted successfully")
+        cur.execute(f"DROP TABLE IF EXISTS test_table")
+        conn.commit()
+        mg.showinfo("Success", "Table deleted successfully")
     except Exception as e:
-        mg.showwarning("Failure", f"Unable to delete from the database. {e}")
+        mg.showwarning("Failure", f"Unable to delete table. {e}")
 
 if __name__ == "__main__":
     # For testing
