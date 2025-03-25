@@ -133,6 +133,7 @@ def createLogIn():
     label = Label(frame, image=img)
     label.pack()
 
+    # Title label
     titleLabel = Label(win, text="Log In")
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(relx=0.15, rely=0.275, relheight=0.1, relwidth=0.7)
@@ -151,6 +152,7 @@ def createLogIn():
     logButton.config(font=("Arial", 16))
     logButton.place(relx=0.28, rely=0.8, relheight=0.13, relwidth=0.2)
 
+    # Username and password labels and boxes
     userLabel = Label(win, text="Username:")
     userLabel.config(font=("Arial", 14))
     userLabel.place(relx=0.12, rely=0.4, relheight=0.13, relwidth=0.2)
