@@ -501,6 +501,17 @@ def getStudentProgress(s_id):
     except Exception as e:
         mg.showwarning("Connection Failed", f"Unable to get progress. {e}")
 
+def testing():
+    load_dotenv()
+    connector_key = os.getenv("DB_KEY")
+    try:
+        conn = psycopg2.connect(connector_key)
+        cur = conn.cursor()
+        cur.execute(f"DELETE FROM stud_classes WHERE class_names = 'test'")
+        mg.showinfo("Success", "Data deleted successfully")
+    except Exception as e:
+        mg.showwarning("Failure", f"Unable to delete from the database. {e}")
+
 if __name__ == "__main__":
     # For testing
     # getTeachID("Kostas Papadopoulos")
@@ -512,5 +523,5 @@ if __name__ == "__main__":
     # print(getSubmissions(1))
     # print(getAssignInfo(1))
     # print(hashPassword("Password1!"))
-    print(checkLogIn("Test", "test"))
+    testing()
     pass
