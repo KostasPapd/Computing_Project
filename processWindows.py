@@ -711,8 +711,9 @@ def togglePass(passBox):
 
 
 def createBox(teacherID):
-    window = Toplevel()
+    window = Toplevel() # Creates a new window
 
+    # calculates middle of the screen
     wWidth = 500
     wHeight = 350
     xCord = int((window.winfo_screenwidth() / 2) - (wWidth / 2))
@@ -722,37 +723,41 @@ def createBox(teacherID):
 
     window.title("Register Account")
 
+    # Variables for the text boxes
     password_var = tkinter.StringVar()
     repassword_var = tkinter.StringVar()
 
+    # Title label
     titleLabel = Label(window, text="Register Account")
     titleLabel.config(font=("Arial", 20))
     titleLabel.place(relx=0.27, rely=0.01, relheight=0.11, relwidth=0.5)
 
+    # Register button
     registerButton = Button(window, text="Register Account", command=lambda: getVal(nameBox, emailBox, passBox,
                                                                                     repassBox, window, teacherID))
     registerButton.config(font=("Arial", 16))
     registerButton.place(relx=0.12, rely=0.7, relheight=0.11, relwidth=0.4)
 
+    # Exit button
     exitButton = Button(window, text="Exit", command=lambda: window.destroy())
     exitButton.config(font=("Arial", 16))
     exitButton.place(relx=0.65, rely=0.7, relheight=0.11, relwidth=0.15)
 
-# Name label and text box
+    # Name label and text box
     nameLabel = Label(window, text="Full Name:")
     nameLabel.config(font=("Arial", 14))
     nameLabel.place(relx=0.05, rely=0.125, relheight=0.11, relwidth=0.4)
     nameBox = Text(window, height=1, width=30)
     nameBox.place(relx=0.37, rely=0.16, relheight=0.06, relwidth=0.48)
 
-# Email label and text box
+    # Email label and text box
     emailLabel = Label(window, text="Email Address:")
     emailLabel.config(font=("Arial", 14))
     emailLabel.place(relx=0.06, rely=0.255, relheight=0.1, relwidth=0.3)
     emailBox = Text(window, height=1, width=30)
     emailBox.place(relx=0.37, rely=0.28, relheight=0.06, relwidth=0.48)
 
-# Password label and text box
+    # Password label and text box
     passLabel = Label(window, text="Password:")
     passLabel.config(font=("Arial", 14))
     passLabel.place(relx=0.15, rely=0.38, relheight=0.1, relwidth=0.2)
@@ -760,7 +765,7 @@ def createBox(teacherID):
     passBox = Entry(window, textvariable=password_var, font=('Arial', 12), show='•', width=27)
     passBox.place(relx=0.37, rely=0.4, relheight=0.06, relwidth=0.48)
 
-# Re-type label and text box
+    # Re-type label and text box
     repassLabel = Label(window, text="Re-type Password:")
     repassLabel.config(font=("Arial", 14))
     repassLabel.place(relx=0.022, rely=0.5, relheight=0.1, relwidth=0.32)
@@ -768,7 +773,7 @@ def createBox(teacherID):
     repassBox.place(relx=0.37, rely=0.52, relheight=0.06, relwidth=0.48)
 
 
-# Show password buttons
+    # Show password buttons
     showPassImg = PhotoImage(file="./Pictures/showPassword.png")
     showPassImg = showPassImg.subsample(15, 15)
     showPass = Button(window, image=showPassImg, borderwidth=0, command=lambda: togglePass(passBox))
