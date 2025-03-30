@@ -1,13 +1,3 @@
-"""
-MAKE ASSIGNMENT TABLE THE ASSIGNMENT ID AND PUT THAT INTO ASSIGNMENTS TABLE SO I CAN SEARCH USING THE TITLE ID
-
-The UI and many processes will go in here
-
-Add:
-Change Password - get value and validation
-Change Email - get value and validation
-"""
-
 import tkinter
 from tkinter import *
 import smtplib
