@@ -12,12 +12,13 @@ import datetime
 from isValid import *
 
 def checkPassword(passw, repassw, level, user, window):
-    from isValid import validatePassword
-    if passw == repassw:
-        if validatePassword(passw) == True:
-            SQLfunctions.changePass(user, level, passw)
+    from isValid import validatePassword # imports the validatePassword function from the isValid module
+    if passw == repassw: # checks if passwords match
+        if validatePassword(passw) == True: # validates the password
+            SQLfunctions.changePass(user, level, passw) # changes the password in the database
             mg.showinfo("Password Changed", "Password has been changed")
             window.destroy()
+    # error handling
         else:
             mg.showwarning("Invalid Password", "Password must include: an uppercase letter, a lowercase "
                                                "letter, a number, "
@@ -28,12 +29,13 @@ def checkPassword(passw, repassw, level, user, window):
 
 def checkEmail(email, reemail, level, user, window):
     from isValid import validEmail, verifyEmail
-    if email == reemail:
-        if validEmail(email) == True:
-            if verifyEmail(email) == True:
-                SQLfunctions.changeEmail(level, user, email)
+    if email == reemail: # checks if emails match
+        if validEmail(email) == True: # validates email
+            if verifyEmail(email) == True: # verifies email
+                SQLfunctions.changeEmail(level, user, email) # changes email in database
                 mg.showinfo("Email Changed", "Email has been changed")
                 window.destroy()
+    # error handling
             else:
                 mg.showwarning("Invalid Email", "The email you have entered is invalid")
         else:
@@ -47,20 +49,24 @@ def togglePass(passBox):
     else:
         passBox.config(show="•")
 
-def changePassUI(user, password, level):
-    win = Toplevel()
+def changePassUI(user, level):
+    win = Toplevel() # creates a new window
 
+    # sets the window size and position
     wWidth = 500
     wHeight = 350
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    # creates StringVar instances for the password and re-entered password
     newPassVar = tkinter.StringVar()
     rePassVar = tkinter.StringVar()
 
+    # title
     win.title("Change Password")
 
+    # labels and buttons
     chaLabel = Label(win, text="Change Password", font=("Arial", 20))
     chaLabel.place(relx=0.26, rely=0.05, relheight=0.1, relwidth=0.5)
 
@@ -95,16 +101,19 @@ def changePassUI(user, password, level):
 
 
 def changeEmailUI(user, level):
-    win = Toplevel()
+    win = Toplevel() # creates a new window
 
+    # sets the window size and position
     wWidth = 500
     wHeight = 350
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    # window title
     win.title("Change Email")
 
+    # labels and buttons defined and placed
     chaLabel = Label(win, text="Change Email", font=("Arial", 20))
     chaLabel.place(relx=0.26, rely=0.05, relheight=0.1, relwidth=0.5)
 
@@ -133,13 +142,15 @@ def changeEmailUI(user, level):
 
 def sendEmailCreate(email, password, name):
     try:
-        server = "smtp.gmail.com"
-        port = 465
+        server = "smtp.gmail.com" # email server
+        port = 465 # email port
+        # login for the email account
         email_s = "thephysicslab12@gmail.com"
         passw = "ihbi vcsv tgjr npmu"
 
-        receiver = email
+        receiver = email # receiving email (student email)
 
+        # email subject and body
         subject = "Account Created"
         message = (f"Hello {name},\n\nYour teacher has created a Physics Lab account for you. "
                    f"Your details are below:\n\n"
@@ -147,17 +158,21 @@ def sendEmailCreate(email, password, name):
                    f"Make sure to log in and change your password to something more secure. "
                    f"Please keep this information safe and do not share it with anyone.")
 
+        # creates the email using the EmailMessage class from the email module
         email_c = EmailMessage()
         email_c['From'] = email
         email_c['to'] = receiver
         email_c['Subject'] = subject
         email_c.set_content(message)
 
+        # creates a secure connection to the email server
         context = ssl.create_default_context()
+        # sends email
         with smtplib.SMTP_SSL(server, port, context=context) as server:
             server.login(email_s, passw)
             server.sendmail(email_s, receiver, email_c.as_string())
 
+    # error handling
     except Exception as e:
         mg.showwarning("Email not sent", f"An error occurred: {e}")
 
@@ -651,17 +666,18 @@ def studentProgress(s_id):
 
 
 def checkVal(email, password, window, name, teacherID):
-    if validEmail(email) == False:
+    if validEmail(email) == False: # validates entered email
         mg.showwarning("Invalid email", "The email you have entered is invalid")
-    elif SQLfunctions.checkEmail(email) == False:
+    elif SQLfunctions.checkEmail(email) == False: # checks if email is already in use
         mg.showwarning("Email taken", "This email is already taken")
-    elif verifyEmail(email) == False:
+    elif verifyEmail(email) == False: # verifies that entered email is real
         mg.showwarning("Invalid email", "The email you have entered is invalid")
-    elif validatePassword(password) == False:
+    elif validatePassword(password) == False: # validates password entered
         mg.showwarning("Invalid password", "Your password must include: an uppercase letter, a "
                                                    "lowercase letter, a number, a special character (!@_&) and "
                                                    "between 8 and 20 characters")
     else:
+        # If all checks pass, create the account and send student confirmation email
         SQLfunctions.registerAcc(email, password, name, teacherID)
         sendEmailCreate(email, password, name)
         mg.showinfo("Account Created", "Account has been created and details have been sent to student")
@@ -675,7 +691,7 @@ def getVal(nameBox, emailBox, passBox, repassBox, window, teacherID):
     password = passBox.get().strip()
     repassword = repassBox.get().strip()
 
-    if len(name) < 1 or len(email) < 1 or len(password) < 1:
+    if len(name) < 1 or len(email) < 1 or len(password) < 1 or len(repassword) < 1:
         mg.showwarning("Empty Field", "Please fill out all fields")
     else:
         # Capitalises the first letter of the first name and surname for the database
@@ -686,6 +702,7 @@ def getVal(nameBox, emailBox, passBox, repassBox, window, teacherID):
         if len(name) < 5:
             mg.showwarning("Name too short", "Please enter your full name")
         else:
+            # Capitalises the first letter of the first name and surname
             name = name[0].capitalize() + name[1:space] + " " + name[space + 1].capitalize() + name[space + 2:]
 
         if password != repassword:
