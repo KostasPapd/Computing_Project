@@ -384,13 +384,17 @@ def deleteClassUI(teacher_id):
     win.mainloop()
 
 def assignmentObjects(frame, id):
+    # creates the title of the window
     title = Label(frame, text="Assignments", font=("Arial", 20))
-    title.pack()
+    title.pack() # places title on the top of teh window
 
+    # gets all assignments under a certain teacher
     assignments = SQLfunctions.getAssignInfo(id)
 
-    if assignments:
+    if assignments: # if assignments is not empty
+        # creates the columns for the table
         columns = ("Assignment ID", "Title", "Due Date", "Class Name")
+        # creates the table using the Treeview widget
         tree = ttk.Treeview(frame, columns=columns, show="headings")
         tree.heading("Assignment ID", text="Assignment ID")
         tree.heading("Title", text="Title")
@@ -402,11 +406,14 @@ def assignmentObjects(frame, id):
         tree.column("Due Date", width=60)
         tree.column("Class Name", width=150)
 
+        # inserts assignment info
         for assignment in assignments:
             tree.insert("", "end", values=assignment)
 
+        # places tre underneath of the title
         tree.pack(fill=BOTH, expand=True)
 
+        # function to sort the table by a certain column
         def sort_by_column(tree, col, reverse):
             l = [(tree.set(k, col), k) for k in tree.get_children('')]
             l.sort(reverse=reverse)
@@ -416,13 +423,15 @@ def assignmentObjects(frame, id):
 
             tree.heading(col, command=lambda: sort_by_column(tree, col, not reverse))
 
+        # sort by id
         sort_by_id_button = Button(frame, text="Sort by Assignment ID",
                                    command=lambda: sort_by_column(tree, "Assignment ID", False))
         sort_by_id_button.pack(side=LEFT, padx=10, pady=10)
 
+        # sort by title
         sort_by_title_button = Button(frame, text="Sort by Title", command=lambda: sort_by_column(tree, "Title", False))
         sort_by_title_button.pack(side=LEFT, padx=10, pady=10)
-    else:
+    else: # if assignments is empty
         no_data_label = Label(frame, text="No assignments found.", font=("Arial", 16))
         no_data_label.pack()
 
