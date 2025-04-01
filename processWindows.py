@@ -177,14 +177,16 @@ def sendEmailCreate(email, password, name):
         mg.showwarning("Email not sent", f"An error occurred: {e}")
 
 def stuListUI(t_ID, updated):
-    win = Toplevel()
+    win = Toplevel() # window instance
 
+    # sets the window size and position
     wWidth = 600
     wHeight = 600
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    # wim title
     win.title("Add Students")
 
     titleLabel = Label(win, text="Add Students", font=("Arial", 20))
@@ -193,18 +195,22 @@ def stuListUI(t_ID, updated):
     scroll = Scrollbar(win)
     scroll.pack(side=RIGHT, fill=Y)
 
+    # gets all students under a certain teacher
     students = SQLfunctions.getStudents(t_ID)
     stuList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
 
+    # puts students in alphabetical list
     if students is not None:
         students = sorted(students)
         for student in students:
             stuList.insert(END, student)
     stuList.pack(side=LEFT, fill=BOTH)
 
+    # defines empty list of selected students
     selectedStu = []
 
+    # returns the selected students to the main window
     def select():
         nonlocal selectedStu
         selected = stuList.curselection()
@@ -218,20 +224,21 @@ def stuListUI(t_ID, updated):
     cancelBut = Button(win, text="Cancel", font=("Arial", 18), command=lambda: win.destroy())
     cancelBut.place(relx=0.75, rely=0.5, relheight=0.1, relwidth=0.2)
 
-
     win.resizable(False, False)
     win.mainloop()
 
 
 def createClassUI(t_ID):
-    win = Toplevel()
+    win = Toplevel() # window instance
 
+    # sets the window size and position
     wWidth = 500
     wHeight = 300
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    # window title
     win.title("Create Class")
 
     titleLabel = Label(win, text="Create Class", font=("Arial", 20))
@@ -243,8 +250,10 @@ def createClassUI(t_ID):
     nameBox = Entry(win, textvariable=nameVar, font=('Arial', 12), width=27)
     nameBox.place(relx=0.35, rely=0.28, relheight=0.08, relwidth=0.55)
 
+    # defines empty list of students
     students = []
 
+    # function to add students to the list
     def update_students(selected_students):
         nonlocal students
         students = selected_students
@@ -256,6 +265,7 @@ def createClassUI(t_ID):
     stuButton = Button(win, text="Add Students", font=("Arial", 16), command=lambda: addStu(t_ID))
     stuButton.place(relx=0.35, rely=0.5, relheight=0.13, relwidth=0.3)
 
+    # function to create class
     def create_class():
         if len(nameVar.get()) == 0 or len(students) == 0:
             mg.showwarning("Error", "Please fill in all fields")
@@ -318,14 +328,16 @@ def sendEmailOTP(check, otp):
         mg.showwarning("Email not sent", f"An error occurred: {e}")
 
 def deleteClassUI(teacher_id):
-    win = Toplevel()
+    win = Toplevel() # window instance
 
+    # sets the window size and position
     wWidth = 600
     wHeight = 600
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    # title of window
     win.title("Delete Class")
 
     titleLabel = Label(win, text="Delete Class", font=("Arial", 20))
@@ -334,18 +346,22 @@ def deleteClassUI(teacher_id):
     scroll = Scrollbar(win)
     scroll.pack(side=RIGHT, fill=Y)
 
+    # gets all classes under a certain teacher
     classes = SQLfunctions.getClass(teacher_id)
     classList = Listbox(win, selectmode=MULTIPLE, width=35, height=20, borderwidth=0, bg='#f0f0f0', font="Arial 16",
                       yscrollcommand=scroll.set)
 
+    # sorts classes alphabetically and adds them to list
     if classes is not None:
         students = sorted(classes)
         for student in students:
             classList.insert(END, student)
     classList.pack(side=LEFT, fill=BOTH)
 
+    # defines empty list of selected classes
     selectedClass = []
 
+    # deletes classes from database
     def delete(teacher_id):
         nonlocal selectedClass
         selected = classList.curselection()
@@ -455,39 +471,46 @@ def submissionObjects(frame, id):
         no_data_label.pack()
 
 def submissionViewCreate(id):
-    win = Tk()
+    win = Tk() # creates window instance
 
+    # sets the window size and position
     wWidth = 600
     wHeight = 500
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
+    # window title
     win.title("Assignments")
 
+    # creates a notebook from tkinter (allows for multiple tabs in one window)
     notebook = ttk.Notebook(win)
     notebook.grid()
 
+    # sets frames for the different tabs
     assignments = Frame(notebook)
     submissions = Frame(notebook)
 
+    # gets the assignment tab and submission tab information
     assignmentObjects(assignments, id)
     submissionObjects(submissions, id)
 
+    # adds the frames to the notebook
     assignments.grid()
     submissions.grid()
 
+    # adds the tabs to the window
     notebook.add(assignments, text="View Assignments")
     notebook.add(submissions, text="View Submissions")
-
 
     win.resizable(False, False)
     win.mainloop()
 
 def createAssign(tID):
-    win = Toplevel()
-    win.title("Create Assignment")
+    win = Toplevel() # window instance
+    win.title("Create Assignment") # window title
 
+    # sets the window size and position
     wWidth = 500
     wHeight = 350
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
@@ -507,6 +530,7 @@ def createAssign(tID):
     classLabel = Label(win, text="Class:", font=("Arial", 16))
     classLabel.place(relx=0.225, rely=0.4, relheight=0.13, relwidth=0.2)
 
+    # gets all classes under a certain teacher
     class_list = SQLfunctions.getClass(tID)
 
     classes = class_list
@@ -515,8 +539,10 @@ def createAssign(tID):
     classMenu = OptionMenu(win, clicked, *classes)
     classMenu.place(relx=0.4, rely=0.41, relheight=0.1, relwidth=0.25)
 
+    # creates a variable to store the date
     dateVar = StringVar()
 
+    # creates a calendar window
     def calendar():
         top = Toplevel(win)
         top.title("Choose Date")
@@ -525,6 +551,7 @@ def createAssign(tID):
         cal = Calendar(top, selectmode='day', year=today.year, month=today.month, day=today.day)
         cal.pack(pady=20)
 
+        # returns the selected date
         def get_date():
             date = cal.selection_get()
             dateVar.set(date)
@@ -537,7 +564,7 @@ def createAssign(tID):
     dueLabel = Label(win, text="Due:", font=("Arial", 16))
     dueLabel.place(relx=0.26, rely=0.55, relheight=0.1, relwidth=0.15)
 
-    dateEntry = Entry(win, textvariable=dateVar, font=('Arial', 12), width=15)
+    dateEntry = Entry(win, textvariable=dateVar, font=('Arial', 12), width=15, state='readonly')
     dateEntry.place(relx=0.7, rely=0.55, relheight=0.1, relwidth=0.25)
 
     dueButton = Button(win, text="Choose Date", font=("Arial", 10), command=lambda: calendar())
@@ -560,9 +587,10 @@ def nextAssign(assign_id, win):
     createQs(assign_id)
 
 def createQs(assign_id):
-    win = Toplevel()
-    win.title("Create Question")
+    win = Toplevel() # window instance
+    win.title("Create Question") # window title
 
+    # sets the window size and position
     wWidth = 650
     wHeight = 500
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
@@ -594,14 +622,12 @@ def createQs(assign_id):
     typeLabel = Label(win, text="Type:", font=("Arial", 16))
     typeLabel.place(relx=0.4, rely=0.22, relheight=0.06, relwidth=0.15)
 
+    # type of question options
     options = ["Standard answer", "Calculation"]
     clicked = StringVar()
     clicked.set("Type of Question")
     typeMenu = OptionMenu(win, clicked, *options)
     typeMenu.place(relx=0.52, rely=0.21, relheight=0.08, relwidth=0.22)
-
-    def open_file_dialog():
-        filename = filedialog.askopenfilename()
 
     nextButton = Button(win, text="Add question", font=("Arial", 16), command=lambda: SQLfunctions.addQuestion(assign_id, quest.get(), answerEntry.get("1.0", "end"), marksEntry.get("1.0", "end"), clicked.get(), win))
     nextButton.place(relx=0.55, rely=0.85, relheight=0.1, relwidth=0.22)
@@ -801,8 +827,8 @@ if __name__ == "__main__":
     # createAssignmentNumber()
     # sendEmailOTP("kostispapd@outlook.com", "123456")
     # deleteClassUI(1)
-    submissionViewCreate(1)
+    # submissionViewCreate(1)
     # createQs(1)
-    # createAssign(1)
+    createAssign(1)
     # studentProgress(3)
     pass
