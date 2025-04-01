@@ -436,11 +436,13 @@ def assignmentObjects(frame, id):
         no_data_label.pack()
 
 def submissionObjects(frame, id):
-    title = Label(frame, text="Submissions", font=("Arial", 20))
-    title.pack()
+    title = Label(frame, text="Submissions", font=("Arial", 20)) # creates the title of the window
+    title.pack() # places title on the top of teh window
 
+    # gets all submissions under a certain teacher
     submissions = SQLfunctions.getSubmissions(id)
 
+    # if submissions is not empty create tree view of submissions
     if submissions:
         columns = ("Title", "Submission ID", "Student Name", "Mark", "Submission Date")
         tree = ttk.Treeview(frame, columns=columns, show="headings")
@@ -475,7 +477,7 @@ def submissionObjects(frame, id):
 
         sort_by_title_button = Button(frame, text="Sort by Title", command=lambda: sort_by_column(tree, "Title", False))
         sort_by_title_button.pack(side=LEFT, padx=10, pady=10)
-    else:
+    else: # if submissions is empty
         no_data_label = Label(frame, text="No submissions found.", font=("Arial", 16))
         no_data_label.pack()
 
