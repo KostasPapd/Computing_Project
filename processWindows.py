@@ -707,8 +707,8 @@ def checkVal(email, password, window, name, teacherID):
         mg.showwarning("Invalid email", "The email you have entered is invalid")
     elif SQLfunctions.checkEmail(email) == False: # checks if email is already in use
         mg.showwarning("Email taken", "This email is already taken")
-    elif verifyEmail(email) == False: # verifies that entered email is real
-        mg.showwarning("Invalid email", "The email you have entered is invalid")
+    #elif verifyEmail(email) == False: # verifies that entered email is real
+        #mg.showwarning("Invalid email", "The email you have entered is invalid")
     elif validatePassword(password) == False: # validates password entered
         mg.showwarning("Invalid password", "Your password must include: an uppercase letter, a "
                                                    "lowercase letter, a number, a special character (!@_&) and "
