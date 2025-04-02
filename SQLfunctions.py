@@ -515,7 +515,7 @@ def testing():
 
 if __name__ == "__main__":
     # For testing
-    # getTeachID("Kostas Papadopoulos")
+    print(getTeachID("Kostas Papadopoulos"))
     # getStudents("Kostas Papadopoulos")
     # registerAcc("test", "test", "test", 1)
     # checkType("test_assignment", 1)
@@ -524,5 +524,5 @@ if __name__ == "__main__":
     # print(getSubmissions(1))
     # print(getAssignInfo(1))
     # print(hashPassword("Password1!"))
-    testing()
+    # testing()
     pass
