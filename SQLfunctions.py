@@ -249,7 +249,7 @@ def getAssignName(assignID):
         return None
 
 def addQuestion(assign_id, question, answer, marks, question_type, win):
-    if len(question) == 0 or len(answer) == 0 or len(marks) == 0 or len(question_type) == 0:
+    if len(question) == 0 or len(answer) == 0 or len(marks) == 0 or question_type == "Type of Question":
         mg.showwarning("Empty Fields", "Please fill in all fields.")
     else:
         load_dotenv() # loads the .env file
@@ -263,7 +263,7 @@ def addQuestion(assign_id, question, answer, marks, question_type, win):
             conn.commit()# saves database changes
             processWindows.nextAssign(assign_id, win)
         except Exception as e:
-            mg.showwarning("Connection Failed", f"Unable to add question. {e}")
+            mg.showwarning("Connection Failed", f"Unable to add question.")
 
 # gets the specified question
 def getQuest(num, assignName):
