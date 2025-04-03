@@ -402,8 +402,7 @@ def deleteClass(t_id, classes):
         try:
             conn = psycopg2.connect(connector_key)# connects to the database
             cur = conn.cursor()# creates a cursor
-            table_name = f"\"{i}_{t_id}\""
-            cur.execute(f"DROP TABLE {table_name}")
+            cur.execute(f"DROP TABLE {i}")
             cur.execute(f"DELETE FROM stud_classes WHERE class_names = %s", (i,))
             conn.commit()# saves database changes
             return True
