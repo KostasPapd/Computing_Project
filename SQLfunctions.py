@@ -158,11 +158,9 @@ def createClass(name, teacher, stuList):
         conn = psycopg2.connect(connector_key) # connects to the database
         cur = conn.cursor()# creates a cursor
         table_name = f"\"{name}_{teacher}\""  # Creates the table name
-        """This is the error for the class creation
-        Replace %s with table name
-        """
-        cur.execute(f"CREATE TABLE %s (student_id INT PRIMARY KEY , student_name varchar(255))", (table_name,))  # Creates the table
-        cur.execute(f"INSERT INTO stud_classes (class_names, teacher_id) VALUES (%s, %s)", (name, teacher))  # Inserts the class into the table
+        cur.execute(f"CREATE TABLE {table_name} (student_id INT PRIMARY KEY , student_name varchar(255))", (table_name,))  # Error was here
+        conn.commit()# saves database changes
+        cur.execute(f"INSERT INTO stud_classes (class_names, teacher_id) VALUES (%s, %s)", (table_name, teacher))  # Inserts the class into the table
         for student in stuList:
             cur.execute("SELECT id FROM main_acc WHERE name = %s", (student,))
             student_id = cur.fetchone()[0]# loads results from the database
@@ -171,9 +169,9 @@ def createClass(name, teacher, stuList):
             cur.execute(f"INSERT INTO {table_name} (student_id, student_name) VALUES (%s, %s)", (student_id, student))
 
         conn.commit()# saves database changes
+        mg.showinfo("Success", "Class created successfully.")
     except Exception as e:
-        mg.showwarning("Connection Failed", f"Unable to create class.{e}")
-        print(e)
+        mg.showwarning("Connection Failed", "Unable to create class.")
 
 # gets all of the classes under a teacher's name
 def getClass(t_ID):
