@@ -651,17 +651,17 @@ def createQs(assign_id):
     win.mainloop()
 
 def studentProgress(s_id):
-    win = Toplevel()
+    win = Toplevel() # window instance
     win.title("Progress")
-
+    # sets the window size and position
     wWidth = 600
     wHeight = 400
     xCord = int((win.winfo_screenwidth() / 2) - (wWidth / 2))
     yCord = int((win.winfo_screenheight() / 2) - (wHeight / 2))
     win.geometry(f"{wWidth}x{wHeight}+{xCord}+{yCord}")
 
-    submissions = SQLfunctions.getStudentProgress(s_id)
-
+    submissions = SQLfunctions.getStudentProgress(s_id) # gets all submissions under a certain student
+    # if submissions is not empty create tree view of submissions
     if submissions:
         columns = ("Title", "Submission ID", "Mark", "Submission Date")
         tree = ttk.Treeview(win, columns=columns, show="headings")
@@ -679,7 +679,7 @@ def studentProgress(s_id):
             tree.insert("", "end", values=submission)
 
         tree.pack(fill=BOTH, expand=True)
-
+        # function to sort the table by a certain column
         def sort_by_column(tree, col, reverse):
             l = [(tree.set(k, col), k) for k in tree.get_children('')]
             l.sort(reverse=reverse)
@@ -694,7 +694,7 @@ def studentProgress(s_id):
 
         sort_by_title_button = Button(win, text="Sort by Title", command=lambda: sort_by_column(tree, "Title", False))
         sort_by_title_button.pack(side=LEFT, padx=10, pady=10)
-    else:
+    else: # if submissions is empty
         no_data_label = Label(win, text="No submissions found.", font=("Arial", 16))
         no_data_label.pack()
 
