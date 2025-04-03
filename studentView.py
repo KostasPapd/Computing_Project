@@ -102,7 +102,7 @@ class MenuBar(Frame):
         accMenu.add_command(label="Change Email", font=("Helvetica", 10),
                             command=lambda: processWindows.changeEmailUI(self.email, "Student"))
         accMenu.add_command(label="Change Password", font=("Helvetica", 10),
-                            command=lambda: processWindows.changePassUI(self.email, self.passw, "Student"))
+                            command=lambda: processWindows.changePassUI(self.email, "Student"))
         accMenu.add_command(label="- " * 15, font=("Helvetica", 10))
         accMenu.add_command(label="Sign Out", font=("Helvetica", 10), command=lambda: signOut(self.master))
 

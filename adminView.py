@@ -34,7 +34,7 @@ class MenuBar(Frame):
         accMenu.add_command(label="Change Email", font=("Helvetica", 9),
                             command=lambda: changeEmailUI(self.user, "Admin"))
         accMenu.add_command(label="Change Password", font=("Helvetica", 9),
-                            command=lambda: changePassUI(self.user, self.passw, "Admin"))
+                            command=lambda: changePassUI(self.user, "Admin"))
 
         # class menu creation and addition of commands
         classMenu = Menu(toolBar)
