@@ -54,7 +54,7 @@ class MenuBar(Frame):
         self.quit()
 
     #method to sign out
-    def signOut(self, ):
+    def signOut(self):
         self.master.destroy()
         logInMenu.createLogIn()
 
