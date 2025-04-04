@@ -162,6 +162,8 @@ class Marking():
                 os.remove(file_name)
 
             self.endMarking(win)
+        else:
+            mg.showerror("Error", "Please enter a valid mark")
 
     def endMarking(self, win):
         # finishes the marking process
