@@ -741,11 +741,10 @@ def getVal(nameBox, emailBox, passBox, repassBox, window, teacherID):
         else:
             # Capitalises the first letter of the first name and surname
             name = name[0].capitalize() + name[1:space] + " " + name[space + 1].capitalize() + name[space + 2:]
-
-        if password != repassword:
-            mg.showwarning("Passwords don't match", "Passwords don't match. Please try again")
-        else:
-            checkVal(email, password, window, name, teacherID)
+            if password != repassword:
+                mg.showwarning("Passwords don't match", "Passwords don't match. Please try again")
+            else:
+                checkVal(email, password, window, name, teacherID)
 
 def togglePass(passBox):
     if passBox.cget("show") == "•":
